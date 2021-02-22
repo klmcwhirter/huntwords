@@ -5,5 +5,5 @@ provider:
 functions:
   ./huntwords-consumed:
     lang: python3
-    handler: ./huntwords-consumed
+    handler: ./puzzleboard-consumed
     image: klmchirter/huntwords-compose:latest

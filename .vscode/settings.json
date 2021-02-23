@@ -1,0 +1,6 @@
+{
+    "python.pythonPath": "/home/klmcw/src/github.com/klmcwhirter/python-projects/huntwords/venv/bin/python3",
+    "python.linting.pylintEnabled": false,
+    "python.linting.flake8Enabled": true,
+    "python.linting.enabled": true
+}

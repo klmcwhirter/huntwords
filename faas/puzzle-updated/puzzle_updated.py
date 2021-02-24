@@ -1,8 +1,8 @@
 import json
-from datetime import datetime
-from random import choice
 
 import redis
+
+from ..model.puzzle import puzzle_urn, Puzzle
 
 
 class HuntwordsPuzzleUpdatedCommand(object):
@@ -11,21 +11,13 @@ class HuntwordsPuzzleUpdatedCommand(object):
     def run(self, jreq):
         '''Command that processes puzzle-updated message'''
 
-        resp = json.loads(jreq)
+        obj = json.loads(jreq)
+        puzzle = Puzzle(obj['name'], obj['description'], obj['words'])
 
-        val = self.tickle_redis()
+        self.set_puzzle(puzzle['name'], jreq)
 
-        status = choice(['pending', 'ok', 'error'])
-        resp["processed"] = {
-            "at": f"{datetime.now().isoformat()}",
-            "bar": val,
-            "status": status
-        }
+        return json.dumps({'status': 'ok', 'puzzle': dict(puzzle)})
 
-        return json.dumps(resp)
-
-    def tickle_redis(self):
+    def set_puzzle(self, name, puzzle):
         r = redis.Redis(host='redis.redis', port=6379, db=0)
-        r.set('bar', 'foo')
-        val = r.get('bar')
-        return val.decode('utf-8')
+        r.set(puzzle_urn(name), puzzle)

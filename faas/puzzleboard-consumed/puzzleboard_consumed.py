@@ -13,7 +13,7 @@ class HuntwordsPuzzleBoardComsumedCommand(object):
 
         resp = json.loads(jreq)
 
-        val = self.tickle_redis()
+        val = self.tickle_redis(resp['puzzleboard'])
 
         status = choice(['pending', 'ok', 'error'])
         resp["processed"] = {
@@ -24,8 +24,8 @@ class HuntwordsPuzzleBoardComsumedCommand(object):
 
         return json.dumps(resp)
 
-    def tickle_redis(self):
+    def tickle_redis(self, name):
         r = redis.Redis(host='redis.redis', port=6379, db=0)
-        r.set('foo', 'bar')
-        val = r.get('foo')
+        r.set('puzzle', name)
+        val = r.get('puzzle')
         return val.decode('utf-8')

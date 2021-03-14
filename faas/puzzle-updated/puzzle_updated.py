@@ -13,11 +13,11 @@ class HuntwordsPuzzleUpdatedCommand(object):
 
         obj = json.loads(jreq)
         puzzle = Puzzle(obj['name'], obj['description'], obj['words'])
-        dpuzzle = dict(puzzle)
+        jpuzzle = json.dumps(dict(puzzle))
 
-        self.set_puzzle(puzzle['name'], dpuzzle)
+        self.set_puzzle(puzzle.name, jpuzzle)
 
-        return json.dumps({'status': 'ok', 'puzzle': dict(puzzle)})
+        return json.dumps({'status': 'ok', 'puzzle': jpuzzle})
 
     def set_puzzle(self, name, puzzle):
         r = redis.Redis(host='redis.redis', port=6379, db=0)

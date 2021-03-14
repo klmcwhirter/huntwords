@@ -18,7 +18,7 @@ class HuntwordsPuzzleBoardComsumedCommand(object):
         status = choice(['pending', 'ok', 'error'])
         resp["processed"] = {
             "at": f"{datetime.now().isoformat()}",
-            "foo": val,
+            "puzzle": val,
             "status": status
         }
 

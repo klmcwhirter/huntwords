@@ -1,8 +1,8 @@
 import json
 from datetime import datetime
-from random import choice
 
-import redis
+from .model.puzzle import get_puzzle
+from .model.puzzleboard import PuzzleBoard, push_puzzleboard
 
 
 class HuntwordsPuzzleBoardComsumedCommand(object):
@@ -13,19 +13,16 @@ class HuntwordsPuzzleBoardComsumedCommand(object):
 
         resp = json.loads(jreq)
 
-        val = self.tickle_redis(resp['puzzleboard'])
+        puzzle = get_puzzle(resp['puzzleboard'])
 
-        status = choice(['pending', 'ok', 'error'])
+        pboard = PuzzleBoard(14, 14, [], [], puzzle)
+        jpboard = json.dumps(dict(pboard))
+
+        push_puzzleboard(puzzle.name, jpboard)
+
         resp["processed"] = {
             "at": f"{datetime.now().isoformat()}",
-            "puzzle": val,
-            "status": status
+            "status": "ok"
         }
 
         return json.dumps(resp)
-
-    def tickle_redis(self, name):
-        r = redis.Redis(host='redis.redis', port=6379, db=0)
-        r.set('puzzle', name)
-        val = r.get('puzzle')
-        return val.decode('utf-8')

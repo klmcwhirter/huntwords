@@ -1,8 +1,7 @@
 import json
 
-import redis
 
-from model.puzzle import puzzle_urn, Puzzle
+from .model.puzzle import set_puzzle, Puzzle
 
 
 class HuntwordsPuzzleUpdatedCommand(object):
@@ -15,10 +14,6 @@ class HuntwordsPuzzleUpdatedCommand(object):
         puzzle = Puzzle(obj['name'], obj['description'], obj['words'])
         jpuzzle = json.dumps(dict(puzzle))
 
-        self.set_puzzle(puzzle.name, jpuzzle)
+        set_puzzle(puzzle.name, jpuzzle)
 
         return json.dumps({'status': 'ok', 'puzzle': jpuzzle})
-
-    def set_puzzle(self, name, puzzle):
-        r = redis.Redis(host='redis.redis', port=6379, db=0)
-        r.set(puzzle_urn(name), puzzle)

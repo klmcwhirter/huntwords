@@ -9,7 +9,7 @@ def command_puzzleboard_consume(**kwargs):
     url = kwargs['--consume-url']
     name = kwargs['--name']
     size = kwargs['--size']
-    data = f'{{"puzzleboard": "{name}", "size": {size}, correlation-id": "{uuid4()}"}}'
+    data = f'{{"puzzleboard": "{name}", "size": {size}, "correlation-id": "{uuid4()}"}}'
     print(data)
 
     r = requests.post(url, data)

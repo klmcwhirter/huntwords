@@ -14,8 +14,9 @@ class HuntwordsPuzzleBoardComsumedCommand(object):
         resp = json.loads(jreq)
 
         puzzle = get_puzzle(resp['puzzleboard'])
+        size = int(resp['size'])
 
-        pboard = PuzzleBoard(14, 14, [], [], puzzle)
+        pboard = PuzzleBoard(size, size, [], [], puzzle)
         jpboard = json.dumps(dict(pboard))
 
         push_puzzleboard(puzzle.name, jpboard)

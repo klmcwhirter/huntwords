@@ -1,7 +1,6 @@
 ''' models for the puzzleboard concept '''
 import random
 import string
-from dataclasses import dataclass
 
 from .puzzle import Puzzle
 from .redis import redis_client
@@ -26,11 +25,20 @@ config = {
 }
 
 
-@dataclass
 class Point:
     '''Represents a cell on the puzzle board'''
-    X: int
-    Y: int
+
+    def __init__(self, X: int, Y: int):
+        self.X = X
+        self.Y = Y
+
+    def __eq__(self, other):
+        return self.X == other.X and self.Y == other.Y
+
+    def __iter__(self):
+        ''' make class iterable so that transformation is easier via dict protocol '''
+        yield 'X', self.X
+        yield 'Y', self.Y
 
 
 direction_offsets: dict[str, Point] = {
@@ -86,7 +94,7 @@ class WordSolution:
         yield 'placed', self.placed
         yield 'origin', self.origin
         yield 'direction', self.direction
-        yield 'points', self.points
+        yield 'points', [dict(p) for p in self.points]
 
 
 class PuzzleBoard:

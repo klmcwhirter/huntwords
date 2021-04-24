@@ -16,7 +16,6 @@ Options:
     -h, --help           Print this help text and exit
     --version            Print the version and exit
 '''
-import redis
 from docopt import docopt
 
 from .commands_puzzleboard import command_puzzleboard_consume
@@ -31,8 +30,6 @@ verbs = {
 if __name__ == '__main__':
     opts = docopt(__doc__, version='0.1')
 
-    opts['redis'] = redis.Redis(host='redis.redis', port=6379, db=0)
-    
     command = [v for k, v in verbs.items() if opts[k]][0]
 
     command(**opts)

@@ -6,7 +6,7 @@ from .redis import redis_client
 
 def puzzle_urn(name):
     ''' redis universal resource name '''
-    return f'urn:puzzle:{name}'
+    return f'puzzle:{name}'
 
 
 class Puzzle:

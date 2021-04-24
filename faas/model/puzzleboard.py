@@ -79,7 +79,7 @@ def word_points(word: str, origin: Point, direction: str) -> list[Point]:
 
 
 class WordSolution:
-    def __init__(self, word, placed=False, origin: Point = (0, 0), direction=None, points: list[Point] = None):
+    def __init__(self, word, placed=False, origin: Point = Point(0, 0), direction=None, points: list[Point] = None):
         self.word = word
         self.placed = placed
         self.origin = origin
@@ -92,7 +92,7 @@ class WordSolution:
         ''' make class iterable so that transformation is easier via dict protocol '''
         yield 'word', self.word
         yield 'placed', self.placed
-        yield 'origin', self.origin
+        yield 'origin', dict(self.origin)
         yield 'direction', self.direction
         yield 'points', [dict(p) for p in self.points]
 

@@ -13,7 +13,7 @@ class Puzzle:
     def __init__(self, name, description, words):
         self.name = name
         self.description = description
-        self.words = words
+        self.words = [word.upper() for word in words]
 
     def __iter__(self):
         ''' make class iterable so that transformation is easier via dict protocol '''

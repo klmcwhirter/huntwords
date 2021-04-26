@@ -32,7 +32,8 @@ class HuntwordsPuzzleBoardPopCommand(object):
 
 def send_consumed(pboard):
     '''Send async request to generate a new copy'''
-    url = '/async-function/puzzleboard-consumed'
+    url = 'http://puzzleboard-consumed.openfaas-fn:8080'
+    
     data = f'{{"puzzle": "{pboard.puzzle.name}" }}'
 
     requests.post(url, data)

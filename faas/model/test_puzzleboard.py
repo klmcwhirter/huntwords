@@ -5,6 +5,8 @@ import pytest
 from .puzzle import Puzzle
 from .puzzleboard import is_direction, puzzleboard_urn, Point, PuzzleBoard, WordSolution
 
+WORD = 'WORD'
+
 
 def test_puzzleboard_urn_returns_correct_key():
     assert 'puzzleboard:mypuzzle' == puzzleboard_urn('mypuzzle')
@@ -163,28 +165,28 @@ def test_try_letter_solution_true_if_overlap(test_puzzleboard):
 
 
 def test_try_place_word_returns_solution_on_empty_board(test_puzzleboard):
-    solution = test_puzzleboard.try_place_word('WORD', Point(0, 0), 'E')
+    solution = test_puzzleboard.try_place_word(WORD, Point(0, 0), 'E')
     assert solution is not None
 
 
 def test_try_place_word_returns_solution_if_at_least_one_overlap(test_puzzleboard):
     test_puzzleboard.letters[0][0] = 'W'
-    solution = test_puzzleboard.try_place_word('WORD', Point(0, 0), 'E')
+    solution = test_puzzleboard.try_place_word(WORD, Point(0, 0), 'E')
     assert solution is not None
     assert solution.placed
     assert [Point(x, 0) for x in range(4)] == solution.points
-    assert 'WORD' == solution.word
+    assert WORD == solution.word
 
 
 def test_try_place_word_returns_solution_if_3_overlap(test_puzzleboard):
     test_puzzleboard.letters[0][0] = 'W'
     test_puzzleboard.letters[2][0] = 'R'
     test_puzzleboard.letters[3][0] = 'D'
-    solution = test_puzzleboard.try_place_word('WORD', Point(0, 0), 'E')
+    solution = test_puzzleboard.try_place_word(WORD, Point(0, 0), 'E')
     assert solution is not None
     assert solution.placed
     assert [Point(x, 0) for x in range(4)] == solution.points
-    assert 'WORD' == solution.word
+    assert WORD == solution.word
 
 
 def test_try_place_word_returns_solution_if_full_but_one_slot(test_puzzleboard):
@@ -193,18 +195,18 @@ def test_try_place_word_returns_solution_if_full_but_one_slot(test_puzzleboard):
     test_puzzleboard.letters[4][4] = None
     test_puzzleboard.letters[5][5] = None
     test_puzzleboard.letters[6][6] = 'D'
-    solution = test_puzzleboard.try_place_word('WORD', Point(3, 3), 'SE')
+    solution = test_puzzleboard.try_place_word(WORD, Point(3, 3), 'SE')
     assert solution is not None
     assert solution.placed
     assert [Point(x, x) for x in range(3, 7)] == solution.points
-    assert 'WORD' == solution.word
+    assert WORD == solution.word
 
 
 def test_try_place_word_returns_None_on_full_board(test_puzzleboard):
     # simulate full board
     test_puzzleboard.fill_with_random_letters()
 
-    solution = test_puzzleboard.try_place_word('WORD', Point(0, 0), 'E')
+    solution = test_puzzleboard.try_place_word(WORD, Point(0, 0), 'E')
     assert solution is None
 
 
@@ -213,7 +215,7 @@ def test_try_place_word_returns_None_when_cannot_place_word(test_puzzleboard):
     for i, ch in enumerate(list('OTHER')):
         test_puzzleboard.letters[0][i] = ch
 
-    solution = test_puzzleboard.try_place_word('WORD', Point(0, 0), 'E')
+    solution = test_puzzleboard.try_place_word(WORD, Point(0, 0), 'E')
     assert solution is None
 
 
@@ -222,7 +224,7 @@ def test_valid_is_false_if_no_solutions(test_puzzleboard):
 
 
 def test_valid_is_true_if_criteria_met(test_puzzleboard):
-    word = 'word'
+    word = WORD
     test_puzzleboard.solutions = [
         WordSolution(word, placed=True, direction='N'),  # vertical
         WordSolution(word, placed=True, direction='S'),  # vertical
@@ -242,7 +244,7 @@ def test_valid_is_true_if_criteria_met(test_puzzleboard):
 
 
 def test_valid_is_false_if_criteria_not_met(test_puzzleboard):
-    word = 'word'
+    word = WORD
     test_puzzleboard.solutions = [
         WordSolution(word, placed=True, direction='N'),  # vertical
         WordSolution(word, placed=True, direction='S'),  # vertical
@@ -263,7 +265,7 @@ def test_valid_is_false_if_criteria_not_met(test_puzzleboard):
     assert not test_puzzleboard.valid()
 
 
-@pytest.mark.parametrize('list_size', [3, 10, 25])
+@pytest.mark.parametrize('list_size', [3, 10])
 def test_words_to_place_returns_n_words(list_size, test_puzzleboard):
     words_to_place = [word for word in islice(test_puzzleboard.words_to_place(), list_size)]
     assert list_size == len(words_to_place)
@@ -271,7 +273,7 @@ def test_words_to_place_returns_n_words(list_size, test_puzzleboard):
 
 @pytest.mark.parametrize('n', range(10))
 def test_words_to_place_returns_random_word_lists(n, test_puzzleboard):
-    list_size = 30
+    list_size = 10
     words_to_place1 = [word for word in islice(test_puzzleboard.words_to_place(), list_size)]
     words_to_place2 = [word for word in islice(test_puzzleboard.words_to_place(), list_size)]
 

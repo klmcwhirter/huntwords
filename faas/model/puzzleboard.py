@@ -150,6 +150,14 @@ class PuzzleBoard:
 
         self.solutions.append(solution)
 
+    def placed_all_words(self):
+        placed_words = set(sorted([sol.word for sol in self.solutions]))
+        words = set(self.puzzle.words)
+        return placed_words == words
+
+    def sort_solutions_by_word(self):
+        self.solutions = sorted(self.solutions, key=lambda s: s.word)
+
     def try_letter_solution(self, letter: str, point: Point) -> bool:
         '''Tests if a letter can be placed in the location requested'''
 
@@ -191,17 +199,24 @@ class PuzzleBoard:
         # must have at least one horizontal solution
         rc &= len(list(filter(is_direction('horizontal'), self.solutions))) >= 1
 
+        # If there are not enough words in the puzzle to fulfill the requirements, and all were placed - accept it
+        rc |= self.placed_all_words()
+
         return rc
 
     def words_to_place(self):
-        '''Generator providing words from the puzzle, circling back if more are needed'''
+        '''Generator providing words from the puzzle'''
+        words_set = set(self.puzzle.words)
+        seen = set()
         while True:
-            seen = set()
-            for n in range(len(self.puzzle.words)):
-                word = random.choice(self.puzzle.words)
-                if word not in seen:
-                    seen.add(word)
-                    yield word
+            word = random.choice(self.puzzle.words)
+
+            if word not in seen:
+                seen.add(word)
+                yield word
+
+            if words_set == seen:
+                break
 
 
 def generate_puzzleboard(height, width, puzzle):
@@ -226,6 +241,8 @@ def generate_puzzleboard(height, width, puzzle):
             # do not need any more words
             if pboard.has_density():
                 break
+
+        pboard.sort_solutions_by_word()
 
         # board quality check
         if pboard.valid():

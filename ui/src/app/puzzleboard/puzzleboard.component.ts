@@ -53,14 +53,15 @@ export class PuzzleBoardComponent implements OnInit {
 
   // Use puzzleDoneService to display PuzzleDoneComponent - if puzzle has been completed
   maybeCompletePuzzle(): void {
-    // if (this.puzzleBoard.wordsNotSelectedCount <= 0) {
-    //     this.puzzleDoneService.completePuzzle(this.puzzleBoard)
-    //         .subscribe(playAgain => {
-    //             if (playAgain) {
-    //                 this.windowReloadService.reload();
-    //             }
-    //         });
-    // }
+    if (this.puzzleBoard.wordsNotSelectedCount <= 0) {
+      //     this.puzzleDoneService.completePuzzle(this.puzzleBoard)
+      //         .subscribe(playAgain => {
+      //             if (playAgain) {
+      //                 this.windowReloadService.reload();
+      //             }
+      //         });
+      console.log('Game complete.');
+    }
   }
 
   /* ------------------------------------- */
@@ -109,24 +110,27 @@ export class PuzzleBoardComponent implements OnInit {
     //     .toPromise();
 
     // await promise.then(() => {
-    //     this.clearCellsHints();
-    //     if (solution.selected) {
-    //         this.setCellsForWordSelected(solution, true);
-    //     }
+    await setTimeout(() => {
+      this.clearCellsHints();
+      if (solution.selected) {
+        this.setCellsForWordSelected(solution, true);
+      }
+    }, 1000);
     // });
   }
 
   showHint(solution: WordSolution): void {
-    // if (this.numHints >= this.puzzleBoard.displayedWordSolutions.length / 3) {
-    //     this.snackService.open('Number of hints exceeded');
-    //     return;
-    // }
+    if (this.numHints >= this.puzzleBoard.displayedWordSolutions.length / 3) {
+      //     this.snackService.open('Number of hints exceeded');
+      console.log('Number of hints exceeded');
+      return;
+    }
 
-    // if (solution.selected) {
-    //     this.setCellsForWordSelected(solution, false);
-    // } else {
-    //     this.numHints++;
-    // }
+    if (solution.selected) {
+      this.setCellsForWordSelected(solution, false);
+    } else {
+      this.numHints++;
+    }
 
     this.setCellsForWordHint(solution, true);
 
@@ -158,7 +162,7 @@ export class PuzzleBoardComponent implements OnInit {
 
       // If this cell intersects another solution don't change it!
       if (selected.length <= 1) {
-          this.selected[cell.y][cell.x] = value;
+        this.selected[cell.y][cell.x] = value;
       }
     }
   }

@@ -22,6 +22,14 @@ class Puzzle:
         yield 'words', self.words
 
 
+def puzzle_from_dict(d: dict) -> Puzzle:
+    return Puzzle(
+        d['name'],
+        d['description'],
+        d['words']
+    )
+
+
 def get_puzzle(name):
     r = redis_client()
     jtext = r.get(puzzle_urn(name))

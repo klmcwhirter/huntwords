@@ -1,14 +1,22 @@
 ''' models for the puzzleboard concept '''
+import json
 import random
 import string
 
-from .puzzle import Puzzle
+from .puzzle import Puzzle, puzzle_from_dict
 from .redis import redis_client
 
 
 def puzzleboard_urn(name):
     ''' redis universal resource name '''
     return f'puzzleboard:{name}'
+
+
+def pop_puzzleboard(name, pboard):
+    '''Pop a board from the cache; signal consumption'''
+    r = redis_client()
+    pboard = r.lpop(puzzleboard_urn(name))
+    return puzzleboard_from_json(pboard)
 
 
 def push_puzzleboard(name, pboard):
@@ -28,17 +36,21 @@ config = {
 class Point:
     '''Represents a cell on the puzzle board'''
 
-    def __init__(self, X: int, Y: int):
-        self.X = X
-        self.Y = Y
+    def __init__(self, x: int, y: int):
+        self.x = x
+        self.y = y
 
     def __eq__(self, other):
-        return self.X == other.X and self.Y == other.Y
+        return self.x == other.x and self.y == other.y
 
     def __iter__(self):
         ''' make class iterable so that transformation is easier via dict protocol '''
-        yield 'X', self.X
-        yield 'Y', self.Y
+        yield 'x', self.x
+        yield 'y', self.y
+
+
+def point_from_dict(d: dict) -> Point:
+    return Point(d['x'], d['y'])
 
 
 direction_offsets: dict[str, Point] = {
@@ -72,9 +84,9 @@ def word_points(word: str, origin: Point, direction: str) -> list[Point]:
     offsets = direction_offsets[direction]
     points = []
     for i, ch in enumerate(list(word)):
-        points.append(Point(origin.X, origin.Y))
-        origin.X += offsets.X
-        origin.Y += offsets.Y
+        points.append(Point(origin.x, origin.y))
+        origin.x += offsets.x
+        origin.y += offsets.y
     return points
 
 
@@ -99,6 +111,16 @@ class WordSolution:
     def __lt__(self, other):
         '''Supports sorting by word'''
         return self.word < other.word
+
+
+def wordsolution_from_dict(d: dict) -> WordSolution:
+    return WordSolution(
+        d['word'],
+        d['placed'],
+        point_from_dict(d['origin']),
+        d['direction'],
+        [point_from_dict(p) for p in d['points']]
+    )
 
 
 class PuzzleBoard:
@@ -150,7 +172,7 @@ class PuzzleBoard:
     def place(self, solution):
         ''' Commit the solution to the board '''
         for letter, point in zip(solution.word, solution.points):
-            self.letters[point.Y][point.X] = letter
+            self.letters[point.y][point.x] = letter
 
         self.solutions.append(solution)
 
@@ -164,8 +186,8 @@ class PuzzleBoard:
 
         # make sure point is in the grid
         value = ''
-        if point.X >= 0 and point.X < self.width and point.Y >= 0 and point.Y < self.height:
-            value = self.letters[point.Y][point.X]
+        if point.x >= 0 and point.x < self.width and point.y >= 0 and point.y < self.height:
+            value = self.letters[point.y][point.x]
 
         return value is None or value == letter
 
@@ -252,3 +274,14 @@ def generate_puzzleboard(height, width, puzzle):
             break
 
     return pboard
+
+
+def puzzleboard_from_json(j: str) -> PuzzleBoard:
+    pbdict = json.loads(j)
+    return PuzzleBoard(
+        pbdict['height'],
+        pbdict['width'],
+        pbdict['letters'],
+        [wordsolution_from_dict(ws) for ws in pbdict['solutions']],
+        puzzle_from_dict(pbdict['puzzle'])
+    )

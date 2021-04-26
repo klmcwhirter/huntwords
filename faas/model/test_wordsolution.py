@@ -7,7 +7,7 @@ def test_wordsolution_can_construct():
 
 
 def test_wordsolution_is_iterable():
-    d = {'word': 'WORD', 'placed': False, 'origin': {'X': 0, 'Y': 0}, 'direction': None, 'points': []}
+    d = {'word': 'WORD', 'placed': False, 'origin': {'x': 0, 'y': 0}, 'direction': None, 'points': []}
     ws = WordSolution('WORD')
 
     # can leverage iterabiity with dict protocol

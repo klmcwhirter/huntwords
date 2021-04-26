@@ -96,6 +96,10 @@ class WordSolution:
         yield 'direction', self.direction
         yield 'points', [dict(p) for p in self.points]
 
+    def __lt__(self, other):
+        '''Supports sorting by word'''
+        return self.word < other.word
+
 
 class PuzzleBoard:
     def __init__(self,
@@ -154,9 +158,6 @@ class PuzzleBoard:
         placed_words = set(sorted([sol.word for sol in self.solutions]))
         words = set(self.puzzle.words)
         return placed_words == words
-
-    def sort_solutions_by_word(self):
-        self.solutions = sorted(self.solutions, key=lambda s: s.word)
 
     def try_letter_solution(self, letter: str, point: Point) -> bool:
         '''Tests if a letter can be placed in the location requested'''
@@ -242,7 +243,7 @@ def generate_puzzleboard(height, width, puzzle):
             if pboard.has_density():
                 break
 
-        pboard.sort_solutions_by_word()
+        pboard.solutions.sort()
 
         # board quality check
         if pboard.valid():

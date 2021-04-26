@@ -1,0 +1,26 @@
+import json
+from datetime import datetime
+
+from .model.puzzleboard import pop_puzzleboard
+
+
+class HuntwordsPuzzleBoardPopCommand(object):
+    '''Command class that processes puzzleboard-pop message'''
+
+    def run(self, jreq):
+        '''Command that processes puzzleboard-pop message'''
+
+        req = json.loads(jreq)
+
+        pboard = pop_puzzleboard(req['puzzle'])
+        jpboard = json.dumps(dict(pboard))
+
+        resp = {
+            'puzzleboard': jpboard,
+            'processed': {
+                'at': f'{datetime.now().isoformat()}',
+                'status': 'ok'
+            }
+        }
+
+        return json.dumps(resp)

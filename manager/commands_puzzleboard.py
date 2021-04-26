@@ -17,3 +17,16 @@ def command_puzzleboard_consume(**kwargs):
     print(f'status_code={r.status_code}')
     print(f'reason={r.reason}')
     print(f'text={r.text}')
+
+
+def command_puzzleboard_pop(**kwargs):
+    url = kwargs['--consume-url']
+    name = kwargs['--name']
+    data = f'{{"puzzle": "{name}", "correlation-id": "{uuid4()}"}}'
+    print(data)
+
+    r = requests.post(url, data)
+
+    print(f'status_code={r.status_code}')
+    print(f'reason={r.reason}')
+    print(f'text={r.text}')

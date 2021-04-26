@@ -12,7 +12,7 @@ def puzzleboard_urn(name):
     return f'puzzleboard:{name}'
 
 
-def pop_puzzleboard(name, pboard):
+def pop_puzzleboard(name):
     '''Pop a board from the cache; signal consumption'''
     r = redis_client()
     pboard = r.lpop(puzzleboard_urn(name))

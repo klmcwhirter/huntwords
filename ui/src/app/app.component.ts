@@ -1,4 +1,7 @@
 import { Component } from '@angular/core';
+import { Puzzle } from './puzzle/puzzle.model';
+import { PuzzleBoard } from './puzzleboard/puzzleboard.model';
+import { PuzzleBoardService } from './puzzleboard/puzzleboard.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +9,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'huntwords';
+  pb = '';
+
+  constructor(pbSvc: PuzzleBoardService) {
+    pbSvc.getPuzzleBoard('').subscribe(pb => this.pb = JSON.stringify(pb));
+  }
 }

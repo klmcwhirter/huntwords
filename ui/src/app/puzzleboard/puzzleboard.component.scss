@@ -1,0 +1,106 @@
+.puzzle-board-card {
+    display: grid;
+    grid-template-columns: 2fr 5fr 3fr;
+    grid-column-gap: 1%;
+}
+
+.puzzle-board {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding-top: 0;
+}
+
+.word-cell-table {
+    width: 100%;
+}
+
+.word-cell-table caption {
+    font-size: smaller;
+}
+
+.word-cell-table caption h3 {
+    display: inline;
+    margin: 0;
+}
+
+.word-cell {
+    background: inherit;
+    color: #875af7;
+    font-family: sans-serif;
+    font-weight: bold;
+    padding: 0.25em;
+    text-align: center;
+    vertical-align: middle;
+    text-decoration-line: none;
+    min-width: 1.5em;
+}
+
+.word-cell:hover {
+    background: yellow;
+    cursor: pointer;
+}
+
+.word-cell-hint {
+    background-color: #e7aaf7;
+}
+
+.word-cell-selected {
+    background-color: #f7bbf7;
+}
+
+.word-list {
+}
+
+.word-list-item {
+    color: #a73ad7;
+    cursor: pointer;
+    font-family: sans-serif;
+    font-weight: bold;
+    text-decoration-line: none;
+}
+
+.word-list-item-selected {
+    font-weight: normal;
+    color: #c77aff;
+}
+
+.word-selected {
+    text-decoration-line: line-through;
+}
+
+@media only screen and (min-width: 1570px) {
+    .word-cell {
+        font-size: 20pt;
+    }
+    .word-list-item {
+        font-size: 14pt;
+    }
+    .word-list-item-selected {
+        font-size: 14pt;
+    }
+}
+
+@media only screen and (min-width: 1000px) and (max-width: 1569px) {
+    .word-cell {
+        font-size: 14px;
+    }
+    .word-list-item {
+        font-size: 10pt;
+    }
+    .word-list-item-selected {
+        font-size: 10pt;
+    }
+}
+
+@media only screen and (max-width: 999px) {
+    /* Nexus 5X landscape and below */
+    .word-cell {
+        font-size: 11px;
+    }
+    .word-list-item {
+        font-size: 7pt;
+    }
+    .word-list-item-selected {
+        font-size: 7pt;
+    }
+}

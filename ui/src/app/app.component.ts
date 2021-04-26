@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
-import { Puzzle } from './puzzle/puzzle.model';
-import { PuzzleBoard } from './puzzleboard/puzzleboard.model';
+import { EMPTY_PUZZLEBOARD, PuzzleBoard } from './puzzleboard/puzzleboard.model';
 import { PuzzleBoardService } from './puzzleboard/puzzleboard.service';
 
 @Component({
@@ -9,9 +8,9 @@ import { PuzzleBoardService } from './puzzleboard/puzzleboard.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  pb = '';
+  pb = EMPTY_PUZZLEBOARD;
 
   constructor(pbSvc: PuzzleBoardService) {
-    pbSvc.getPuzzleBoard('').subscribe(pb => this.pb = JSON.stringify(pb));
+    pbSvc.getPuzzleBoard('').subscribe(pb => this.pb = pb);
   }
 }

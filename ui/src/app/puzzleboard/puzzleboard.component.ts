@@ -16,11 +16,12 @@ import { PuzzleBoardService } from './puzzleboard.service';
 // import { WindowReloadService } from '../utils/window-reload.service';
 
 @Component({
+  selector: 'app-puzzleboard',
   templateUrl: './puzzleboard.component.html',
   styleUrls: ['./puzzleboard.component.scss'],
   providers: [],
 })
-export class PuzzleComponent implements OnInit {
+export class PuzzleBoardComponent implements OnInit {
   // The puzzle
   @Input() puzzleBoard: PuzzleBoard = EMPTY_PUZZLEBOARD;
   // The cells containing the word the user has requested a hint
@@ -153,12 +154,12 @@ export class PuzzleComponent implements OnInit {
   setCellsForWordSelected(solution: WordSolution, value: boolean): void {
     for (const cell of solution.points) {
       // This cell may be an intersection point for multiple solutions
-      // const selected = this.findSolutions(cell.y, cell.x).filter(s => s.selected);
+      const selected = this.findSolutions(cell.y, cell.x).filter(s => s.selected);
 
       // If this cell intersects another solution don't change it!
-      // if (selected.length <= 1) {
-      //     this.selected[cell.y][cell.x] = value;
-      // }
+      if (selected.length <= 1) {
+          this.selected[cell.y][cell.x] = value;
+      }
     }
   }
 
@@ -167,14 +168,15 @@ export class PuzzleComponent implements OnInit {
 
     if (solutions.length === 1) {
       const solution = solutions[0];
-      // const wasSelected = solution.selected;
+      const wasSelected = solution.selected;
 
 
-      // this.setCellsForWordSelected(solution, !wasSelected);
-      // solution.selected = !wasSelected;
+      this.setCellsForWordSelected(solution, !wasSelected);
+      solution.selected = !wasSelected;
 
-      // const verb = (wasSelected) ? 'unselected' : 'found';
+      const verb = (wasSelected) ? 'unselected' : 'found';
       // this.snackService.open(`You ${verb} ${solution.word}`, { duration: 1000 });
+      console.log(`You ${verb} ${solution.word}`);
 
       this.maybeCompletePuzzle();
     }

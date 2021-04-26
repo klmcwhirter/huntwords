@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { PuzzleBoard } from './puzzleboard.model';
+import { PuzzleBoard, WordSolution } from './puzzleboard.model';
 
 const puzzleboard: PuzzleBoard = {
     height: 15,
@@ -266,7 +266,12 @@ const puzzleboard: PuzzleBoard = {
         words: [
             'ABRAHAM', 'ADAM', 'BETHLEHAM', 'DANIEL', 'DAVID', 'ELIJAH', 'ELISHA', 'EVE', 'FAITH', 'GOD', 'GOLIATH', 'GRACE', 'HEALING', 'HOLYSPIRIT', 'ISRAEL', 'JACOB', 'JESUS', 'JOB', 'JOHN', 'JOSEPH', 'MANGER', 'MARY', 'NOAH', 'PAUL', 'PETER', 'SAMUEL', 'SARAH', 'SHEEP', 'SHEPHERD', 'STAR', 'THOMAS', 'WISEMEN'
         ]
-    }
+    },
+    displayedWordSolutions: [] as WordSolution[],
+    wordListCols: 0,
+    wordsPlacedCount: 0,
+    wordsNotSelectedCount: 0,
+    wordsSelectedCount: 0
 };
 
 

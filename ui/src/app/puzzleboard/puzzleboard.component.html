@@ -23,7 +23,7 @@
     </article>
 
     <aside class="puzzle-board word-list">
-        <div style="font-size: smaller; padding: 3px;">{{puzzleBoard.wordsNotSelectedCount}} words to go</div>
+        <!-- <div style="font-size: smaller; padding: 3px;">{{puzzleBoard.wordsNotSelectedCount}} words to go</div> -->
         <mat-grid-list cols="{{puzzleBoard.wordListCols}}" rowHeight="1.6em">
             <mat-grid-tile *ngFor="let wordSol of puzzleBoard.displayedWordSolutions"
             class="word-list-item" [ngClass]="{ 'word-list-item-selected': wordSol.selected }">

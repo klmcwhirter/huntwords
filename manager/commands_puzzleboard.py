@@ -20,7 +20,7 @@ def command_puzzleboard_consume(**kwargs):
 
 
 def command_puzzleboard_pop(**kwargs):
-    url = kwargs['--consume-url']
+    url = kwargs['--pop-url']
     name = kwargs['--name']
     data = f'{{"puzzle": "{name}", "correlation-id": "{uuid4()}"}}'
     print(data)

@@ -1,6 +1,6 @@
 import json
 
-from .handler import Event, Response
+from .handler_models import Event, Response
 from .model.puzzle import set_puzzle, Puzzle
 
 

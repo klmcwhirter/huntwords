@@ -1,25 +1,10 @@
 """handler for huntwords api"""
-from dataclasses import dataclass
+
+from .handler_models import Event, Response
 
 from .puzzle_updated import HuntwordsPuzzleUpdatedCommand
 from .puzzleboard_consumed import HuntwordsPuzzleBoardComsumedCommand
 from .puzzleboard_pop import HuntwordsPuzzleBoardPopCommand
-
-
-@dataclass
-class Event:
-    body: str
-    headers: str
-    method: str
-    query: str
-    path: str
-
-
-@dataclass
-class Response:
-    statusCode: int
-    body: str
-    headers: dict
 
 
 commands = {

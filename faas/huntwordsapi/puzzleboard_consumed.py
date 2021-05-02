@@ -1,7 +1,7 @@
 import json
 from datetime import datetime
 
-from .handler import Event, Response
+from .handler_models import Event, Response
 from .model.puzzle import get_puzzle
 from .model.puzzleboard import generate_puzzleboard, push_puzzleboard
 

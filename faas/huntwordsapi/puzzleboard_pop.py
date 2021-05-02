@@ -5,7 +5,7 @@ from datetime import datetime
 
 import requests
 
-from .handler import Event, Response
+from .handler_models import Event, Response
 from .model.puzzleboard import pop_puzzleboard
 
 

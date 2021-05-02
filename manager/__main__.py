@@ -6,9 +6,9 @@ Usage:
     manager puzzleboard_pop (--name <name>)
 
 Options:
-    --consume-url <url>  The url to the puzzleboard-consume function [default: http://localhost:8080/async-function/puzzleboard-consumed]
-    --load-url <url>     The url to the puzzle-updated function [default: http://localhost:8080/function/puzzle-updated]
-    --pop-url <url>      The url to the puzzleboard-pop function [default: http://localhost:8080/function/puzzleboard-pop]
+    --consume-url <url>  The url to the puzzleboard-consume function [default: http://localhost:8080/async-function/huntwordsapi/puzzleboard-consumed]
+    --load-url <url>     The url to the puzzle-updated function [default: http://localhost:8080/function/huntwordsapi/puzzle-updated]
+    --pop-url <url>      The url to the puzzleboard-pop function [default: http://localhost:8080/function/huntwordsapi/puzzleboard-pop]
 
     --file <filename>    The filename from which to read the words; one per line
     --name <name>        The puzzle name to give the dictionary of words

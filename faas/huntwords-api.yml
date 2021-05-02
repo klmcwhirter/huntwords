@@ -2,16 +2,26 @@ version: 1.0
 provider:
   name: openfaas
   gateway: http://192.168.1.50:31112
+configuration:
+  copy:
+  - model
 functions:
-  puzzleboard-consumed:
-    lang: python3-debian
-    handler: ./puzzleboard-consumed
-    image: klmcwhirter/puzzleboard-consumed:arm32v7
-  puzzleboard-pop:
-    lang: python3-debian
-    handler: ./puzzleboard-pop
-    image: klmcwhirter/puzzleboard-pop:arm32v7
-  puzzle-updated:
-    lang: python3-debian
-    handler: ./puzzle-updated
-    image: klmcwhirter/puzzle-updated:arm32v7
+  # puzzleboard-consumed:
+  #   lang: python3-debian
+  #   handler: ./puzzleboard-consumed
+  #   image: klmcwhirter/puzzleboard-consumed:arm32v7
+  # puzzleboard-pop:
+  #   lang: python3-debian
+  #   handler: ./puzzleboard-pop
+  #   image: klmcwhirter/puzzleboard-pop:arm32v7
+  # puzzle-updated:
+  #   lang: python3-debian
+  #   handler: ./puzzle-updated
+  #   image: klmcwhirter/puzzle-updated:arm32v7
+  huntwordsapi:
+    lang: python3-http
+    handler: ./huntwordsapi
+    image: klmcwhirter/huntwordsapi:arm32v7
+    build_args:
+      TEST_ENABLED: false
+      TEST_COMMAND: pytest

@@ -20,4 +20,4 @@ def handle(event: Event, context):
         rc = command.run(event, context)
         return rc
 
-    return Response(404, f"{event.path} is not recognized")
+    return Response(404, f"{event.path} is not recognized", {})

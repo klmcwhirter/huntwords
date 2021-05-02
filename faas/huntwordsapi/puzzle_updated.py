@@ -16,4 +16,4 @@ class HuntwordsPuzzleUpdatedCommand(object):
 
         set_puzzle(puzzle.name, jpuzzle)
 
-        return Response(200, jpuzzle)
+        return Response(200, jpuzzle, {})

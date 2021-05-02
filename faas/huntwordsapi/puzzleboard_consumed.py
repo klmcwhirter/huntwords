@@ -26,4 +26,4 @@ class HuntwordsPuzzleBoardComsumedCommand(object):
             "at": f"{datetime.now().isoformat()}",
         }
 
-        return Response(200, json.dumps(resp))
+        return Response(200, json.dumps(resp), {})

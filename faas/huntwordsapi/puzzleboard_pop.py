@@ -42,4 +42,4 @@ def send_consumed(pboard):
 
     data = f'{{"puzzle": "{pboard.puzzle.name}" }}'
 
-    return requests.post(url, data)
+    return requests.post(url, data, {})

@@ -8,9 +8,9 @@ from .puzzleboard_pop import HuntwordsPuzzleBoardPopCommand
 
 
 commands = {
-    "puzzle-updated": HuntwordsPuzzleUpdatedCommand,
-    "puzzleboard-consumed": HuntwordsPuzzleBoardComsumedCommand,
-    "puzzleboard-pop": HuntwordsPuzzleBoardPopCommand,
+    "/puzzle-updated": HuntwordsPuzzleUpdatedCommand,
+    "/puzzleboard-consumed": HuntwordsPuzzleBoardComsumedCommand,
+    "/puzzleboard-pop": HuntwordsPuzzleBoardPopCommand,
 }
 
 

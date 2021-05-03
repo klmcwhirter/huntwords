@@ -14,6 +14,6 @@ class HuntwordsPuzzleUpdatedCommand(object):
         puzzle = Puzzle(obj["name"], obj["description"], obj["words"])
         jpuzzle = json.dumps(dict(puzzle))
 
-        set_puzzle(puzzle.name, jpuzzle)
+        set_puzzle(puzzle.name, puzzle)
 
         return Response(200, jpuzzle, {})

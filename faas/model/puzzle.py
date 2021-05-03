@@ -4,7 +4,7 @@ import json
 from .redis import redis_client
 
 
-def puzzle_urn(name):
+def puzzle_urn(name) -> str:
     ''' redis universal resource name '''
     return f'puzzle:{name}'
 
@@ -30,7 +30,7 @@ def puzzle_from_dict(d: dict) -> Puzzle:
     )
 
 
-def get_puzzle(name):
+def get_puzzle(name: str) -> Puzzle:
     r = redis_client()
     jtext = r.get(puzzle_urn(name))
 
@@ -40,6 +40,6 @@ def get_puzzle(name):
     return puzzle
 
 
-def set_puzzle(name, puzzle):
+def set_puzzle(name: str, puzzle: Puzzle):
     r = redis_client()
-    r.set(puzzle_urn(name), puzzle)
+    r.set(puzzle_urn(name), json.dumps(dict(puzzle)))

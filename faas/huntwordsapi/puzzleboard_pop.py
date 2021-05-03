@@ -6,7 +6,7 @@ from datetime import datetime
 import requests
 
 from .handler_models import Event, Response
-from .model.puzzleboard import pop_puzzleboard
+from .model.puzzleboard import pop_puzzleboard, PuzzleBoard
 
 
 class HuntwordsPuzzleBoardPopCommand(object):
@@ -15,16 +15,15 @@ class HuntwordsPuzzleBoardPopCommand(object):
     def __init__(self):
         logging.basicConfig(stream=sys.stderr)
 
-    def run(self, event: Event, context):
+    def run(self, event: Event, context) -> Response:
         """Command that processes puzzleboard-pop message"""
 
         req = json.loads(event.body)
 
         pboard = pop_puzzleboard(req["puzzle"])
-        jpboard = json.dumps(dict(pboard))
 
         resp = {
-            "puzzleboard": jpboard,
+            "puzzleboard": dict(pboard),
             "processed": {
                 "at": f"{datetime.now().isoformat()}",
             },
@@ -36,7 +35,7 @@ class HuntwordsPuzzleBoardPopCommand(object):
         return Response(200, json.dumps(resp), {})
 
 
-def send_consumed(pboard):
+def send_consumed(pboard: PuzzleBoard):
     """Send async request to generate a new copy"""
     url = "http://gateway.openfaas:8080/async-function/huntwordsapi/puzzleboard-consumed"
 

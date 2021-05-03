@@ -4,25 +4,26 @@ import random
 import string
 
 from .puzzle import Puzzle, puzzle_from_dict
+from .puzzleboard import PuzzleBoard
 from .redis import redis_client
 
 
-def puzzleboard_urn(name):
+def puzzleboard_urn(name: str) -> str:
     ''' redis universal resource name '''
     return f'puzzleboard:{name}'
 
 
-def pop_puzzleboard(name):
+def pop_puzzleboard(name: str) -> PuzzleBoard:
     '''Pop a board from the cache; signal consumption'''
     r = redis_client()
     pboard = r.lpop(puzzleboard_urn(name))
     return puzzleboard_from_json(pboard)
 
 
-def push_puzzleboard(name, pboard):
+def push_puzzleboard(name: str, pboard: PuzzleBoard):
     '''Place the board in the cache for usage'''
     r = redis_client()
-    r.rpush(puzzleboard_urn(name), pboard)
+    r.rpush(puzzleboard_urn(name), json.dumps(dict(pboard)))
 
 
 config = {
@@ -159,7 +160,7 @@ class PuzzleBoard:
                 if self.letters[y][x] is None:
                     self.letters[y][x] = random.choice(string.ascii_uppercase)
 
-    def has_density(self):
+    def has_density(self) -> float:
         ''' Count of placed word letters / total grid letter count >= config['word_density'] '''
         word_letters = sum([len(sol.word) for sol in self.solutions])
         total = self.height * self.width
@@ -169,14 +170,14 @@ class PuzzleBoard:
         '''Tests if all the cells of the board are full'''
         return not any([cell is None for row in self.letters for cell in row])
 
-    def place(self, solution):
+    def place(self, solution: WordSolution):
         ''' Commit the solution to the board '''
         for letter, point in zip(solution.word, solution.points):
             self.letters[point.y][point.x] = letter
 
         self.solutions.append(solution)
 
-    def placed_all_words(self):
+    def placed_all_words(self) -> bool:
         placed_words = set(sorted([sol.word for sol in self.solutions]))
         words = set(self.puzzle.words)
         return placed_words == words
@@ -191,7 +192,7 @@ class PuzzleBoard:
 
         return value is None or value == letter
 
-    def try_place_word(self, word, origin, direction):
+    def try_place_word(self, word: int, origin: Point, direction: str) -> WordSolution:
         '''tests if word can be placed on the board, and if so returns WordSolution'''
         solution = None
 
@@ -242,7 +243,7 @@ class PuzzleBoard:
                 break
 
 
-def generate_puzzleboard(height, width, puzzle):
+def generate_puzzleboard(height: int, width: int, puzzle: Puzzle) -> PuzzleBoard:
     '''Generate a puzzleboard for the puzzle and dimensions passed'''
     maxtries = len(direction_offsets.keys()) * width * height * config['random_factor']
 

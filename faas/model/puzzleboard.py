@@ -4,26 +4,7 @@ import random
 import string
 
 from .puzzle import Puzzle, puzzle_from_dict
-from .puzzleboard import PuzzleBoard
 from .redis import redis_client
-
-
-def puzzleboard_urn(name: str) -> str:
-    ''' redis universal resource name '''
-    return f'puzzleboard:{name}'
-
-
-def pop_puzzleboard(name: str) -> PuzzleBoard:
-    '''Pop a board from the cache; signal consumption'''
-    r = redis_client()
-    pboard = r.lpop(puzzleboard_urn(name))
-    return puzzleboard_from_json(pboard)
-
-
-def push_puzzleboard(name: str, pboard: PuzzleBoard):
-    '''Place the board in the cache for usage'''
-    r = redis_client()
-    r.rpush(puzzleboard_urn(name), json.dumps(dict(pboard)))
 
 
 config = {
@@ -286,3 +267,21 @@ def puzzleboard_from_json(j: str) -> PuzzleBoard:
         [wordsolution_from_dict(ws) for ws in pbdict['solutions']],
         puzzle_from_dict(pbdict['puzzle'])
     )
+
+
+def puzzleboard_urn(name: str) -> str:
+    ''' redis universal resource name '''
+    return f'puzzleboard:{name}'
+
+
+def pop_puzzleboard(name: str) -> PuzzleBoard:
+    '''Pop a board from the cache; signal consumption'''
+    r = redis_client()
+    pboard = r.lpop(puzzleboard_urn(name))
+    return puzzleboard_from_json(pboard)
+
+
+def push_puzzleboard(name: str, pboard: PuzzleBoard):
+    '''Place the board in the cache for usage'''
+    r = redis_client()
+    r.rpush(puzzleboard_urn(name), json.dumps(dict(pboard)))

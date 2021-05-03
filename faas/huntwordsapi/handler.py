@@ -1,4 +1,4 @@
-"""handler for huntwords api"""
+'''handler for huntwords api'''
 
 from .handler_models import Event, Response
 
@@ -8,9 +8,9 @@ from .puzzleboard_pop import HuntwordsPuzzleBoardPopCommand
 
 
 commands = {
-    "/puzzle-updated": HuntwordsPuzzleUpdatedCommand,
-    "/puzzleboard-consumed": HuntwordsPuzzleBoardComsumedCommand,
-    "/puzzleboard-pop": HuntwordsPuzzleBoardPopCommand,
+    '/puzzle-updated': HuntwordsPuzzleUpdatedCommand,
+    '/puzzleboard-consumed': HuntwordsPuzzleBoardComsumedCommand,
+    '/puzzleboard-pop': HuntwordsPuzzleBoardPopCommand,
 }
 
 
@@ -18,6 +18,6 @@ def handle(event: Event, context):
     if event.path in commands:
         command = commands[event.path]()
         rc = command.run(event, context)
-        return rc
+        return dict(rc)  # send dict back to index.py
 
-    return Response(404, f"{event.path} is not recognized", {})
+    return Response(404, f'{event.path} is not recognized', {})

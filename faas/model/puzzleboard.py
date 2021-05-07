@@ -277,8 +277,8 @@ def puzzleboard_urn(name: str) -> str:
 def pop_puzzleboard(name: str) -> PuzzleBoard:
     '''Pop a board from the cache; signal consumption'''
     r = redis_client()
-    pboard = r.lpop(puzzleboard_urn(name))
-    return puzzleboard_from_json(pboard)
+    jpboard = r.lpop(puzzleboard_urn(name))
+    return puzzleboard_from_json(jpboard)
 
 
 def push_puzzleboard(name: str, pboard: PuzzleBoard):

@@ -18,7 +18,7 @@ class HuntwordsPuzzleBoardPopCommand(object):
     def run(self, event: Event, context) -> Response:
         """Command that processes puzzleboard-pop message"""
 
-        req = json.loads(event.body)
+        req = json.loads(event.request.body)
 
         pboard = pop_puzzleboard(req["puzzle"])
 

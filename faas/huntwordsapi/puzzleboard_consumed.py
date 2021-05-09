@@ -12,7 +12,7 @@ class HuntwordsPuzzleBoardComsumedCommand(object):
     def run(self, event: Event, context) -> Response:
         """Command that processes puzzleboard-consumed message"""
 
-        resp = json.loads(event.body)
+        resp = json.loads(event.request.body)
 
         puzzle = get_puzzle(resp["puzzle"])
         size = int(resp["size"])

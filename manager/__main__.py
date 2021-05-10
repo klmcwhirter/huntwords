@@ -1,14 +1,14 @@
 '''
 Usage:
-    manager puzzle_load (--file <filename>) [--load-url <url>]
-    manager puzzle_del (--name <name>) [--pop-url <url>]
-    manager puzzleboard_consume [--consume-url <url>] (--name <name>) [--size <size>]
-    manager puzzleboard_pop (--name <name>)
+    manager puzzle_load (--file <filename>) [--url <url>]
+    manager puzzle_del (--name <name>) [--url <url>]
+    manager puzzles [--url <url>]
+    manager puzzleboard_consume [--async-url <url>] (--name <name>) [--size <size>]
+    manager puzzleboard_pop (--name <name>) [--url <url>]
 
 Options:
-    --consume-url <url>  The url to the puzzleboard-consume function [default: http://localhost:8080/async-function/huntwordsapi/puzzleboard-consumed]
-    --load-url <url>     The url to the puzzle-updated function [default: http://localhost:8080/function/huntwordsapi/puzzle-updated]
-    --pop-url <url>      The url to the puzzleboard-pop function [default: http://localhost:8080/function/huntwordsapi/puzzleboard-pop]
+    --async-url <url>    The url to the async function endpoint [default: http://localhost:8080/async-function/huntwordsapi]
+    --url <url>          The url to the function [default: http://localhost:8080/function/huntwordsapi]
 
     --file <filename>    The filename from which to read the words; one per line
     --name <name>        The puzzle name to give the dictionary of words
@@ -20,11 +20,12 @@ Options:
 from docopt import docopt
 
 from .commands_puzzleboard import command_puzzleboard_consume, command_puzzleboard_pop
-from .commands_puzzle import command_puzzle_load
+from .commands_puzzle import command_puzzle_load, command_puzzles
 
 # Command pattern
 verbs = {
     'puzzle_load': command_puzzle_load,
+    'puzzles': command_puzzles,
     'puzzleboard_consume': command_puzzleboard_consume,
     'puzzleboard_pop': command_puzzleboard_pop
 }

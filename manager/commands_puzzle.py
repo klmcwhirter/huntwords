@@ -7,7 +7,7 @@ from faas.model.puzzle import Puzzle
 
 
 def command_puzzle_load(**kwargs):
-    url = kwargs['--load-url']
+    url = kwargs['--url']
     filename = kwargs['--file']
 
     jpuzzle = '{}'
@@ -21,10 +21,21 @@ def command_puzzle_load(**kwargs):
         dpuzzle = dict(puzzle)
         jpuzzle = dumps(dpuzzle)
 
+        data = f'{{ "oper": "puzzle-updated", "body": {jpuzzle} }}'
         print(f'calling {url} with:')
-        print(jpuzzle)
-        r = requests.post(url, jpuzzle)
+        print(data)
+        r = requests.post(url, data)
 
         print(f'status_code={r.status_code}')
         print(f'reason={r.reason}')
         print(f'text={r.text}')
+
+
+def command_puzzles(**kwargs):
+    url = kwargs['--url']
+
+    r = requests.post(url, '{ "oper": "puzzles", "body": {} }')
+
+    print(f'status_code={r.status_code}')
+    print(f'reason={r.reason}')
+    print(f'text={r.text}')

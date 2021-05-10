@@ -6,10 +6,10 @@ import requests
 
 
 def command_puzzleboard_consume(**kwargs):
-    url = kwargs['--consume-url']
+    url = kwargs['--async-url']
     name = kwargs['--name']
     size = kwargs['--size']
-    data = f'{{"puzzle": "{name}", "size": {size}, "correlation-id": "{uuid4()}"}}'
+    data = f'{{ "oper": "puzzleboard-consumed", "body": {{"puzzle": "{name}", "size": {size}, "correlation-id": "{uuid4()}"}} }}'
     print(data)
 
     r = requests.post(url, data)
@@ -20,9 +20,9 @@ def command_puzzleboard_consume(**kwargs):
 
 
 def command_puzzleboard_pop(**kwargs):
-    url = kwargs['--pop-url']
+    url = kwargs['--url']
     name = kwargs['--name']
-    data = f'{{"puzzle": "{name}", "correlation-id": "{uuid4()}"}}'
+    data = f'{{ "oper": "puzzleboard-pop", "body": {{"puzzle": "{name}", "correlation-id": "{uuid4()}"}} }}'
     print(data)
 
     r = requests.post(url, data)

@@ -1,0 +1,50 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: huntwords
+  namespace: huntwords
+  labels:
+    app: huntwords
+spec:
+  selector:
+    matchLabels:
+      app: huntwords
+  replicas: 1
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: huntwords
+    spec:
+      containers:
+        - name: huntwords
+          image: nginx:alpine
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: huntwords-artifacts-volume
+              mountPath: /usr/share/nginx/html
+            - name: huntwords-nginx-config-volume
+              mountPath: /etc/nginx
+      volumes:
+        - name: huntwords-artifacts-volume
+          configMap:
+            name: huntwords-artifacts
+        - name: huntwords-nginx-config-volume
+          configMap:
+            name: huntwords-nginx-config
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: huntwords-service
+  namespace: huntwords
+spec:
+  selector:
+    app: huntwords
+  ports:
+    - protocol: TCP
+      port: 80

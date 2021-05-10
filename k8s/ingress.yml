@@ -1,0 +1,20 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: huntwords-ingress
+  namespace: huntwords
+  annotations:
+    kubernetes.io/ingress.class: "traefik"
+    # traefik.frontend.rule.type: PathPrefixStrip
+spec:
+  rules:
+  - http:
+      paths:
+      - path: /huntwords
+        pathType: Prefix
+        backend:
+          service:
+            name: huntwords-service
+            port:
+              number: 80

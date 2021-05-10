@@ -1,6 +1,9 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { PuzzleBoard, WordSolution } from './puzzleboard.model';
+
 
 const puzzleboard: PuzzleBoard = {
     height: 15,
@@ -57,11 +60,29 @@ const puzzleboard: PuzzleBoard = {
     wordsSelectedCount: 0
 };
 
+const url = '/huntwords/api/huntwordsapi';
+
+interface PuzzleBoardResponse {
+    puzzleboard: PuzzleBoard;
+    processed: string;
+}
+
 @Injectable({
     providedIn: 'root'
 })
 export class PuzzleBoardService {
+
+    constructor(private http: HttpClient) { }
+
+    // getPuzzleBoardLocal(name: string): Observable<PuzzleBoard> {
+    //     return of(new PuzzleBoard(puzzleboard.height, puzzleboard.width, puzzleboard.letters, puzzleboard.solutions, puzzleboard.puzzle));
+    // }
+
     getPuzzleBoard(name: string): Observable<PuzzleBoard> {
-        return of(new PuzzleBoard(puzzleboard.height, puzzleboard.width, puzzleboard.letters, puzzleboard.solutions, puzzleboard.puzzle));
+        return this.http.post<PuzzleBoardResponse>(url, `{ "oper": "puzzleboard-pop", "body":{ "puzzle": "${name}" } }`)
+            .pipe(map(pbr => {
+                const pb = pbr.puzzleboard;
+                return new PuzzleBoard(pb.height, pb.width, pb.letters, pb.solutions, pb.puzzle);
+            }));
     }
 }

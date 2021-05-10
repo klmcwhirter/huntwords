@@ -42,9 +42,11 @@ export class PuzzleBoardComponent implements OnInit {
 
   ngOnInit() {
     // const puzzleBoard = <IPuzzleBoard>this.activatedRoute.snapshot.data['board'];
-    this.pbSvc.getPuzzleBoard('').subscribe(pb => this.puzzleBoard = new PuzzleBoard(pb.height, pb.width, pb.letters, pb.solutions, pb.puzzle));
-    this.clearCellsHints();
-    this.clearCellsSelected();
+    this.pbSvc.getPuzzleBoard('Animals').subscribe(pb => {
+      this.puzzleBoard = pb;
+      this.clearCellsHints();
+      this.clearCellsSelected();
+      });
   }
 
   /* ------------------------- */
@@ -68,8 +70,8 @@ export class PuzzleBoardComponent implements OnInit {
   /* METHODS THAT OPERATE ON HELPER ARRAYS */
   /* ------------------------------------- */
 
-  clearArray(array: boolean[][]): boolean[][] {
-    array = [];
+  clearArray(): boolean[][] {
+    const array: boolean[][] = [];
     for (let r = 0; r < this.puzzleBoard.height; r++) {
       array[r] = [];
       for (let c = 0; c < this.puzzleBoard.width; c++) {
@@ -80,11 +82,11 @@ export class PuzzleBoardComponent implements OnInit {
   }
 
   clearCellsHints() {
-    this.hint = this.clearArray(this.hint);
+    this.hint = this.clearArray();
   }
 
   clearCellsSelected(): void {
-    this.selected = this.clearArray(this.selected);
+    this.selected = this.clearArray();
   }
 
   setCellsForWordHint(solution: WordSolution, value: boolean): void {

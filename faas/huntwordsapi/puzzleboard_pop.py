@@ -18,7 +18,7 @@ class HuntwordsPuzzleBoardPopCommand(object):
     def run(self, event: Event, context) -> Response:
         """Command that processes puzzleboard-pop message"""
 
-        req = json.loads(event.request.body)
+        req = event.request.body
 
         pboard = pop_puzzleboard(req["puzzle"])
 
@@ -37,8 +37,8 @@ class HuntwordsPuzzleBoardPopCommand(object):
 
 def send_consumed(pboard: PuzzleBoard):
     """Send async request to generate a new copy"""
-    url = "http://gateway.openfaas:8080/async-function/huntwordsapi/puzzleboard-consumed"
+    url = "http://gateway.openfaas:8080/async-function/huntwordsapi"
 
-    data = f'{{"puzzle": "{pboard.puzzle.name}", "size": "{pboard.height}" }}'
+    data = f'{{ "oper": "puzzleboard-consumed", "body": {{ "puzzle": "{pboard.puzzle.name}", "size": {pboard.height} }} }}'
 
     return requests.post(url, data, {})

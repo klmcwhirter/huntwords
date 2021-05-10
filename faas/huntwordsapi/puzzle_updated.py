@@ -10,7 +10,7 @@ class HuntwordsPuzzleUpdatedCommand(object):
     def run(self, event: Event, context):
         """Command that processes puzzle-updated message"""
 
-        obj = json.loads(event.request.body)
+        obj = event.request.body
         puzzle = Puzzle(obj["name"], obj["description"], obj["words"])
         jpuzzle = json.dumps(dict(puzzle))
 

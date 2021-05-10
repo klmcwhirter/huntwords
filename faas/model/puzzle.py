@@ -1,5 +1,6 @@
 ''' models for the puzzle concept '''
 import json
+from typing import List
 
 from .redis import redis_client
 
@@ -38,6 +39,17 @@ def get_puzzle(name: str) -> Puzzle:
     puzzle = Puzzle(obj['name'], obj['description'], obj['words'])
 
     return puzzle
+
+
+def get_puzzles() -> List[Puzzle]:
+    r = redis_client()
+
+    keys = [k.decode('utf-8') for k in r.keys(puzzle_urn('*'))]
+
+    puzzle_names = [name[7:] for name in keys]
+
+    puzzles = [get_puzzle(name) for name in puzzle_names]
+    return puzzles
 
 
 def set_puzzle(name: str, puzzle: Puzzle):

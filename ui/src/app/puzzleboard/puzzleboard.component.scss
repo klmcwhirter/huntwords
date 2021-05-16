@@ -13,16 +13,6 @@
 
 .word-cell-table {
     grid-area: puzzle-board;
-    // width: 100%;
-}
-
-.word-cell-table caption {
-    font-size: smaller;
-}
-
-.word-cell-table caption h3 {
-    display: inline;
-    margin: 0;
 }
 
 .word-cell {
@@ -54,19 +44,12 @@
     grid-area: words;
 }
 
-.word-list-header {
-    font-size: smaller;
-    padding: 3px;
-    text-align: center;
-}
-
 .word-list-item {
     color: #a73ad7;
     cursor: pointer;
     font-family: sans-serif;
     font-weight: bold;
     text-decoration-line: none;
-    width: 100%;
 }
 
 .word-list-item-selected {

@@ -1,9 +1,6 @@
 <div class="puzzle-board-card" *ngIf="puzzleBoard.height">
     <div class="puzzle-board word-cell-table">
         <table>
-            <caption>
-                <h3>{{puzzleBoard.puzzle.name}}</h3>&nbsp;-&nbsp;{{puzzleBoard.puzzle.description}}
-            </caption>
             <tbody>
                 <tr *ngFor="let letterRow of puzzleBoard.letters; let r = index;">
                     <td *ngFor="let char of letterRow; let c = index" class="word-cell" [ngClass]="{
@@ -17,7 +14,6 @@
     </div>
 
     <div class="puzzle-board word-list">
-        <div class="word-list-header">{{puzzleBoard.wordsNotSelectedCount}} words to go</div>
         <mat-grid-list cols="{{puzzleBoard.wordListCols}}" rowHeight="1.6em">
             <mat-grid-tile *ngFor="let wordSol of puzzleBoard.displayedWordSolutions"
             class="word-list-item" [ngClass]="{ 'word-list-item-selected': wordSol.selected }">

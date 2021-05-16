@@ -7,12 +7,14 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { AppMaterialModule } from './app-material.module';
 import { AppRoutingModule } from './app-routing.module';
+import { GameStateComponent } from './game-state/game-state.component';
 import { PuzzleBoardComponent } from './puzzleboard/puzzleboard.component';
 import { PuzzleSelectComponent } from './puzzle-select/puzzle-select.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    GameStateComponent,
     PuzzleBoardComponent,
     PuzzleSelectComponent
   ],

@@ -1,7 +1,5 @@
 
-import { Component, Input, OnInit } from '@angular/core';
-import { Location } from '@angular/common';
-// import { ActivatedRoute } from '@angular/router';
+import { Component } from '@angular/core';
 
 import {
   EMPTY_PUZZLEBOARD,
@@ -9,11 +7,7 @@ import {
   WordSolution,
 } from './puzzleboard.model';
 import { PuzzlesService } from './puzzleboard.service';
-
-// import { PuzzleDoneService } from '../puzzle-done/puzzle-done.service';
-
-// import { SnackService } from '../utils/snack.service';
-// import { WindowReloadService } from '../utils/window-reload.service';
+import { GameStateService } from '../game-state/game-state.service';
 
 @Component({
   selector: 'app-puzzleboard',
@@ -21,7 +15,7 @@ import { PuzzlesService } from './puzzleboard.service';
   styleUrls: ['./puzzleboard.component.scss'],
   providers: [],
 })
-export class PuzzleBoardComponent implements OnInit {
+export class PuzzleBoardComponent {
   // The puzzle
   puzzleBoard: PuzzleBoard = EMPTY_PUZZLEBOARD;
   // The cells containing the word the user has requested a hint
@@ -32,38 +26,27 @@ export class PuzzleBoardComponent implements OnInit {
   selected: boolean[][] = [];
 
   constructor(
-    // private activatedRoute: ActivatedRoute,
-    private location: Location,
+    private gameStateSvc: GameStateService,
     private puzzlesSvc: PuzzlesService,
-    // private puzzleDoneService: PuzzleDoneService,
-    // private snackService: SnackService,
-    // private windowReloadService: WindowReloadService
   ) {
     this.puzzlesSvc.puzzlesBoard$.subscribe(pb => {
       this.puzzleBoard = pb;
+      this.gameStateSvc.reset(pb.puzzle.name, pb.puzzle.description, pb.wordsNotSelectedCount);
       this.clearCellsHints();
       this.clearCellsSelected();
     });
-  }
-
-  ngOnInit(): void {
-    // const puzzleBoard = <IPuzzleBoard>this.activatedRoute.snapshot.data['board'];
   }
 
   /* ------------------------- */
   /* METHODS THAT USE SERVICES */
   /* ------------------------- */
 
-  // Use puzzleDoneService to display PuzzleDoneComponent - if puzzle has been completed
   maybeCompletePuzzle(): void {
+    this.gameStateSvc.state.wordsToGo = this.puzzleBoard.wordsNotSelectedCount;
+
     if (this.puzzleBoard.wordsNotSelectedCount <= 0) {
-      //     this.puzzleDoneService.completePuzzle(this.puzzleBoard)
-      //         .subscribe(playAgain => {
-      //             if (playAgain) {
-      //                 this.windowReloadService.reload();
-      //             }
-      //         });
       console.log('Game complete.');
+      this.gameStateSvc.state.complete = true;
     }
   }
 
@@ -100,31 +83,19 @@ export class PuzzleBoardComponent implements OnInit {
   /* METHODS THAT PROVIDE BEHAVIOR */
   /* ----------------------------- */
 
-  back(): void {
-    this.location.back();
-  }
-
   // This uses async / await so that we are sure the cells have been reset
   // before allowing the view to re-render
   async showSnackAndReset(solution: WordSolution): Promise<void> {
-    // const msg = `${solution.word} : ${solution.direction} @ ${originToString(solution.origin)}`;
-    // const promise = this.snackService.open(msg, { duration: 1000 })
-    //     .afterDismissed()
-    //     .toPromise();
-
-    // await promise.then(() => {
     await setTimeout(() => {
       this.clearCellsHints();
       if (solution.selected) {
         this.setCellsForWordSelected(solution, true);
       }
     }, 1000);
-    // });
   }
 
   showHint(solution: WordSolution): void {
     if (this.numHints >= this.puzzleBoard.displayedWordSolutions.length / 3) {
-      //     this.snackService.open('Number of hints exceeded');
       console.log('Number of hints exceeded');
       return;
     }
@@ -182,7 +153,6 @@ export class PuzzleBoardComponent implements OnInit {
       solution.selected = !wasSelected;
 
       const verb = (wasSelected) ? 'unselected' : 'found';
-      // this.snackService.open(`You ${verb} ${solution.word}`, { duration: 1000 });
       console.log(`You ${verb} ${solution.word}`);
 
       this.maybeCompletePuzzle();

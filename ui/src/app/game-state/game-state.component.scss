@@ -1,0 +1,22 @@
+.state-container {
+    margin-left: 20px;
+}
+
+.state-puzzle-name::after {
+    content: " - ";
+}
+
+.state-puzzle-desc {
+    font-size: smaller;
+}
+
+.state-words-to-go {
+    font-size: smaller;
+    margin-left: 20px;
+}
+
+.state-complete {
+    color: yellow;
+    font-weight: bolder;
+    margin-left: 20px;
+}

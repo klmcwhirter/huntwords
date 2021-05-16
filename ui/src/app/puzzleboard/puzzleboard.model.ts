@@ -41,7 +41,7 @@ export class PuzzleBoard {
     }
 
     // return the number of cols into which the place words will fit given the puzzle height
-    get wordListCols() {
+    get wordListCols(): number {
         const height = this.height || 1;
         const rc = Math.ceil(this.wordsPlacedCount / height);
         return rc;

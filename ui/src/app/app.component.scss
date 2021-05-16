@@ -1,0 +1,14 @@
+.app-main {
+    display: grid;
+    grid-template: 'list board board board board';
+    grid-template-columns: repeat(5, 1fr);
+}
+
+.app-main app-puzzle-select {
+    grid-area: list;
+}
+
+
+.app-main app-puzzleboard {
+    grid-area: board;
+}

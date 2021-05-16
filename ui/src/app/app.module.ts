@@ -8,11 +8,13 @@ import { AppComponent } from './app.component';
 import { AppMaterialModule } from './app-material.module';
 import { AppRoutingModule } from './app-routing.module';
 import { PuzzleBoardComponent } from './puzzleboard/puzzleboard.component';
+import { PuzzleSelectComponent } from './puzzle-select/puzzle-select.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PuzzleBoardComponent
+    PuzzleBoardComponent,
+    PuzzleSelectComponent
   ],
   imports: [
     BrowserModule,

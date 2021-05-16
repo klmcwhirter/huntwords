@@ -1,27 +1,30 @@
 import { NgModule } from '@angular/core';
 
-import { MatCardModule } from '@angular/material/card';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatIconModule, MatIconRegistry } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
     imports: [
-        MatCardModule,
         MatGridListModule,
         MatIconModule,
         MatInputModule,
         MatListModule,
+        MatToolbarModule,
+        MatTooltipModule
     ],
     exports: [
-        MatCardModule,
         MatGridListModule,
         MatIconModule,
         MatInputModule,
-        MatListModule
+        MatListModule,
+        MatToolbarModule,
+        MatTooltipModule
     ],
     declarations: [],
-    providers: [MatIconRegistry],
+    providers: [MatIconRegistry]
 })
 export class AppMaterialModule { }

@@ -8,7 +8,7 @@ import {
   PuzzleBoard,
   WordSolution,
 } from './puzzleboard.model';
-import { PuzzleBoardService } from './puzzleboard.service';
+import { PuzzlesService } from './puzzleboard.service';
 
 // import { PuzzleDoneService } from '../puzzle-done/puzzle-done.service';
 
@@ -23,7 +23,7 @@ import { PuzzleBoardService } from './puzzleboard.service';
 })
 export class PuzzleBoardComponent implements OnInit {
   // The puzzle
-  @Input() puzzleBoard: PuzzleBoard = EMPTY_PUZZLEBOARD;
+  puzzleBoard: PuzzleBoard = EMPTY_PUZZLEBOARD;
   // The cells containing the word the user has requested a hint
   hint: boolean[][] = [];
   // The number of hints the user has requested
@@ -34,19 +34,20 @@ export class PuzzleBoardComponent implements OnInit {
   constructor(
     // private activatedRoute: ActivatedRoute,
     private location: Location,
-    private pbSvc: PuzzleBoardService,
+    private puzzlesSvc: PuzzlesService,
     // private puzzleDoneService: PuzzleDoneService,
     // private snackService: SnackService,
     // private windowReloadService: WindowReloadService
-  ) { }
-
-  ngOnInit() {
-    // const puzzleBoard = <IPuzzleBoard>this.activatedRoute.snapshot.data['board'];
-    this.pbSvc.getPuzzleBoard('Animals').subscribe(pb => {
+  ) {
+    this.puzzlesSvc.puzzlesBoard$.subscribe(pb => {
       this.puzzleBoard = pb;
       this.clearCellsHints();
       this.clearCellsSelected();
-      });
+    });
+  }
+
+  ngOnInit(): void {
+    // const puzzleBoard = <IPuzzleBoard>this.activatedRoute.snapshot.data['board'];
   }
 
   /* ------------------------- */
@@ -81,7 +82,7 @@ export class PuzzleBoardComponent implements OnInit {
     return array;
   }
 
-  clearCellsHints() {
+  clearCellsHints(): void {
     this.hint = this.clearArray();
   }
 

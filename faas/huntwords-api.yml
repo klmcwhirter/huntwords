@@ -6,18 +6,6 @@ configuration:
   copy:
   - model
 functions:
-  # puzzleboard-consumed:
-  #   lang: python3-debian
-  #   handler: ./puzzleboard-consumed
-  #   image: klmcwhirter/puzzleboard-consumed:arm32v7
-  # puzzleboard-pop:
-  #   lang: python3-debian
-  #   handler: ./puzzleboard-pop
-  #   image: klmcwhirter/puzzleboard-pop:arm32v7
-  # puzzle-updated:
-  #   lang: python3-debian
-  #   handler: ./puzzle-updated
-  #   image: klmcwhirter/puzzle-updated:arm32v7
   huntwordsapi:
     lang: python3-http
     handler: ./huntwordsapi

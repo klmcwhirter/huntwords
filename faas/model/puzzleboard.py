@@ -278,7 +278,7 @@ def clear_puzzleboards() -> None:
     '''Delete all puzzleboard lists'''
     r = redis_client()
     keys = r.keys(puzzleboard_urn('*'))
-    r.delete(keys)
+    r.delete(*keys)
 
 
 def pop_puzzleboard(name: str) -> PuzzleBoard:

@@ -274,6 +274,13 @@ def puzzleboard_urn(name: str) -> str:
     return f'puzzleboard:{name}'
 
 
+def clear_puzzleboard() -> None:
+    '''Delete all puzzleboard lists'''
+    r = redis_client()
+    keys = r.keys(puzzleboard_urn('*'))
+    r.delete(keys)
+
+
 def pop_puzzleboard(name: str) -> PuzzleBoard:
     '''Pop a board from the cache; signal consumption'''
     r = redis_client()

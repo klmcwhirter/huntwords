@@ -1,15 +1,18 @@
 '''handler for huntwords api'''
 import json
 
+
 from .handler_models import Event, Response, request_from_dict
 from .puzzle_updated import HuntwordsPuzzleUpdatedCommand
 from .puzzles import HuntwordsPuzzlesCommand
+from .puzzleboards_clear import HuntwordsPuzzleBoardClearCommand
 from .puzzleboard_consumed import HuntwordsPuzzleBoardComsumedCommand
 from .puzzleboard_pop import HuntwordsPuzzleBoardPopCommand
 
 commands = {
     'puzzle-updated': HuntwordsPuzzleUpdatedCommand,
     'puzzles': HuntwordsPuzzlesCommand,
+    'puzzleboards-clear': HuntwordsPuzzleBoardClearCommand,
     'puzzleboard-consumed': HuntwordsPuzzleBoardComsumedCommand,
     'puzzleboard-pop': HuntwordsPuzzleBoardPopCommand,
 }

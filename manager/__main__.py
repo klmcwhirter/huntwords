@@ -3,6 +3,7 @@ Usage:
     manager puzzle_load (--file <filename>) [--url <url>]
     manager puzzle_del (--name <name>) [--url <url>]
     manager puzzles [--url <url>]
+    manager puzzleboards_clear [--url <url>]
     manager puzzleboard_consume [--async-url <url>] (--name <name>) [--size <size>]
     manager puzzleboard_pop (--name <name>) [--url <url>]
 
@@ -19,13 +20,14 @@ Options:
 '''
 from docopt import docopt
 
-from .commands_puzzleboard import command_puzzleboard_consume, command_puzzleboard_pop
+from .commands_puzzleboard import command_puzzleboards_clear, command_puzzleboard_consume, command_puzzleboard_pop
 from .commands_puzzle import command_puzzle_load, command_puzzles
 
 # Command pattern
 verbs = {
     'puzzle_load': command_puzzle_load,
     'puzzles': command_puzzles,
+    'puzzleboards_clear': command_puzzleboards_clear,
     'puzzleboard_consume': command_puzzleboard_consume,
     'puzzleboard_pop': command_puzzleboard_pop
 }

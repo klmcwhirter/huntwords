@@ -5,6 +5,18 @@ from uuid import uuid4
 import requests
 
 
+def command_puzzleboards_clear(**kwargs):
+    url = kwargs['--async-url']
+    data = f'{{ "oper": "puzzleboards-clear", "body": {{"correlation-id": "{uuid4()}"}} }}'
+    print(data)
+
+    r = requests.post(url, data)
+
+    print(f'status_code={r.status_code}')
+    print(f'reason={r.reason}')
+    print(f'text={r.text}')
+
+
 def command_puzzleboard_consume(**kwargs):
     url = kwargs['--async-url']
     name = kwargs['--name']

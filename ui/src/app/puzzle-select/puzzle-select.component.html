@@ -1,9 +1,0 @@
-<div class="puzzle-list">
-    <mat-toolbar><span>Puzzle List</span></mat-toolbar>
-
-    <mat-grid-list cols="1" rowHeight="1.6em">
-        <mat-grid-tile *ngFor="let p of puzzles" class="puzzle-list-item">
-            <a (click)="onPuzzleChange(p.name)" matTooltip="{{p.description}}" matTooltipPosition="right">{{p.name}}</a>
-        </mat-grid-tile>
-    </mat-grid-list>
-</div>

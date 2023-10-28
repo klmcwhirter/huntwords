@@ -8,8 +8,8 @@ Usage:
     manager puzzleboard_pop (--name <name>) [--url <url>]
 
 Options:
-    --async-url <url>    The url to the async function endpoint [default: http://localhost:8080/async-function/huntwordsapi]
-    --url <url>          The url to the function [default: http://localhost:8080/function/huntwordsapi]
+    --async-url <url>    The url to the async function endpoint [default: http://localhost:8090/api/]
+    --url <url>          The url to the function [default: http://localhost:8090/api/]
 
     --file <filename>    The filename from which to read the words; one per line
     --name <name>        The puzzle name to give the dictionary of words

@@ -2,12 +2,12 @@
 
 cd ~/src/github.com/klmcwhirter/python-projects/huntwords
 
-source ./venv/bin/activate
+source ./.venv/bin/activate
 
-count=$(python -m manager puzzles | awk -F '=' '/^text=/ { print $2 }' | jq -c 'length')
+count=$(python -m manager puzzles | awk -F '=' '/^text=/ { print $2 }' | jq -c '.body | length')
 echo count=${count}
 
-if [ "$1" != "reload" -o ${count} -ne 4 ]
+if [ "$1" = "reload" -o ${count} -ne 4 ]
 then
     python -m manager puzzleboards_clear
 

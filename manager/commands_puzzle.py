@@ -3,7 +3,7 @@ from json import dumps, loads
 
 import requests
 
-from faas.model.puzzle import Puzzle
+from api.huntwordsapi.models.puzzle import Puzzle
 
 
 def command_puzzle_load(**kwargs):

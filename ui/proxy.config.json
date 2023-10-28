@@ -1,7 +1,0 @@
-{
-  "/huntwords/api/huntwordsapi": {
-    "target": "http://localhost:8080/function/huntwordsapi",
-    "secure": false,
-    "logLevel": "debug"
-  }
-}

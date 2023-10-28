@@ -1,0 +1,30 @@
+version: "3.8"
+
+services:
+  api:
+    build:
+      context: ./api
+    environment:
+      REDIS_HOST: redis
+      REDIS_PORT: 6379
+      APP_HOST: api
+      APP_PORT: 3000
+      APP_ROOT: /api
+    ports:
+      - 3000:3000
+  ui:
+    build:
+      context: ./ui
+    ports:
+      - 8090:80
+  redis:
+    image: redis:7-alpine
+    ports:
+      - 6379:6379
+  redis-commander:
+    image: rediscommander/redis-commander:latest
+    restart: always
+    environment:
+      - REDIS_HOSTS=local:redis:6379
+    ports:
+      - 8099:8081

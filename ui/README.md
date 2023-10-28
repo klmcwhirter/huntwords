@@ -1,27 +1,34 @@
-# Huntwords
+## Usage
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.2.10.
+Those templates dependencies are maintained via [pnpm](https://pnpm.io) via `pnpm up -Lri`.
 
-## Development server
+This is the reason you see a `pnpm-lock.yaml`. That being said, any package manager will work. This file can be safely be removed once you clone a template.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+```bash
+$ npm install # or pnpm install or yarn install
+```
 
-## Code scaffolding
+### Learn more on the [Solid Website](https://solidjs.com) and come chat with us on our [Discord](https://discord.com/invite/solidjs)
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Available Scripts
 
-## Build
+In the project directory, you can run:
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+### `npm run dev` or `npm start`
 
-## Running unit tests
+Runs the app in the development mode.<br>
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+The page will reload if you make edits.<br>
 
-## Running end-to-end tests
+### `npm run build`
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+Builds the app for production to the `dist` folder.<br>
+It correctly bundles Solid in production mode and optimizes the build for the best performance.
 
-## Further help
+The build is minified and the filenames include the hashes.<br>
+Your app is ready to be deployed!
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+## Deployment
+
+You can deploy the `dist` folder to any static host provider (netlify, surge, now, etc.)

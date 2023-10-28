@@ -1,0 +1,6 @@
+docopt
+fastapi
+jmespath
+redis
+requests
+uvicorn[standard]

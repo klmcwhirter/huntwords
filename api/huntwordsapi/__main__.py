@@ -15,7 +15,7 @@ def index(_request: Request):
 
 
 @app.post("/")
-async def get_handler(request: Request):
+async def post_handler(request: Request):
     body = await request.json()
     return handle(body)
 

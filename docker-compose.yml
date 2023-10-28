@@ -15,6 +15,10 @@ services:
   ui:
     build:
       context: ./ui
+    environment:
+      EXPOSED_API_PORT: 3000
+      EXPOSED_UI_PORT: 8090
+      EXPOSED_REDISCMD_PORT: 8099
     ports:
       - 8090:80
   redis:

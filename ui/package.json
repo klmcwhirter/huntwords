@@ -5,13 +5,15 @@
   "scripts": {
     "start": "vite",
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build --mode development",
     "serve": "vite preview"
   },
   "license": "MIT",
   "devDependencies": {
     "autoprefixer": "^10.4.14",
     "postcss": "^8.4.24",
+    "prettier": "^3.0.3",
+    "prettier-plugin-tailwindcss": "^0.5.6",
     "solid-devtools": "^0.27.3",
     "tailwindcss": "^3.3.2",
     "typescript": "^5.1.3",

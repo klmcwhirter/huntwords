@@ -1,21 +1,20 @@
 '''handler for huntwords api'''
 import json
 
-
-from .handler_models import Response, request_from_dict
 from .commands.echo import HuntwordsEchoCommand
 from .commands.puzzle_updated import HuntwordsPuzzleUpdatedCommand
-from .commands.puzzles import HuntwordsPuzzlesCommand
-from .commands.puzzleboards_clear import HuntwordsPuzzleBoardClearCommand
-from .commands.puzzleboard_consumed import HuntwordsPuzzleBoardComsumedCommand
+from .commands.puzzleboard_consumed import HuntwordsPuzzleBoardConsumedCommand
 from .commands.puzzleboard_pop import HuntwordsPuzzleBoardPopCommand
+from .commands.puzzleboards_clear import HuntwordsPuzzleBoardClearCommand
+from .commands.puzzles import HuntwordsPuzzlesCommand
+from .handler_models import Response, request_from_dict
 
 commands = {
     'echo': HuntwordsEchoCommand,
     'puzzle-updated': HuntwordsPuzzleUpdatedCommand,
     'puzzles': HuntwordsPuzzlesCommand,
     'puzzleboards-clear': HuntwordsPuzzleBoardClearCommand,
-    'puzzleboard-consumed': HuntwordsPuzzleBoardComsumedCommand,
+    'puzzleboard-consumed': HuntwordsPuzzleBoardConsumedCommand,
     'puzzleboard-pop': HuntwordsPuzzleBoardPopCommand,
 }
 

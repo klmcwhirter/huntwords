@@ -5,7 +5,7 @@ from ..models.puzzle import get_puzzle
 from ..models.puzzleboard import generate_puzzleboard, push_puzzleboard
 
 
-class HuntwordsPuzzleBoardComsumedCommand(object):
+class HuntwordsPuzzleBoardConsumedCommand(object):
     """Command class that processes puzzleboard-consumed message"""
 
     def run(self, request: Request) -> Response:

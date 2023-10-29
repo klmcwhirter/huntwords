@@ -5,7 +5,8 @@ from datetime import datetime
 import requests
 
 from ..handler_models import Request, Response
-from ..models.puzzleboard import pop_puzzleboard, PuzzleBoard
+from ..models.puzzleboard import PuzzleBoard, pop_puzzleboard
+from .puzzleboard_consumed import HuntwordsPuzzleBoardConsumedCommand
 
 
 class HuntwordsPuzzleBoardPopCommand(object):
@@ -36,8 +37,12 @@ class HuntwordsPuzzleBoardPopCommand(object):
 
 def send_consumed(pboard: PuzzleBoard):
     """Send async request to generate a new copy"""
-    url = "http://gateway.openfaas:8080/async-function/huntwordsapi"
+    req = Request("puzzleboard-consumed", {"puzzle": pboard.puzzle.name, "size": pboard.height})
+    cmd = HuntwordsPuzzleBoardConsumedCommand()
+    cmd.run(req)
 
-    data = f'{{ "oper": "puzzleboard-consumed", "body": {{ "puzzle": "{pboard.puzzle.name}", "size": {pboard.height} }} }}'
+    # url = "http://gateway.openfaas:8080/async-function/huntwordsapi"
 
-    return requests.post(url, data, {})
+    # data = f'{{ "oper": "puzzleboard-consumed", "body": {{ "puzzle": "{pboard.puzzle.name}", "size": {pboard.height} }} }}'
+
+    # return requests.post(url, data, {})

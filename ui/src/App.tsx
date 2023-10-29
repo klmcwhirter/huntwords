@@ -1,8 +1,19 @@
 import type { Component } from 'solid-js';
 
+import { GameStateProvider } from './puzzles/game.context';
+import PuzzleBoardView from './puzzles/puzzleboard';
+import PuzzlesView from './puzzles/puzzles';
+import Toolbar from './toolbar';
+
 const App: Component = () => {
   return (
-    <p class="text-4xl text-green-700 text-center py-20">Hello tailwind!</p>
+    <GameStateProvider>
+      <Toolbar />
+      <div class='w-full'>
+        <PuzzlesView />
+        <PuzzleBoardView />
+      </div>
+    </GameStateProvider>
   );
 };
 

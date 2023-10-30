@@ -40,9 +40,3 @@ def send_consumed(pboard: PuzzleBoard):
     req = Request("puzzleboard-consumed", {"puzzle": pboard.puzzle.name, "size": pboard.height})
     cmd = HuntwordsPuzzleBoardConsumedCommand()
     cmd.run(req)
-
-    # url = "http://gateway.openfaas:8080/async-function/huntwordsapi"
-
-    # data = f'{{ "oper": "puzzleboard-consumed", "body": {{ "puzzle": "{pboard.puzzle.name}", "size": {pboard.height} }} }}'
-
-    # return requests.post(url, data, {})

@@ -2,43 +2,36 @@
 
 from uuid import uuid4
 
-import requests
+from .command import command
 
 
 def command_puzzleboards_clear(**kwargs):
-    url = kwargs['--async-url']
-    data = f'{{ "oper": "puzzleboards-clear", "body": {{"correlation-id": "{uuid4()}"}} }}'
-    print(data)
+    url = kwargs['--url']
+    body = f'{{ "oper": "puzzleboards-clear", "body": {{"correlation-id": "{uuid4()}"}} }}'
 
-    r = requests.post(url, data)
-
-    print(f'status_code={r.status_code}')
-    print(f'reason={r.reason}')
-    print(f'text={r.text}')
+    command('command_puzzleboards_clear', url, body)
 
 
 def command_puzzleboard_consume(**kwargs):
-    url = kwargs['--async-url']
+    url = kwargs['--url']
     name = kwargs['--name']
     size = kwargs['--size']
-    data = f'{{ "oper": "puzzleboard-consumed", "body": {{"puzzle": "{name}", "size": {size}, "correlation-id": "{uuid4()}"}} }}'
-    print(data)
+    body = f'{{ "oper": "puzzleboard-consumed", "body": {{"puzzle": "{name}", "size": {size}, "correlation-id": "{uuid4()}"}} }}'
 
-    r = requests.post(url, data)
+    command('command_puzzleboard_consume', url, body)
 
-    print(f'status_code={r.status_code}')
-    print(f'reason={r.reason}')
-    print(f'text={r.text}')
+
+def command_puzzleboard_count(**kwargs):
+    url = kwargs['--url']
+    name = kwargs['--name']
+    body = f'{{ "oper": "puzzleboard-count", "body": {{"puzzle": "{name}", "correlation-id": "{uuid4()}"}} }}'
+
+    command('command_puzzleboard_count', url, body)
 
 
 def command_puzzleboard_pop(**kwargs):
     url = kwargs['--url']
     name = kwargs['--name']
-    data = f'{{ "oper": "puzzleboard-pop", "body": {{"puzzle": "{name}", "correlation-id": "{uuid4()}"}} }}'
-    print(data)
+    body = f'{{ "oper": "puzzleboard-pop", "body": {{"puzzle": "{name}", "correlation-id": "{uuid4()}"}} }}'
 
-    r = requests.post(url, data)
-
-    print(f'status_code={r.status_code}')
-    print(f'reason={r.reason}')
-    print(f'text={r.text}')
+    command('command_puzzleboard_pop', url, body)

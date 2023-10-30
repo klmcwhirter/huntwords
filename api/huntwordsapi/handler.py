@@ -4,6 +4,7 @@ import json
 from .commands.echo import HuntwordsEchoCommand
 from .commands.puzzle_updated import HuntwordsPuzzleUpdatedCommand
 from .commands.puzzleboard_consumed import HuntwordsPuzzleBoardConsumedCommand
+from .commands.puzzleboard_count import HuntwordsPuzzleBoardCountCommand
 from .commands.puzzleboard_pop import HuntwordsPuzzleBoardPopCommand
 from .commands.puzzleboards_clear import HuntwordsPuzzleBoardClearCommand
 from .commands.puzzles import HuntwordsPuzzlesCommand
@@ -15,6 +16,7 @@ commands = {
     'puzzles': HuntwordsPuzzlesCommand,
     'puzzleboards-clear': HuntwordsPuzzleBoardClearCommand,
     'puzzleboard-consumed': HuntwordsPuzzleBoardConsumedCommand,
+    'puzzleboard-count': HuntwordsPuzzleBoardCountCommand,
     'puzzleboard-pop': HuntwordsPuzzleBoardPopCommand,
 }
 

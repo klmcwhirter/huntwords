@@ -1,6 +1,14 @@
 #!/bin/bash
 
+DIR=$(dirname $0)
+
 cd ~/src/github.com/klmcwhirter/python-projects/huntwords
+
+if [ ! -d .venv ]
+then
+    echo 'Recreating .venv ...'
+    ./create_venv >/dev/null
+fi
 
 source ./.venv/bin/activate
 
@@ -13,5 +21,5 @@ then
 
     python -m manager puzzle_load --file ./files/puzzles-all.json
 
-    for p in Animals Bible Flowers Fruit;do for ct in 1 2 3 4 5;do python -m manager puzzleboard_consume --name $p;sleep 2;done;done
+    ${DIR}/refresh_puzzleboards.sh
 fi

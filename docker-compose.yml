@@ -1,4 +1,4 @@
-version: "3.8"
+version: '3.8'
 
 services:
   api:
@@ -12,6 +12,10 @@ services:
       APP_ROOT: /api
     ports:
       - 3000:3000
+    restart: always
+    networks:
+      - backend
+
   ui:
     build:
       context: ./ui
@@ -21,14 +25,30 @@ services:
       EXPOSED_REDISCMD_PORT: 8099
     ports:
       - 8090:80
+    restart: always
+    networks:
+      - frontend
+      - backend
+
   redis:
     image: redis:7-alpine
     ports:
       - 6379:6379
+    restart: always
+    networks:
+      - backend
+
   redis-commander:
     image: rediscommander/redis-commander:latest
-    restart: always
     environment:
       - REDIS_HOSTS=local:redis:6379
     ports:
       - 8099:8081
+    restart: always
+    networks:
+      - frontend
+      - backend
+
+networks:
+  frontend:
+  backend:

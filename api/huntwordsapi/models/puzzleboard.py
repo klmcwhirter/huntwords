@@ -6,7 +6,6 @@ import string
 from .puzzle import Puzzle, puzzle_from_dict
 from .redis import redis_client
 
-
 config = {
     'retries': 2048,
     'diagonal_ratio': 0.095,
@@ -281,6 +280,13 @@ def clear_puzzleboards() -> None:
     r = redis_client()
     keys = r.keys(puzzleboard_urn('*'))
     r.delete(*keys)
+
+
+def count_puzzleboard(name: str) -> int:
+    '''Delete all puzzleboard lists'''
+    r = redis_client()
+    llen = r.llen(puzzleboard_urn(name))
+    return llen
 
 
 def pop_puzzleboard(name: str) -> PuzzleBoard:

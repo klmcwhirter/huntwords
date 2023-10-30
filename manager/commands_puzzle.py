@@ -1,9 +1,9 @@
 ''' commands that work with redis '''
 from json import dumps, loads
 
-import requests
-
 from api.huntwordsapi.models.puzzle import Puzzle
+
+from .command import command
 
 
 def command_puzzle_load(**kwargs):
@@ -21,21 +21,12 @@ def command_puzzle_load(**kwargs):
         dpuzzle = dict(puzzle)
         jpuzzle = dumps(dpuzzle)
 
-        data = f'{{ "oper": "puzzle-updated", "body": {jpuzzle} }}'
-        print(f'calling {url} with:')
-        print(data)
-        r = requests.post(url, data)
+        body = f'{{ "oper": "puzzle-updated", "body": {jpuzzle} }}'
 
-        print(f'status_code={r.status_code}')
-        print(f'reason={r.reason}')
-        print(f'text={r.text}')
+        command('command_puzzle_load', url, body)
 
 
 def command_puzzles(**kwargs):
     url = kwargs['--url']
-
-    r = requests.post(url, '{ "oper": "puzzles", "body": {} }')
-
-    print(f'status_code={r.status_code}')
-    print(f'reason={r.reason}')
-    print(f'text={r.text}')
+    body = '{ "oper": "puzzles", "body": {} }'
+    command('command_puzzles', url, body)

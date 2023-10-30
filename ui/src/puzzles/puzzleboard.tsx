@@ -1,15 +1,11 @@
-import { Show } from 'solid-js';
-import { Game, useGame } from './game.context';
+import BoardSummary from './boardsummary';
+import BoardCellsView from './boardcells';
 
 const PuzzleBoardView = (props) => {
-  const game: Game = useGame();
-
   return (
-    <div class='mt-0 inline-block h-fit w-4/5 bg-blue-200 p-2 align-top '>
-      PuzzleBoard
-      <Show when={game.puzzleBoard()}>
-        <span class='p-2'>{game.puzzleBoard().puzzle.name}</span>
-      </Show>
+    <div class='mt-0 grid h-[94vh] grow grid-cols-3 gap-4 bg-blue-200 p-2 p-2 align-top'>
+      <BoardCellsView />
+      <BoardSummary />
     </div>
   );
 };

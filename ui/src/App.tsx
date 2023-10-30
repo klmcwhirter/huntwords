@@ -9,7 +9,7 @@ const App: Component = () => {
   return (
     <GameStateProvider>
       <Toolbar />
-      <div class='w-full'>
+      <div class='flex w-full gap-0'>
         <PuzzlesView />
         <PuzzleBoardView />
       </div>

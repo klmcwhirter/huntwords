@@ -3,9 +3,3 @@
 @tailwind components;
 
 @tailwind utilities;
-
-@layer components {
-  button {
-    @apply m-2 rounded-lg bg-slate-400 p-2 ring-1 ring-slate-300 hover:scale-125 hover:bg-slate-300 hover:ring-slate-200;
-  }
-}

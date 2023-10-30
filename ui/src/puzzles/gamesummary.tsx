@@ -5,19 +5,14 @@ const GameSummary = (props) => {
   const game = useGame();
 
   return (
-    <Show when={game.puzzleBoard()?.puzzle?.name}>
-      <div class='ml-20 inline-block text-green-100'>
-        <span class='text-lg'>{game.puzzleBoard().puzzle.name}</span>
-
-        <Show when={game.puzzleBoard().puzzle.description}>
-          <span class='text-base'>
-            {' '}
-            - {game.puzzleBoard().puzzle.description}
-          </span>
-        </Show>
-
-        <span class='ml-20 text-lg text-blue-200'>
-          {game.puzzleBoard().wordsToGo} words to go
+    <Show when={game.puzzleBoard()}>
+      <div class='inline-block text-emerald-100'>
+        <span class='ml-20 text-2xl font-bold text-blue-100'>
+          {game.puzzleBoard().wordsNotSelectedCount}
+        </span>
+        <span class='text-lg text-blue-200'>
+          {' / '}
+          {game.puzzleBoard().wordsPlacedCount} words to go
         </span>
 
         <Show when={game.puzzleBoard().completed}>

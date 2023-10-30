@@ -14,11 +14,13 @@ export const fetchPuzzles = async (): Promise<Puzzle[]> => {
       mode: 'same-origin',
     })
   ).json();
-  let puzzles;
+  let puzzles: Puzzle[];
   await resp.then((r) => {
     // console.log("in puzzles promise: ", r);
     puzzles = r.body;
   });
+  puzzles = puzzles.map((p) => new Puzzle(p)).toSorted(Puzzle.sort_array);
+
   return puzzles;
 };
 
@@ -48,7 +50,6 @@ export const fetchPuzzleBoard = async (
   await resp.then((r) => {
     // console.log("in puzzleboard promise: ", r);
     board = new PuzzleBoard(r.body.puzzleboard);
-    board.wordsToGo = board.puzzle.words.length;
   });
   return board;
 };

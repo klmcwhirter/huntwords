@@ -32,7 +32,9 @@ URL|What
 `docker-compose up`
 
 In another shell:
-`./etc/load_puzzles.sh`
+`./etc/refresh_puzzleboards.sh`
+
+refresh_puzzleboards.sh is designed to be able to scheduled via cron. This may be needed in case of regular power failures. Ask me how I know ...
 
 ## Raspberry Pi
 

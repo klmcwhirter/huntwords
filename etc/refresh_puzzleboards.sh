@@ -10,6 +10,16 @@ fi
 
 source ./.venv/bin/activate
 
+count=$(python -m manager puzzles | awk -F '=' '/^text=/ { print $2 }' | jq -c '.body | length')
+echo count=${count}
+
+if [ ${count} -lt 4 ]
+then
+    python -m manager puzzleboards_clear
+
+    python -m manager puzzle_load --file ./files/puzzles-all.json
+fi
+
 MIN_PBS=5
 for p in Animals Bible Flowers Fruit
 do

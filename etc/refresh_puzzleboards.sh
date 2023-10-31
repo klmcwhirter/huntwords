@@ -20,7 +20,7 @@ then
     python -m manager puzzle_load --file ./files/puzzles-all.json
 fi
 
-if [ $1 = 'reload' ]
+if [ "$1" = 'reload' ]
 then
     echo python -m manager puzzleboards_clear
     python -m manager puzzleboards_clear

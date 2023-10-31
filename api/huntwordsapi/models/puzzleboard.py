@@ -2,15 +2,16 @@
 import json
 import random
 import string
+from typing import Self
 
 from .puzzle import Puzzle, puzzle_from_dict
 from .redis import redis_client
 
 config = {
     'retries': 2048,
-    'diagonal_ratio': 0.095,
+    'diagonal_ratio': 0.098,
     'random_factor': 32,
-    'word_density': 0.6
+    'word_density': 0.75
 }
 
 
@@ -24,10 +25,16 @@ class Point:
     def __eq__(self, other):
         return self.x == other.x and self.y == other.y
 
+    def __hash__(self) -> int:
+        return hash(self.x) ^ hash(self.y)
+
     def __iter__(self):
         ''' make class iterable so that transformation is easier via dict protocol '''
         yield 'x', self.x
         yield 'y', self.y
+
+    def __repr__(self) -> str:
+        return f'Point(x={self.x}, y={self.y})'
 
 
 def point_from_dict(d: dict) -> Point:
@@ -93,6 +100,21 @@ class WordSolution:
         '''Supports sorting by word'''
         return self.word < other.word
 
+    def __repr__(self: Self) -> str:
+        return f'WordSolution(word=\'{self.word}\', placed={self.placed}, origin={self.origin}, direction={self.direction}, points={self.points})'
+
+    def overlaps(self: Self, solutions: list[Self]) -> bool:
+        '''Detects whether this proposed solution overlaps completely with sny other - say APPLE and PINEAPPLE'''
+        points_set = set(self.points)
+
+        rc = False
+        for ws in solutions:
+            sol_points_set = set(ws.points)
+            rc = len(points_set.intersection(sol_points_set)) == len(points_set)
+            if rc:
+                break
+        return rc
+
 
 def wordsolution_from_dict(d: dict) -> WordSolution:
     return WordSolution(
@@ -107,9 +129,9 @@ def wordsolution_from_dict(d: dict) -> WordSolution:
 class PuzzleBoard:
     def __init__(self,
                  height: int, width: int,
-                 letters: list[str] = None,
+                 letters: list[list[str | None]] = None,
                  solutions: list[WordSolution] = None,
-                 puzzle: Puzzle = None):
+                 puzzle: Puzzle | None = None):
         self.height = height
         self.width = width
 
@@ -131,7 +153,7 @@ class PuzzleBoard:
         yield 'width', self.width
         yield 'letters', self.letters
         yield 'solutions', [dict(s) for s in self.solutions]
-        yield 'puzzle', dict(self.puzzle)
+        yield 'puzzle', dict(self.puzzle) if self.puzzle else dict()
 
     def fill_with_random_letters(self):
         '''Fills all empty cells on the board with random upper case letters'''
@@ -172,7 +194,7 @@ class PuzzleBoard:
 
         return value is None or value == letter
 
-    def try_place_word(self, word: int, origin: Point, direction: str) -> WordSolution:
+    def try_place_word(self, word: str, origin: Point, direction: str) -> WordSolution | None:
         '''tests if word can be placed on the board, and if so returns WordSolution'''
         solution = None
 
@@ -240,7 +262,8 @@ def generate_puzzleboard(height: int, width: int, puzzle: Puzzle) -> PuzzleBoard
                 direction = random.choice(list(direction_offsets.keys()))
 
                 solution = pboard.try_place_word(word, origin, direction)
-                if solution:
+                # if solution:
+                if solution and not solution.overlaps(pboard.solutions):
                     pboard.place(solution)
                     break
 

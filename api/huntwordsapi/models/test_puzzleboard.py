@@ -3,7 +3,8 @@ from itertools import islice
 import pytest
 
 from .puzzle import Puzzle
-from .puzzleboard import is_direction, puzzleboard_urn, Point, PuzzleBoard, WordSolution
+from .puzzleboard import (Point, PuzzleBoard, WordSolution, is_direction,
+                          puzzleboard_urn)
 
 WORD = 'WORD'
 
@@ -49,7 +50,7 @@ def test_puzzleboard_can_contruct_with_defaults():
 def test_puzzleboard_can_contruct_with_letters():
     height = 14
     width = 15
-    letters = [['X'] * width] * height
+    letters: list[list[str | None]] = [['X'] * width] * height
 
     p = PuzzleBoard(height, width, letters=letters)
     assert p is not None
@@ -91,9 +92,9 @@ def test_has_density_is_False_if_no_solutions(test_puzzleboard):
 
 
 def test_has_density_is_False_if_just_shy(test_puzzleboard):
-    ''' Note: word letter count / total grid letter count >= 0.6
+    ''' Note: word letter count / total grid letter count >= 0.75
     10x10 == 100
-    100 * 0.6 = 60 - so 59 should give False
+    100 * 0.75 = 75 - so 74 should give False
     '''
     test_puzzleboard.solutions = [WordSolution('X' * 59)]
     assert not test_puzzleboard.has_density()
@@ -102,7 +103,7 @@ def test_has_density_is_False_if_just_shy(test_puzzleboard):
 def test_has_density_is_False_if_just_shy_as_sum(test_puzzleboard):
     ''' Note: word letter count / total grid letter count >= 0.6
     10x10 == 100
-    100 * 0.6 = 60 - so 59 should give False
+    100 * 0.6 = 75 - so 59 should give False
     '''
     test_puzzleboard.solutions = [
         WordSolution('X' * 20),
@@ -113,23 +114,24 @@ def test_has_density_is_False_if_just_shy_as_sum(test_puzzleboard):
 
 
 def test_has_density_is_True_if_equal(test_puzzleboard):
-    ''' Note: word letter count / total grid letter count >= 0.6
+    ''' Note: word letter count / total grid letter count >= 0.75
     10x10 == 100
-    100 * 0.6 = 60 - so 60 should give True
+    100 * 0.75 = 75 - so 75 should give True
     '''
-    test_puzzleboard.solutions = [WordSolution('X' * 60)]
+    test_puzzleboard.solutions = [WordSolution('X' * 75)]
     assert test_puzzleboard.has_density()
 
 
 def test_has_density_is_True_if_equal_as_sum(test_puzzleboard):
-    ''' Note: word letter count / total grid letter count >= 0.6
+    ''' Note: word letter count / total grid letter count >= 0.75
     10x10 == 100
-    100 * 0.6 = 60 - so 60 should give True
+    100 * 0.75 = 75 - so 75 should give True
     '''
     test_puzzleboard.solutions = [
         WordSolution('X' * 15),
         WordSolution('X' * 25),
-        WordSolution('X' * 20)
+        WordSolution('X' * 20),
+        WordSolution('X' * 15)
     ]
     assert test_puzzleboard.has_density()
 

@@ -31,11 +31,20 @@ for p in Animals Bible Flowers Fruit
 do
     count=$(python -m manager puzzleboard_count --name $p | awk -F '=' '/^text=/ { print $2 }' | jq -c '.body.count')
     need=$((MIN_PBS - count))
-    echo $p count=${count}, need=${need}
+    over=$((count - MIN_PBS))
+    echo $p count=${count}, need=${need}, over=${over}
+
     while [ $need -gt 0 ]
     do
         echo python -m manager puzzleboard_consume --name $p
         python -m manager puzzleboard_consume --name $p
         ((need -= 1))
+    done
+
+    while [ $over -gt 0 ]
+    do
+        echo python -m manager puzzleboard_pop --name $p
+        python -m manager puzzleboard_pop --name $p
+        ((over -= 1))
     done
 done

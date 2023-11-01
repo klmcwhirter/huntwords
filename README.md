@@ -45,7 +45,7 @@ To get support for linux-arm64 the image must be created from source.
 Do the following:
 
 1. clone https://github.com/joeferner/redis-commander.git
-1. From the root dir of the repo: `docker buuld -t rediscommander/redis-commander .`
+1. From the root dir of the repo: `docker build -t rediscommander/redis-commander .`
 
 This will register the image locally. From there repeat the steps in the Running section above.
 

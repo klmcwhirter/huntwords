@@ -5,8 +5,7 @@ from datetime import datetime
 import requests
 
 from ..handler_models import Request, Response
-from ..models.puzzleboard import PuzzleBoard, pop_puzzleboard
-from .puzzleboard_consumed import HuntwordsPuzzleBoardConsumedCommand
+from ..models.puzzleboard import pop_puzzleboard
 
 
 class HuntwordsPuzzleBoardPopCommand(object):
@@ -29,14 +28,4 @@ class HuntwordsPuzzleBoardPopCommand(object):
             },
         }
 
-        rc = send_consumed(pboard)
-        logging.info(rc)
-
         return Response(200, resp, {})
-
-
-def send_consumed(pboard: PuzzleBoard):
-    """Send async request to generate a new copy"""
-    req = Request("puzzleboard-consumed", {"puzzle": pboard.puzzle.name, "size": pboard.height})
-    cmd = HuntwordsPuzzleBoardConsumedCommand()
-    cmd.run(req)

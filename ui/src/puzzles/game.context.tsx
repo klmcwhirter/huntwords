@@ -9,7 +9,11 @@ import {
   useContext,
 } from 'solid-js';
 import { Puzzle, PuzzleBoard, WordSolution } from './puzzle.model';
-import { fetchPuzzleBoard, fetchPuzzles } from './puzzles.service';
+import {
+  consumePuzzleBoard,
+  fetchPuzzleBoard,
+  fetchPuzzles,
+} from './puzzles.service';
 
 export class Game {
   static MAX_HINTS = 5;
@@ -38,6 +42,7 @@ export const GameStateProvider = (props) => {
       initialValue: null,
     },
   );
+  const [_consumed] = createResource(puzzleBoard, consumePuzzleBoard);
 
   const game = new Game(
     puzzles,

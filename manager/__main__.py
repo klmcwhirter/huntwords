@@ -3,12 +3,13 @@ Usage:
     manager puzzle_load (--file <filename>) [--url <url>]
     manager puzzles [--url <url>]
     manager puzzleboards_clear [--url <url>]
-    manager puzzleboard_consume [--url <url>] (--name <name>) [--size <size>]
+    manager puzzleboard_consume [--async-url <url>] (--name <name>) [--size <size>]
     manager puzzleboard_count [--url <url>] (--name <name>)
     manager puzzleboard_pop (--name <name>) [--url <url>]
 
 Options:
     --url <url>          The url to the function [default: http://localhost:8090/api/]
+    --async-url <url>    The url to the function [default: http://localhost:8090/api/async/]
 
     --file <filename>    The filename from which to read the words; one per line
     --name <name>        The puzzle name on which to operate

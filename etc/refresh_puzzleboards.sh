@@ -36,8 +36,6 @@ do
     do
         echo python -m manager puzzleboard_consume --name $p
         python -m manager puzzleboard_consume --name $p
-
-        count=$(python -m manager puzzleboard_count --name $p | awk -F '=' '/^text=/ { print $2 }' | jq -c '.body.count')
-        need=$((MIN_PBS - count))
+        ((need -= 1))
     done
 done

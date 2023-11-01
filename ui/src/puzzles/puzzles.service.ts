@@ -27,7 +27,7 @@ export const fetchPuzzles = async (): Promise<Puzzle[]> => {
 export const fetchPuzzleBoard = async (
   puzzleName: string,
 ): Promise<PuzzleBoard> => {
-  //   console.log("fetchPuzzleBoard: puzzleName: ", puzzleName);
+  // console.log('fetchPuzzleBoard: puzzleName: ', puzzleName);
   if (!puzzleName) {
     return null;
   }
@@ -48,8 +48,35 @@ export const fetchPuzzleBoard = async (
   ).json();
   let board: PuzzleBoard;
   await resp.then((r) => {
-    // console.log("in puzzleboard promise: ", r);
+    // console.log('in fetchPuzzleBoard promise: ', r);
     board = new PuzzleBoard(r.body.puzzleboard);
   });
   return board;
+};
+
+export const consumePuzzleBoard = async (
+  puzzleboard: PuzzleBoard,
+): Promise<void> => {
+  const puzzleName = puzzleboard?.puzzle?.name;
+
+  // console.log('consumePuzzleBoard: puzzleName: ', puzzleName);
+
+  if (!puzzleName) {
+    return null;
+  }
+
+  const resp = await fetch(api_url + 'async/', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      oper: 'puzzleboard-consumed',
+      body: { puzzle: puzzleName, size: puzzleboard.height },
+    }),
+    cache: 'no-cache',
+    mode: 'same-origin',
+    redirect: 'follow',
+  });
+  // console.log('in consumePuzzleBoard: resp=', resp);
 };

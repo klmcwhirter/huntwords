@@ -13,7 +13,7 @@ def command_puzzleboards_clear(**kwargs):
 
 
 def command_puzzleboard_consume(**kwargs):
-    url = kwargs['--url']
+    url = kwargs['--async-url']
     name = kwargs['--name']
     size = kwargs['--size']
     body = f'{{ "oper": "puzzleboard-consumed", "body": {{"puzzle": "{name}", "size": {size}, "correlation-id": "{uuid4()}"}} }}'

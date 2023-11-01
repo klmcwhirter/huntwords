@@ -1,6 +1,7 @@
 import os
-from fastapi import FastAPI, Request
+from http import HTTPStatus
 
+from fastapi import BackgroundTasks, FastAPI, Request, Response
 from uvicorn import run
 
 from .handler import handle
@@ -18,6 +19,13 @@ def index(_request: Request):
 async def post_handler(request: Request):
     body = await request.json()
     return handle(body)
+
+
+@app.post("/async")
+async def post_handler_async(request: Request, bg_tasks: BackgroundTasks):
+    body = await request.json()
+    bg_tasks.add_task(handle, body)
+    return Response(status_code=HTTPStatus.ACCEPTED)
 
 
 if __name__ == '__main__':

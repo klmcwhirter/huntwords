@@ -22,10 +22,10 @@ ui_1               | EXPOSED_REDISCMD_PORT: 8099
 
 Visit the following urls as mentioned in the output above.
 
-URL|What
----|----
-[http://host:8090/](http://host:8090/)|Hunt Words UI
-[http://host:8099/](http://host:8099/)|Redis Commander
+| URL                                    | What            |
+| -------------------------------------- | --------------- |
+| [http://host:8090/](http://host:8090/) | Hunt Words UI   |
+| [http://host:8099/](http://host:8099/) | Redis Commander |
 
 ## Running
 
@@ -34,7 +34,7 @@ URL|What
 In another shell:
 `./etc/refresh_puzzleboards.sh`
 
-refresh_puzzleboards.sh is designed to be able to scheduled via cron. This may be needed in case of regular power failures. Ask me how I know ...
+refresh_puzzleboards.sh is designed to be able to be scheduled via cron. This may be needed in case of regular power failures. Ask me how I know ...
 
 ## Raspberry Pi
 

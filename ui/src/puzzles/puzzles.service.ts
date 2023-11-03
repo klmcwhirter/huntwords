@@ -1,6 +1,7 @@
 import { Puzzle, PuzzleBoard } from './puzzle.model';
 
 const api_url = `${document.location.origin}/api/`;
+const isChromeOS = /\bCrOS\b/.test(navigator.userAgent);
 
 export const fetchPuzzles = async (): Promise<Puzzle[]> => {
   const resp = (
@@ -76,7 +77,8 @@ export const consumePuzzleBoard = async (
     }),
     cache: 'no-cache',
     mode: 'same-origin',
-    redirect: 'follow',
+    // Note on ChromeOS 'follow' seems to effect wifi connectivity for some reason.
+    redirect: isChromeOS ? 'manual' : 'follow',
   });
   // console.log('in consumePuzzleBoard: resp=', resp);
 };

@@ -16,7 +16,7 @@ const PuzzlesView = (props) => {
             <li class='p-2'>
               <a
                 class='p-2 text-lg text-blue-700
-                hover:rounded-lg hover:bg-emerald-500 hover:font-semibold hover:text-white'
+                hover:rounded-lg hover:bg-emerald-500 hover:font-semibold hover:text-white hover:cursor-pointer'
                 classList={{
                   'rounded-lg bg-emerald-500 font-semibold text-white':
                     game.puzzleName() === p.name,

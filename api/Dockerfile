@@ -1,26 +1,39 @@
-FROM python:3.12-alpine
 
-RUN apk upgrade --no-cache
+ARG PYTHON_BASE=3.12-alpine
+
+FROM python:$PYTHON_BASE
 
 # Add non root user
 RUN addgroup -S app && adduser app -S -G app
 
 USER app:app
 
+WORKDIR /app
+
 ENV PATH=$PATH:/home/app/.local/bin
 
-WORKDIR /
-COPY --chown=app:app ./huntwordsapi /huntwordsapi
-COPY --chown=app:app ./requirements* ./
+# install PDM
+RUN pip install -U pdm
 
-RUN python -m pip install --upgrade pip wheel && \
-pip install -r requirements.txt && \
-pip install pytest && \
-pytest huntwordsapi
+# disable update check
+ENV PDM_CHECK_UPDATE=false
 
-RUN pip uninstall -y pytest && rm -fr /.pytest_cache
+# copy files
+COPY  --chown=app:app huntwordsapi/ /app/huntwordsapi/
+COPY  --chown=app:app pyproject.toml pdm.lock /app/
+
+# install project dependencies, run tests, clean up
+RUN <<EOF
+pdm install --check --no-editable
+
+pdm run pytest
+
+pdm cache clear
+
+pdm run python -m ensurepip --default-pip
+pip cache purge
+EOF
 
 EXPOSE 3000
 
-CMD ["python", "-m", "huntwordsapi"]
-
+CMD ["pdm", "run", "start"]

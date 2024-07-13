@@ -27,7 +27,8 @@ then
 fi
 
 MIN_PBS=5
-for p in Animals Bible Flowers Fruit
+puzzles=$(python -m manager puzzles | awk -F '=' '/^text=/ { print $2 }' | jq -cr .body[].name | sort)
+for p in ${puzzles}
 do
     count=$(python -m manager puzzleboard_count --name $p | awk -F '=' '/^text=/ { print $2 }' | jq -c '.body.count')
     need=$((MIN_PBS - count))

@@ -6,7 +6,7 @@ Hunt for words in a grid
 
 ## Usage
 
-Just docker-compose. Upon startup the ui component will display the ports exposed.
+Run `docker compose up` or `pdm run up`. Upon startup the ui component will display the ports exposed.
 
 ```
 ui_1               | -- ------------------------------------------------------------
@@ -29,24 +29,15 @@ Visit the following urls as mentioned in the output above.
 
 ## Running
 
-`docker-compose up`
+`docker compose up` or `pdm run up`
 
 In another shell:
-`./etc/refresh_puzzleboards.sh`
+`./etc/refresh_puzzleboards.sh` or `pdm run refresh`
 
-refresh_puzzleboards.sh is designed to be able to be scheduled via cron. This may be needed in case of regular power failures. Ask me how I know ...
+> refresh_puzzleboards.sh is designed to be able to be scheduled via cron. This may be needed in case of regular power failures. Ask me how I know ...
 
 ## Raspberry Pi
 
-The image for redis-commander on Docker Hub only supports amd64.
+The image for redis-commander on ghcr.io now supports linux/amd64, linux/arm/v7, and linux/arm64.
 
-To get support for linux-arm64 the image must be created from source.
-
-Do the following:
-
-1. clone https://github.com/joeferner/redis-commander.git
-1. From the root dir of the repo: `docker build -t rediscommander/redis-commander .`
-
-This will register the image locally. From there repeat the steps in the Running section above.
-
-Voila!
+It is no longer needed to be created from source.

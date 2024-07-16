@@ -33,8 +33,7 @@ if __name__ == '__main__':
     port_str = os.environ['APP_PORT'] if 'APP_PORT' in os.environ else '3000'
     port = int(port_str)
     root_path = os.environ['APP_ROOT'] if 'APP_ROOT' in os.environ else 'api'
-    workers = os.cpu_count() - 1
 
     print(f'Running on {host}:{port} with root_path={root_path}')
 
-    uvicorn.run(app, host=host, port=port, workers=workers, proxy_headers=True, root_path=root_path)
+    uvicorn.run(app, host=host, port=port, proxy_headers=True, root_path=root_path)

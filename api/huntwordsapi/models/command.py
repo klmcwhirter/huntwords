@@ -5,7 +5,7 @@ from typing import Any
 
 
 @dataclass
-class Request:
+class CommandRequest:
     oper: str
     body: dict
 
@@ -14,15 +14,18 @@ class Request:
         yield 'body', self.body
 
 
-def request_from_dict(d: dict) -> Request:
-    return Request(
+def request_from_dict(d: dict) -> CommandRequest:
+    if 'oper' not in d or 'body' not in d:
+        return CommandRequest('invalid oper', {})
+
+    return CommandRequest(
         d['oper'],
         d['body']
     )
 
 
 @dataclass
-class Response:
+class CommandResponse:
     statusCode: int
     body: Any
     headers: dict

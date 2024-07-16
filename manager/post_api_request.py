@@ -1,7 +1,7 @@
 import requests
 
 
-def command(cmd: str, url: str, body: str):
+def post_api_request(cmd: str, url: str, body: str):
     print(f'cmd={cmd}, url={url}, body={body}')
 
     r = requests.post(url, body)

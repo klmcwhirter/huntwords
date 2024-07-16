@@ -23,7 +23,7 @@ distribution = false
 dev = ["autopep8>=2.1.0", "pytest>=8.1.1", "pytest-cov>=5.0.0"]
 
 [tool.pdm.scripts]
-create.shell = "pdm venv remove -y in-project; pdm install --check  --prod --no-editable"
+create.shell = "pdm venv remove -y in-project; pdm install --check --no-editable"
 clean.shell = "find . -type d -name __pycache__ -exec rm -fr {} \\;;for d in ${TO_DEL};do echo $d;rm -fr $d;done"
 clean.env = { TO_DEL = "build .coverage coverage.xml log .mypy_cache .pdm-build __pycache__ .pytest_cache src/qwirkle.egg-info .tox dist src/build" }
 clean.help = "Clean environment"

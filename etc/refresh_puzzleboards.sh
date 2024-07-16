@@ -5,7 +5,7 @@ cd ~/src/github.com/klmcwhirter/python-projects/huntwords
 if [ ! -d .venv ]
 then
     echo 'Recreating .venv ...'
-    ./create_venv >/dev/null
+    pdm run create
 fi
 
 source ./.venv/bin/activate

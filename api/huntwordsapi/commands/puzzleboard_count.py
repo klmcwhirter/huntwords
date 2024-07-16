@@ -1,7 +1,7 @@
 import logging
 import sys
 
-from ..handler_models import Request, Response
+from ..models.command import CommandRequest, CommandResponse
 from ..models.puzzleboard import count_puzzleboard
 
 
@@ -11,7 +11,7 @@ class HuntwordsPuzzleBoardCountCommand(object):
     def __init__(self):
         logging.basicConfig(stream=sys.stderr)
 
-    def run(self, request: Request) -> Response:
+    def run(self, request: CommandRequest) -> CommandResponse:
         """Command that processes puzzleboard-count message"""
 
         req = request.body
@@ -23,4 +23,4 @@ class HuntwordsPuzzleBoardCountCommand(object):
             "count": llen
         }
 
-        return Response(200, resp, {})
+        return CommandResponse(200, resp, {})

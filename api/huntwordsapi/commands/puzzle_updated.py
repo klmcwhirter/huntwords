@@ -1,12 +1,12 @@
 
-from ..handler_models import Request, Response
-from ..models.puzzle import set_puzzle, Puzzle
+from ..models.command import CommandRequest, CommandResponse
+from ..models.puzzle import Puzzle, set_puzzle
 
 
 class HuntwordsPuzzleUpdatedCommand(object):
     """Command class that processes puzzle-updated message"""
 
-    def run(self, request: Request):
+    def run(self, request: CommandRequest):
         """Command that processes puzzle-updated message"""
 
         obj = request.body
@@ -15,4 +15,4 @@ class HuntwordsPuzzleUpdatedCommand(object):
 
         set_puzzle(puzzle.name, puzzle)
 
-        return Response(200, jpuzzle, {})
+        return CommandResponse(200, jpuzzle, {})

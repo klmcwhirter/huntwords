@@ -1,13 +1,13 @@
 from datetime import datetime
 
-from ..handler_models import Request, Response
+from ..models.command import CommandRequest, CommandResponse
 from ..models.puzzleboard import clear_puzzleboards
 
 
 class HuntwordsPuzzleBoardClearCommand(object):
     """Command class that processes puzzleboards-clear message"""
 
-    def run(self, request: Request) -> Response:
+    def run(self, request: CommandRequest) -> CommandResponse:
         """Command that processes puzzleboards-clear message"""
 
         resp = request.body
@@ -18,4 +18,4 @@ class HuntwordsPuzzleBoardClearCommand(object):
             "at": f"{datetime.now().isoformat()}",
         }
 
-        return Response(200, resp, {})
+        return CommandResponse(200, resp, {})

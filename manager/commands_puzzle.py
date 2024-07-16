@@ -3,7 +3,7 @@ from json import dumps, loads
 
 from api.huntwordsapi.models.puzzle import Puzzle
 
-from .command import command
+from .post_api_request import post_api_request
 
 
 def command_puzzle_load(**kwargs):
@@ -23,10 +23,10 @@ def command_puzzle_load(**kwargs):
 
         body = f'{{ "oper": "puzzle-updated", "body": {jpuzzle} }}'
 
-        command('command_puzzle_load', url, body)
+        post_api_request('command_puzzle_load', url, body)
 
 
 def command_puzzles(**kwargs):
     url = kwargs['--url']
     body = '{ "oper": "puzzles", "body": {} }'
-    command('command_puzzles', url, body)
+    post_api_request('command_puzzles', url, body)

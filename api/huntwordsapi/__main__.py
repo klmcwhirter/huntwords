@@ -1,10 +1,10 @@
 import os
 from http import HTTPStatus
 
+import uvicorn
 from fastapi import BackgroundTasks, FastAPI, Request, Response
-from uvicorn import run
 
-from .handler import handle
+from .commands.adapter import handle_request
 
 app = FastAPI()
 
@@ -12,19 +12,19 @@ app = FastAPI()
 @app.get("/")
 def index(_request: Request):
     body = {'message': 'Not intended to be used directly.'}
-    return handle({'oper': 'echo', 'body': body})
+    return handle_request({'oper': 'echo', 'body': body})
 
 
 @app.post("/")
 async def post_handler(request: Request):
     body = await request.json()
-    return handle(body)
+    return handle_request(body)
 
 
 @app.post("/async")
 async def post_handler_async(request: Request, bg_tasks: BackgroundTasks):
     body = await request.json()
-    bg_tasks.add_task(handle, body)
+    bg_tasks.add_task(handle_request, body)
     return Response(status_code=HTTPStatus.ACCEPTED)
 
 
@@ -36,4 +36,4 @@ if __name__ == '__main__':
 
     print(f'Running on {host}:{port} with root_path={root_path}')
 
-    run(app, host=host, port=port, proxy_headers=True, root_path=root_path)
+    uvicorn.run(app, host=host, port=port, proxy_headers=True, root_path=root_path)

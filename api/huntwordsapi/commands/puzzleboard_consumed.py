@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from ..handler_models import Request, Response
+from ..models.command import CommandRequest, CommandResponse
 from ..models.puzzle import get_puzzle
 from ..models.puzzleboard import generate_puzzleboard, push_puzzleboard
 
@@ -8,7 +8,7 @@ from ..models.puzzleboard import generate_puzzleboard, push_puzzleboard
 class HuntwordsPuzzleBoardConsumedCommand(object):
     """Command class that processes puzzleboard-consumed message"""
 
-    def run(self, request: Request) -> Response:
+    def run(self, request: CommandRequest) -> CommandResponse:
         """Command that processes puzzleboard-consumed message"""
 
         resp = request.body
@@ -24,4 +24,4 @@ class HuntwordsPuzzleBoardConsumedCommand(object):
             "at": f"{datetime.now().isoformat()}",
         }
 
-        return Response(200, resp, {})
+        return CommandResponse(200, resp, {})

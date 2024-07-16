@@ -18,21 +18,24 @@ RUN pip install -U pdm
 # disable update check
 ENV PDM_CHECK_UPDATE=false
 
-# copy files
-COPY  --chown=app:app huntwordsapi/ /app/huntwordsapi/
+# copy project files to prepare for setup
 COPY  --chown=app:app pyproject.toml pdm.lock /app/
 
-# install project dependencies, run tests, clean up
+# create .venv, install project dependencies, clean up
 RUN <<EOF
-pdm install --check --no-editable
-
-pdm run pytest
+pdm create
 
 pdm cache clear
 
 pdm run python -m ensurepip --default-pip
 pip cache purge
 EOF
+
+# copy files
+COPY  --chown=app:app huntwordsapi/ /app/huntwordsapi/
+
+# run tests
+RUN pdm run pytest
 
 EXPOSE 3000
 

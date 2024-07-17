@@ -21,12 +21,14 @@ export class Game {
     public puzzles: Resource<Puzzle[]>,
     public puzzleBoard: Resource<PuzzleBoard>,
     public puzzleName: Accessor<string>,
+    public puzzleToEdit: Accessor<Puzzle>,
     public hints: Accessor<string[]>,
 
     public hintRequested: (ws: WordSolution) => void,
+    public editPuzzle: (p: Puzzle) => void,
     public selectPuzzle: (p: Puzzle) => void,
     public selectWord: (ws: WordSolution) => void,
-  ) {}
+  ) { }
 }
 
 const GameStateContext = createContext<Game>();
@@ -42,12 +44,14 @@ export const GameStateProvider = (props) => {
       initialValue: null,
     },
   );
+  const [puzzleToEdit, setPuzzleToEdit] = createSignal<Puzzle>(null);
   const [_consumed] = createResource(puzzleBoard, consumePuzzleBoard);
 
   const game = new Game(
     puzzles,
     puzzleBoard,
     puzzleName,
+    puzzleToEdit,
     hints,
     // hintRequested
     (ws: WordSolution) => {
@@ -66,12 +70,30 @@ export const GameStateProvider = (props) => {
         }
       }
     },
-    // selectGame
+    // editPuzzle
     (p: Puzzle) => {
-      setPuzzleName(null);
-      mutatePuzzleBoard(null);
-      setPuzzleName((g) => p.name);
-      setHints((h) => []);
+      queueMicrotask(() => {
+        console.log('editPuzzle: puzzleToEdit=', p);
+
+        setPuzzleName(null);
+        mutatePuzzleBoard(null);
+        setHints((h) => []);
+
+        setPuzzleToEdit(p);
+      });
+    },
+    // selectPuzzle
+    (p: Puzzle) => {
+      queueMicrotask(() => {
+        console.log('selectPuzzle: puzzle=', p);
+
+        setPuzzleToEdit(null);
+        setPuzzleName(null);
+
+        setPuzzleName((g) => p.name);
+        mutatePuzzleBoard(null);
+        setHints((h) => []);
+      });
     },
     // selectWord
     (ws: WordSolution) => {

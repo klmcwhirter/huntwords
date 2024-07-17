@@ -5,8 +5,8 @@ const GameSummary = (props) => {
   const game = useGame();
 
   return (
-    <Show when={game.puzzleBoard()}>
-      <div class='inline-block text-emerald-100'>
+    <div class='inline-block text-emerald-100'>
+      <Show when={game.puzzleBoard()}>
         <span class='ml-20 text-2xl font-bold text-blue-100'>
           {game.puzzleBoard().wordsNotSelectedCount}
         </span>
@@ -20,8 +20,13 @@ const GameSummary = (props) => {
             Congratulations! You completed the puzzle.
           </span>
         </Show>
-      </div>
-    </Show>
+      </Show>
+      <Show when={game.puzzleToEdit() !== null}>
+        <span class='ml-20 text-2xl font-bold text-blue-100'>
+          {game.puzzleToEdit().words.length} words
+        </span>
+      </Show>
+    </div>
   );
 };
 

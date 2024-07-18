@@ -23,7 +23,7 @@ export const PuzzleEditView = (props) => {
 
   return (
     <Show when={game?.puzzleToEdit() !== null}>
-      <div class='mt-0 grid h-[94vh] grow grid-cols-3 gap-4 bg-blue-200 p-2 align-top overflow-auto'>
+      <div class='mt-0 grid h-[94vh] grow grid-cols-6 gap-1 auto-rows-min font-bold text-blue-700 text-lg bg-blue-200 p-2 align-top overflow-auto'>
         <For each={game.puzzleToEdit().words}>
           {(w, i) => (
             <div>{w}</div>

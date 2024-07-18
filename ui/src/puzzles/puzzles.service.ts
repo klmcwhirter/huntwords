@@ -51,13 +51,16 @@ export const fetchPuzzleBoard = async (
   await resp.then((r) => {
     // console.log('in fetchPuzzleBoard promise: ', r);
     board = new PuzzleBoard(r.body.puzzleboard);
+
+    // notify that a puzzle was consumed
+    consumePuzzleBoard(board);
   });
   return board;
 };
 
-export const consumePuzzleBoard = async (
+export const consumePuzzleBoard = (
   puzzleboard: PuzzleBoard,
-): Promise<void> => {
+): void => {
   const puzzleName = puzzleboard?.puzzle?.name;
 
   // console.log('consumePuzzleBoard: puzzleName: ', puzzleName);
@@ -66,19 +69,21 @@ export const consumePuzzleBoard = async (
     return null;
   }
 
-  const resp = await fetch(api_url + 'async/', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      oper: 'puzzleboard-consumed',
-      body: { puzzle: puzzleName, size: puzzleboard.height },
-    }),
-    cache: 'no-cache',
-    mode: 'same-origin',
-    // Note on ChromeOS 'follow' seems to effect wifi connectivity for some reason.
-    // redirect: isChromeOS ? 'manual' : 'follow',
+  const resp = (
+    fetch(api_url + 'async/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        oper: 'puzzleboard-consumed',
+        body: { puzzle: puzzleName, size: puzzleboard.height },
+      }),
+      cache: 'no-cache',
+      mode: 'same-origin',
+    })
+  );
+  resp.then((r) => {
+    // console.log('in consumePuzzleBoard promise: ', r);
   });
-  // console.log('in consumePuzzleBoard: resp=', resp);
 };

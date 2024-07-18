@@ -45,7 +45,6 @@ export const GameStateProvider = (props) => {
     },
   );
   const [puzzleToEdit, setPuzzleToEdit] = createSignal<Puzzle>(null);
-  const [_consumed] = createResource(puzzleBoard, consumePuzzleBoard);
 
   const game = new Game(
     puzzles,
@@ -84,16 +83,14 @@ export const GameStateProvider = (props) => {
     },
     // selectPuzzle
     (p: Puzzle) => {
-      queueMicrotask(() => {
-        console.log('selectPuzzle: puzzle=', p);
-
-        setPuzzleToEdit(null);
-        setPuzzleName(null);
-
-        setPuzzleName((g) => p.name);
-        mutatePuzzleBoard(null);
-        setHints((h) => []);
-      });
+      console.log('selectPuzzle: puzzle=', p);
+      
+      setPuzzleToEdit(null);
+      setPuzzleName(null);
+      
+      setPuzzleName((g) => p.name);
+      mutatePuzzleBoard(null);
+      setHints((h) => []);
     },
     // selectWord
     (ws: WordSolution) => {

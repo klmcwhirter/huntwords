@@ -36,4 +36,4 @@ build.shell = "./etc/wrap_for_compose.sh docker compose build"
 compose.shell = "docker compose up"
 up.composite = [ "build", "compose" ]
 down.shell = "docker compose down"
-refresh.shell = "./etc/refresh_puzzleboards.sh"
+refresh = "./etc/refresh_puzzleboards.sh"

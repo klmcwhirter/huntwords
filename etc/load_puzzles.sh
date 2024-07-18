@@ -19,7 +19,7 @@ if [ "$1" = "reload" -o ${count} -ne 4 ]
 then
     python -m manager puzzleboards_clear
 
-    python -m manager puzzle_load --file ./files/puzzles-all.json
+    python -m manager puzzle_load --file ./etc/puzzles-all.json
 
     ${DIR}/refresh_puzzleboards.sh
 fi

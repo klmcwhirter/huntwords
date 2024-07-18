@@ -1,6 +1,6 @@
 ''' models for the puzzle concept '''
 import json
-from typing import List
+from typing import Self
 
 from .redis import redis_client
 
@@ -11,12 +11,12 @@ def puzzle_urn(name) -> str:
 
 
 class Puzzle:
-    def __init__(self, name, description, words):
+    def __init__(self: Self, name: str, description: str, words: list[str]):
         self.name = name
         self.description = description
         self.words = [word.upper() for word in words]
 
-    def __iter__(self):
+    def __iter__(self: Self):
         ''' make class iterable so that transformation is easier via dict protocol '''
         yield 'name', self.name
         yield 'description', self.description
@@ -41,7 +41,7 @@ def get_puzzle(name: str) -> Puzzle:
     return puzzle
 
 
-def get_puzzles() -> List[Puzzle]:
+def get_puzzles() -> list[Puzzle]:
     r = redis_client()
 
     keys = [k.decode('utf-8') for k in r.keys(puzzle_urn('*'))]
@@ -52,6 +52,6 @@ def get_puzzles() -> List[Puzzle]:
     return puzzles
 
 
-def set_puzzle(name: str, puzzle: Puzzle):
+def set_puzzle(name: str, puzzle: Puzzle) -> None:
     r = redis_client()
     r.set(puzzle_urn(name), json.dumps(dict(puzzle)))

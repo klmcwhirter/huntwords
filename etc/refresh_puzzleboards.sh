@@ -8,7 +8,9 @@ then
     pdm run create
 fi
 
-source ./.venv/bin/activate
+if [ -z "$VIRTUAL_ENV"];then
+    source ./.venv/bin/activate
+fi
 
 echo python -m manager puzzles
 count=$(python -m manager puzzles | awk -F '=' '/^text=/ { print $2 }' | jq -c '.body | length')
@@ -16,8 +18,8 @@ echo count=${count}
 
 if [ ${count} -lt 4 ]
 then
-    echo python -m manager puzzle_load --file ./files/puzzles-all.json
-    python -m manager puzzle_load --file ./files/puzzles-all.json
+    echo python -m manager puzzle_load --file ./etc/puzzles-all.json
+    python -m manager puzzle_load --file ./etc/puzzles-all.json
 fi
 
 if [ "$1" = 'reload' ]

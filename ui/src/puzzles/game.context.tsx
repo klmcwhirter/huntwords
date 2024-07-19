@@ -10,7 +10,6 @@ import {
 } from 'solid-js';
 import { Puzzle, PuzzleBoard, WordSolution } from './puzzle.model';
 import {
-  consumePuzzleBoard,
   fetchPuzzleBoard,
   fetchPuzzles,
 } from './puzzles.service';

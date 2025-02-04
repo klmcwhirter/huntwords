@@ -101,7 +101,12 @@ class WordSolution:
         return self.word < other.word
 
     def __repr__(self: Self) -> str:
-        return f'WordSolution(word=\'{self.word}\', placed={self.placed}, origin={self.origin}, direction={self.direction}, points={self.points})'
+        return f'''WordSolution(
+        word=\'{self.word}\',
+        placed={self.placed},
+        origin={self.origin},
+        direction={self.direction},
+        points={self.points})'''
 
     def overlaps(self: Self, solutions: list[Self]) -> bool:
         '''Detects whether this proposed solution overlaps completely with sny other - say APPLE and PINEAPPLE'''
@@ -181,7 +186,7 @@ class PuzzleBoard:
 
     def placed_all_words(self: Self) -> bool:
         placed_words = set(sol.word for sol in self.solutions)
-        words = set(self.puzzle.words)
+        words = set(self.puzzle.words) if self.puzzle else set()
         return placed_words == words
 
     def try_letter_solution(self: Self, letter: str, point: Point) -> bool:

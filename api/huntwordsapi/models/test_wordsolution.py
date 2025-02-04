@@ -25,7 +25,7 @@ def test_wordsolution_overlaps_detects_intersection():
 
 
 def test_wordsolution_overlaps_detects_no_intersection():
-    points = [Point(x, x) for x in range(5)]
+    # points = [Point(x, x) for x in range(5)]
 
     ws = WordSolution('APPLE')
     ws.points = [Point(x, x+2) for x in range(4, 5+4)]

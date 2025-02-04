@@ -29,7 +29,8 @@ echo_bar 'SUMMARY'
 
 echo SCRIPT: $0 $*
 echo NGINX: `nginx -v`
-echo EXPOSED_UI_PORT: $EXPOSED_UI_PORT
-echo EXPOSED_REDISCMD_PORT: $EXPOSED_REDISCMD_PORT
+echo
+echo ui: http://localhost:${EXPOSED_UI_PORT}
+echo redis-commander: http://localhost:${EXPOSED_REDISCMD_PORT}
 
 echo_bar DONE

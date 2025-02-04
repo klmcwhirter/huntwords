@@ -5,49 +5,45 @@ cd ~/src/github.com/klmcwhirter/python-projects/huntwords
 if [ ! -d .venv ]
 then
     echo 'Recreating .venv ...'
-    pdm run create
+    pdm sync
 fi
 
-if [ -z "$VIRTUAL_ENV"];then
-    source ./.venv/bin/activate
-fi
-
-echo python -m manager puzzles
-count=$(python -m manager puzzles | awk -F '=' '/^text=/ { print $2 }' | jq -c '.body | length')
+echo pdm manage puzzles
+count=$(pdm manage puzzles | awk -F '=' '/^text=/ { print $2 }' | jq -c '.body | length')
 echo count=${count}
 
 if [ ${count} -lt 4 ]
 then
-    echo python -m manager puzzle_load --file ./etc/puzzles-all.json
-    python -m manager puzzle_load --file ./etc/puzzles-all.json
+    echo pdm manage puzzle_load --file ./etc/puzzles-all.json
+    pdm manage puzzle_load --file ./etc/puzzles-all.json
 fi
 
 if [ "$1" = 'reload' ]
 then
-    echo python -m manager puzzleboards_clear
-    python -m manager puzzleboards_clear
+    echo pdm manage puzzleboards_clear
+    pdm manage puzzleboards_clear
 fi
 
 MIN_PBS=5
-puzzles=$(python -m manager puzzles | awk -F '=' '/^text=/ { print $2 }' | jq -cr .body[].name | sort)
+puzzles=$(pdm manage puzzles | awk -F '=' '/^text=/ { print $2 }' | jq -cr .body[].name | sort)
 for p in ${puzzles}
 do
-    count=$(python -m manager puzzleboard_count --name $p | awk -F '=' '/^text=/ { print $2 }' | jq -c '.body.count')
+    count=$(pdm manage puzzleboard_count --name $p | awk -F '=' '/^text=/ { print $2 }' | jq -c '.body.count')
     need=$((MIN_PBS - count))
     over=$((count - MIN_PBS))
     echo $p count=${count}, need=${need}, over=${over}
 
     while [ $need -gt 0 ]
     do
-        echo python -m manager puzzleboard_consume --name $p
-        python -m manager puzzleboard_consume --name $p
+        echo pdm manage puzzleboard_consume --name $p
+        pdm manage puzzleboard_consume --name $p
         ((need -= 1))
     done
 
     while [ $over -gt 0 ]
     do
-        echo python -m manager puzzleboard_pop --name $p
-        python -m manager puzzleboard_pop --name $p
+        echo pdm manage puzzleboard_pop --name $p
+        pdm manage puzzleboard_pop --name $p
         ((over -= 1))
     done
 done

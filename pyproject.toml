@@ -1,7 +1,7 @@
 [project]
 name = "huntwords"
 version = "0.1.0"
-description = "Default template for PDM package"
+description = "Huntwords - hunt for words in a grid of letters"
 authors = [{ name = "Kevin McWhirter", email = "klmcw@yahoo.com" }]
 dependencies = [
     "docopt>=0.6.2",
@@ -11,16 +11,13 @@ dependencies = [
     "requests>=2.31.0",
     "uvicorn[standard]>=0.29.0",
 ]
-requires-python = ">=3.12"
+requires-python = ">=3.13"
 readme = "README.md"
 license = { text = "MIT" }
 
 
 [tool.pdm]
 distribution = false
-
-[tool.pdm.dev-dependencies]
-dev = ["autopep8>=2.1.0", "pytest>=8.1.1", "pytest-cov>=5.0.0"]
 
 [tool.pdm.scripts]
 create.shell = "pdm venv remove -y in-project; pdm install --check --no-editable"
@@ -36,4 +33,14 @@ build.shell = "./etc/wrap_for_compose.sh docker compose build"
 compose.shell = "docker compose up"
 up.composite = [ "build", "compose" ]
 down.shell = "docker compose down"
+manage = "python -m manager"
 refresh = "./etc/refresh_puzzleboards.sh"
+
+[dependency-groups]
+dev = [
+    "autopep8>=2.1.0",
+    "flake8>=7.1.1",
+    "mypy>=1.14.1",
+    "pytest>=8.1.1",
+    "pytest-cov>=5.0.0",
+]

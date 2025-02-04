@@ -2,6 +2,7 @@ services:
   api:
     build:
       context: ./api
+      dockerfile: Containerfile
     environment:
       REDIS_HOST: redis
       REDIS_PORT: 6379
@@ -18,6 +19,11 @@ services:
   ui:
     build:
       context: ./ui
+      dockerfile: Containerfile
+    depends_on:
+      - api
+      - redis
+      - redis-commander
     environment:
       EXPOSED_UI_PORT: 8090
       EXPOSED_REDISCMD_PORT: 8099

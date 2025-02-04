@@ -1,0 +1,78 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/ubuntu
+{
+	"name": "huntwords",
+	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
+	"image": "fedora41-python-dx:latest",
+	"runArgs": [
+		"--name",
+		"huntwords"
+	],
+	"containerEnv": {
+		"HOME": "/var/home/klmcw",
+		"TZ": "PST8PDT",
+		"USER": "klmcw"
+	},
+	"mounts": [
+		{
+			"source": "/var/home/klmcw",
+			"target": "/var/home/klmcw",
+			"type": "bind"
+		}
+	],
+	// Features to add to the dev container. More info: https://containers.dev/features.
+	"features": {},
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	"forwardPorts": [
+		9000
+	],
+	"onCreateCommand": {
+		"start time": "date",
+		"install pnpm": ".devcontainer/vsc-install-pnpm.sh"
+	},
+	// Use 'postCreateCommand' to run commands after the container is created.
+	"postCreateCommand": {
+		"pwd": "pwd",
+		"uname": "uname -a",
+		"node version": "node --version",
+		"pdm version": "pdm --version",
+		"pnpm version": "pnpm --version",
+		"python version": "python --version"
+	},
+	// Use 'postStartCommand' to run commands after the container is created.
+	"postStartCommand": {
+		"end time": "date"
+	},
+	// Configure tool-specific properties.
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"dbaeumer.vscode-eslint",
+				"ms-python.flake8",
+				"ms-python.isort",
+				"ms-toolsai.jupyter",
+				"streetsidesoftware.code-spell-checker",
+				"bradlc.vscode-tailwindcss",
+				"dtsvet.vscode-wasm",
+				"redhat.vscode-yaml"
+			],
+			"settings": {
+				"[tailwindcss]": {
+					"editor.quickSuggestions": {
+						"strings": "on"
+					}
+				},
+				"files.associations": {
+					"*.css": "tailwindcss"
+				},
+				"python.terminal.activateEnvironment": false,
+				"redhat.telemetry.enabled": false,
+				"terminal.integrated.defaultProfile.linux": "bash"
+			}
+		}
+	},
+	"remoteEnv": {
+		"HOSTNAME": "huntwords"
+	},
+	"remoteUser": "klmcw"
+}

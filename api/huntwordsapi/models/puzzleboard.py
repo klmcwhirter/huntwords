@@ -61,7 +61,7 @@ direction_hints: dict[str, list[str]] = {
 
 def is_direction(direction_hint: str):
     '''Returns a function that tests a solution for a direction_hint'''
-    def inner(s: WordSolution):
+    def inner(s: WordSolution) -> bool:
         '''Tests a WordSolution for being in a direction_hint'''
         return s.placed and s.direction in direction_hints[direction_hint]
     return inner
@@ -109,7 +109,7 @@ class WordSolution:
         points={self.points})'''
 
     def overlaps(self: Self, solutions: list[Self]) -> bool:
-        '''Detects whether this proposed solution overlaps completely with sny other - say APPLE and PINEAPPLE'''
+        '''Detects whether this proposed solution overlaps completely with any other - say APPLE and PINEAPPLE'''
         points_set = set(self.points)
 
         rc = False
@@ -160,24 +160,24 @@ class PuzzleBoard:
         yield 'solutions', [dict(s) for s in self.solutions]
         yield 'puzzle', dict(self.puzzle) if self.puzzle else dict()
 
-    def fill_with_random_letters(self: Self):
+    def fill_with_random_letters(self: Self) -> None:
         '''Fills all empty cells on the board with random upper case letters'''
         for y in range(self.height):
             for x in range(self.width):
                 if self.letters[y][x] is None:
                     self.letters[y][x] = random.choice(string.ascii_uppercase)
 
-    def has_density(self: Self) -> float:
+    def has_word_density(self: Self) -> float:
         ''' Count of placed word letters / total grid letter count >= config['word_density'] '''
         word_letters = sum([len(sol.word) for sol in self.solutions])
         total = self.height * self.width
         return word_letters / total >= config['word_density']
 
-    def is_full(self: Self):
+    def is_full(self: Self) -> bool:
         '''Tests if all the cells of the board are full'''
         return all(cell is not None for row in self.letters for cell in row)
 
-    def place(self: Self, solution: WordSolution):
+    def place(self: Self, solution: WordSolution) -> None:
         ''' Commit the solution to the board '''
         for letter, point in zip(solution.word, solution.points):
             self.letters[point.y][point.x] = letter
@@ -189,7 +189,7 @@ class PuzzleBoard:
         words = set(self.puzzle.words) if self.puzzle else set()
         return placed_words == words
 
-    def try_letter_solution(self: Self, letter: str, point: Point) -> bool:
+    def try_place_letter(self: Self, letter: str, point: Point) -> bool:
         '''Tests if a letter can be placed in the location requested'''
 
         # make sure point is in the grid
@@ -201,12 +201,12 @@ class PuzzleBoard:
 
     def try_place_word(self: Self, word: str, origin: Point, direction: str) -> Optional[WordSolution]:
         '''tests if word can be placed on the board, and if so returns WordSolution'''
-        solution = None
+        solution: Optional[WordSolution] = None
 
         if not self.is_full():
             points = word_points(word, origin, direction)
 
-            if all(self.try_letter_solution(letter, point) for letter, point in zip(word, points)):
+            if all(self.try_place_letter(letter, point) for letter, point in zip(word, points)):
                 solution = WordSolution(word=word,
                                         placed=True,
                                         origin=origin,
@@ -215,7 +215,7 @@ class PuzzleBoard:
 
         return solution
 
-    def valid(self: Self):
+    def valid(self: Self) -> bool:
         '''Validates the quality of the generated board'''
 
         rc = False
@@ -269,13 +269,14 @@ def generate_puzzleboard(height: int, width: int, puzzle: Puzzle) -> PuzzleBoard
                 direction = random.choice(list(direction_offsets.keys()))
 
                 solution = pboard.try_place_word(word, origin, direction)
-                # if solution:
+
+                # if solution overlaps another one it will be impossible to select; disallow it
                 if solution and not solution.overlaps(pboard.solutions):
                     pboard.place(solution)
                     break
 
             # do not need any more words
-            if pboard.has_density():
+            if pboard.has_word_density():
                 break
 
         pboard.solutions.sort()
@@ -326,7 +327,7 @@ def pop_puzzleboard(name: str) -> PuzzleBoard:
     return puzzleboard_from_json(jpboard)
 
 
-def push_puzzleboard(name: str, pboard: PuzzleBoard):
+def push_puzzleboard(name: str, pboard: PuzzleBoard) -> None:
     '''Place the board in the cache for usage'''
     r = redis_client()
     r.rpush(puzzleboard_urn(name), json.dumps(dict(pboard)))

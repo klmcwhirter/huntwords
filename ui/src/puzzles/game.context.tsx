@@ -87,7 +87,7 @@ export const GameStateProvider = (props) => {
       setPuzzleToEdit(null);
       setPuzzleName(null);
       
-      setPuzzleName((g) => p.name);
+      setPuzzleName((prev) => p.name);
       mutatePuzzleBoard(null);
       setHints((h) => []);
     },

@@ -14,12 +14,12 @@ def test_puzzleboard_urn_returns_correct_key():
 
 
 @pytest.fixture
-def test_puzzle():
+def test_puzzle() -> Puzzle:
     return Puzzle('test_puzzle', '', ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'])
 
 
 @pytest.fixture
-def test_puzzleboard(test_puzzle):
+def test_puzzleboard(test_puzzle) -> PuzzleBoard:
     return PuzzleBoard(10, 10, puzzle=test_puzzle)
 
 
@@ -64,12 +64,12 @@ def test_puzzleboard_can_contruct_with_letters():
     assert all([cell == 'X' for row in p.letters for cell in row])
 
 
-def test_fill_with_random_letters_replaces_all_None(test_puzzleboard):
+def test_fill_with_random_letters_replaces_all_None(test_puzzleboard: PuzzleBoard):
     test_puzzleboard.fill_with_random_letters()
     assert all([cell is not None for row in test_puzzleboard.letters for cell in row])
 
 
-def test_fill_with_random_letters_does_not_touch_placed_letters(test_puzzleboard):
+def test_fill_with_random_letters_does_not_touch_placed_letters(test_puzzleboard: PuzzleBoard):
 
     test_puzzleboard.letters[3][3] = 'z'
     test_puzzleboard.letters[5][5] = 'n'
@@ -87,20 +87,20 @@ def test_fill_with_random_letters_does_not_touch_placed_letters(test_puzzleboard
     assert 'l' == test_puzzleboard.letters[8][8]
 
 
-def test_has_density_is_False_if_no_solutions(test_puzzleboard):
-    assert not test_puzzleboard.has_density()
+def test_has_word_density_is_False_if_no_solutions(test_puzzleboard: PuzzleBoard):
+    assert not test_puzzleboard.has_word_density()
 
 
-def test_has_density_is_False_if_just_shy(test_puzzleboard):
+def test_has_word_density_is_False_if_just_shy(test_puzzleboard: PuzzleBoard):
     ''' Note: word letter count / total grid letter count >= 0.75
     10x10 == 100
     100 * 0.75 = 75 - so 74 should give False
     '''
     test_puzzleboard.solutions = [WordSolution('X' * 59)]
-    assert not test_puzzleboard.has_density()
+    assert not test_puzzleboard.has_word_density()
 
 
-def test_has_density_is_False_if_just_shy_as_sum(test_puzzleboard):
+def test_has_word_density_is_False_if_just_shy_as_sum(test_puzzleboard: PuzzleBoard):
     ''' Note: word letter count / total grid letter count >= 0.6
     10x10 == 100
     100 * 0.6 = 75 - so 59 should give False
@@ -110,19 +110,19 @@ def test_has_density_is_False_if_just_shy_as_sum(test_puzzleboard):
         WordSolution('X' * 20),
         WordSolution('X' * 19)
     ]
-    assert not test_puzzleboard.has_density()
+    assert not test_puzzleboard.has_word_density()
 
 
-def test_has_density_is_True_if_equal(test_puzzleboard):
+def test_has_word_density_is_True_if_equal(test_puzzleboard: PuzzleBoard):
     ''' Note: word letter count / total grid letter count >= 0.75
     10x10 == 100
     100 * 0.75 = 75 - so 75 should give True
     '''
     test_puzzleboard.solutions = [WordSolution('X' * 75)]
-    assert test_puzzleboard.has_density()
+    assert test_puzzleboard.has_word_density()
 
 
-def test_has_density_is_True_if_equal_as_sum(test_puzzleboard):
+def test_has_word_density_is_True_if_equal_as_sum(test_puzzleboard: PuzzleBoard):
     ''' Note: word letter count / total grid letter count >= 0.75
     10x10 == 100
     100 * 0.75 = 75 - so 75 should give True
@@ -133,14 +133,14 @@ def test_has_density_is_True_if_equal_as_sum(test_puzzleboard):
         WordSolution('X' * 20),
         WordSolution('X' * 15)
     ]
-    assert test_puzzleboard.has_density()
+    assert test_puzzleboard.has_word_density()
 
 
-def test_is_full_false_when_no_letters_placed(test_puzzleboard):
+def test_is_full_false_when_no_letters_placed(test_puzzleboard: PuzzleBoard):
     assert not test_puzzleboard.is_full()
 
 
-def test_puzzleboard_is_iterable(test_puzzleboard):
+def test_puzzleboard_is_iterable(test_puzzleboard: PuzzleBoard):
     d = {'height': 10, 'width': 10, 'letters': [], 'solutions': [], 'puzzle': dict(test_puzzleboard.puzzle)}
     test_puzzleboard.letters = []
 
@@ -148,30 +148,30 @@ def test_puzzleboard_is_iterable(test_puzzleboard):
     assert d == dict(test_puzzleboard)
 
 
-def test_try_letter_solution_true_if_None(test_puzzleboard):
-    assert test_puzzleboard.try_letter_solution('W', Point(0, 0))
+def test_try_place_letter_true_if_None(test_puzzleboard: PuzzleBoard):
+    assert test_puzzleboard.try_place_letter('W', Point(0, 0))
 
 
-def test_try_letter_solution_false_if_filled(test_puzzleboard):
+def test_try_place_letter_false_if_filled(test_puzzleboard: PuzzleBoard):
     test_puzzleboard.letters[0][0] = 'F'
-    assert not test_puzzleboard.try_letter_solution('W', Point(0, 0))
+    assert not test_puzzleboard.try_place_letter('W', Point(0, 0))
 
 
-def test_try_letter_solution_false_if_outside_of_grid(test_puzzleboard):
-    assert not test_puzzleboard.try_letter_solution('W', Point(-1, -2))
+def test_try_place_letter_false_if_outside_of_grid(test_puzzleboard: PuzzleBoard):
+    assert not test_puzzleboard.try_place_letter('W', Point(-1, -2))
 
 
-def test_try_letter_solution_true_if_overlap(test_puzzleboard):
+def test_try_place_letter_true_if_overlap(test_puzzleboard: PuzzleBoard):
     test_puzzleboard.letters[0][0] = 'W'
-    assert test_puzzleboard.try_letter_solution('W', Point(0, 0))
+    assert test_puzzleboard.try_place_letter('W', Point(0, 0))
 
 
-def test_try_place_word_returns_solution_on_empty_board(test_puzzleboard):
+def test_try_place_word_returns_solution_on_empty_board(test_puzzleboard: PuzzleBoard):
     solution = test_puzzleboard.try_place_word(WORD, Point(0, 0), 'E')
     assert solution is not None
 
 
-def test_try_place_word_returns_solution_if_at_least_one_overlap(test_puzzleboard):
+def test_try_place_word_returns_solution_if_at_least_one_overlap(test_puzzleboard: PuzzleBoard):
     test_puzzleboard.letters[0][0] = 'W'
     solution = test_puzzleboard.try_place_word(WORD, Point(0, 0), 'E')
     assert solution is not None
@@ -180,7 +180,7 @@ def test_try_place_word_returns_solution_if_at_least_one_overlap(test_puzzleboar
     assert WORD == solution.word
 
 
-def test_try_place_word_returns_solution_if_3_overlap(test_puzzleboard):
+def test_try_place_word_returns_solution_if_3_overlap(test_puzzleboard: PuzzleBoard):
     test_puzzleboard.letters[0][0] = 'W'
     test_puzzleboard.letters[2][0] = 'R'
     test_puzzleboard.letters[3][0] = 'D'
@@ -191,7 +191,7 @@ def test_try_place_word_returns_solution_if_3_overlap(test_puzzleboard):
     assert WORD == solution.word
 
 
-def test_try_place_word_returns_solution_if_full_but_one_slot(test_puzzleboard):
+def test_try_place_word_returns_solution_if_full_but_one_slot(test_puzzleboard: PuzzleBoard):
     test_puzzleboard.fill_with_random_letters()
     test_puzzleboard.letters[3][3] = 'W'
     test_puzzleboard.letters[4][4] = None
@@ -204,7 +204,7 @@ def test_try_place_word_returns_solution_if_full_but_one_slot(test_puzzleboard):
     assert WORD == solution.word
 
 
-def test_try_place_word_returns_None_on_full_board(test_puzzleboard):
+def test_try_place_word_returns_None_on_full_board(test_puzzleboard: PuzzleBoard):
     # simulate full board
     test_puzzleboard.fill_with_random_letters()
 
@@ -212,7 +212,7 @@ def test_try_place_word_returns_None_on_full_board(test_puzzleboard):
     assert solution is None
 
 
-def test_try_place_word_returns_None_when_cannot_place_word(test_puzzleboard):
+def test_try_place_word_returns_None_when_cannot_place_word(test_puzzleboard: PuzzleBoard):
     # simulate position occupied
     for i, ch in enumerate(list('OTHER')):
         test_puzzleboard.letters[0][i] = ch
@@ -221,11 +221,11 @@ def test_try_place_word_returns_None_when_cannot_place_word(test_puzzleboard):
     assert solution is None
 
 
-def test_valid_is_false_if_no_solutions(test_puzzleboard):
+def test_valid_is_false_if_no_solutions(test_puzzleboard: PuzzleBoard):
     assert not test_puzzleboard.valid()
 
 
-def test_valid_is_true_if_criteria_met(test_puzzleboard):
+def test_valid_is_true_if_criteria_met(test_puzzleboard: PuzzleBoard):
     word = WORD
     test_puzzleboard.solutions = [
         WordSolution(word, placed=True, direction='N'),  # vertical
@@ -245,7 +245,7 @@ def test_valid_is_true_if_criteria_met(test_puzzleboard):
     assert test_puzzleboard.valid()
 
 
-def test_valid_is_false_if_criteria_not_met(test_puzzleboard):
+def test_valid_is_false_if_criteria_not_met(test_puzzleboard: PuzzleBoard):
     word = WORD
     test_puzzleboard.solutions = [
         WordSolution(word, placed=True, direction='N'),  # vertical
@@ -268,13 +268,13 @@ def test_valid_is_false_if_criteria_not_met(test_puzzleboard):
 
 
 @pytest.mark.parametrize('list_size', [3, 10])
-def test_words_to_place_returns_n_words(list_size, test_puzzleboard):
+def test_words_to_place_returns_n_words(list_size, test_puzzleboard: PuzzleBoard):
     words_to_place = [word for word in islice(test_puzzleboard.words_to_place(), list_size)]
     assert list_size == len(words_to_place)
 
 
 @pytest.mark.parametrize('n', range(10))
-def test_words_to_place_returns_random_word_lists(n, test_puzzleboard):
+def test_words_to_place_returns_random_word_lists(n, test_puzzleboard: PuzzleBoard):
     list_size = 10
     words_to_place1 = [word for word in islice(test_puzzleboard.words_to_place(), list_size)]
     words_to_place2 = [word for word in islice(test_puzzleboard.words_to_place(), list_size)]

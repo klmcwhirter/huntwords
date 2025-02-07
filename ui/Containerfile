@@ -2,12 +2,16 @@ FROM node:20-alpine AS build
 
 WORKDIR /app
 
-COPY package-lock.json package.json /app/
-RUN npm install
 
-COPY favicon.ico index.html postcss.config.* tailwind.config.* tsconfig.* vite.config.* /app/
+RUN npm install --global corepack@latest && \
+corepack enable pnpm
+
+COPY pnpm-lock.yaml package.json /app/
+RUN pnpm install
+
+COPY favicon.ico index.html tailwind.config.* tsconfig.* vite.config.* /app/
 COPY src/ /app/src/
-RUN npm run build
+RUN pnpm run build
 
 
 FROM nginx:mainline-alpine

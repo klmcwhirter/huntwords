@@ -11,18 +11,19 @@
   "license": "MIT",
   "type": "module",
   "devDependencies": {
+    "@tailwindcss/vite": "^4.0.4",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.5.1",
     "prettier": "^3.4.2",
     "prettier-plugin-tailwindcss": "^0.6.11",
     "solid-devtools": "^0.33.0",
     "tailwindcss": "^4.0.4",
-    "@tailwindcss/vite": "^4.0.4",
     "typescript": "^5.7.3",
     "vite": "^6.1.0",
     "vite-plugin-solid": "^2.11.1"
   },
   "dependencies": {
+    "corepack": "^0.31.0",
     "solid-js": "^1.9.4"
   }
 }

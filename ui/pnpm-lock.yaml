@@ -8,13 +8,16 @@ importers:
 
   .:
     dependencies:
-      '@tailwindcss/vite':
-        specifier: ^4.0.4
-        version: 4.0.4(vite@6.1.0(jiti@2.4.2)(lightningcss@1.29.1))
+      corepack:
+        specifier: ^0.31.0
+        version: 0.31.0
       solid-js:
         specifier: ^1.9.4
         version: 1.9.4
     devDependencies:
+      '@tailwindcss/vite':
+        specifier: ^4.0.4
+        version: 4.0.4(vite@6.1.0(jiti@2.4.2)(lightningcss@1.29.1))
       autoprefixer:
         specifier: ^10.4.20
         version: 10.4.20(postcss@8.5.1)
@@ -598,6 +601,11 @@ packages:
 
   convert-source-map@2.0.0:
     resolution: {integrity: sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==}
+
+  corepack@0.31.0:
+    resolution: {integrity: sha512-PFXOWB1S3gzr8Afuwq1sslrxDzLKsef6bu8NXKPxCBJAy54FXm86NutB/kjiPhwjSwV3hMzKSnLFzxTBlWNUqA==}
+    engines: {node: ^18.17.1 || ^20.10.0 || >=22.11.0}
+    hasBin: true
 
   csstype@3.1.3:
     resolution: {integrity: sha512-M1uQkMl8rQK/szD0LNhtqxIPLpimGm8sOBwU7lLnCpSbTyY3yeU1Vc7l4KT5zT4s/yOxHH5O7tIuuLOCnLADRw==}
@@ -1458,6 +1466,8 @@ snapshots:
   caniuse-lite@1.0.30001698: {}
 
   convert-source-map@2.0.0: {}
+
+  corepack@0.31.0: {}
 
   csstype@3.1.3: {}
 

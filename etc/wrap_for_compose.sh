@@ -13,7 +13,7 @@ function echo_eval
 {
     # execute command being wrapped
     echo $*
-    eval $*
+    $*
 }
 
 #*----------------------------------------------------------------------*
@@ -28,7 +28,7 @@ function cleanup_files
         trg=${DEST}/${f}
         if [ -d ${trg} ]
         then
-            echo_eval rm -fr $trg}
+            echo_eval rm -fr ${trg}
         else
             echo_eval rm ${trg}
         fi

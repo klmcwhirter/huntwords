@@ -11,12 +11,12 @@ scripts:
 - name: clean
   is-local: false
   options:
-    items_to_delete: build/ .coverage/ coverage.xml log/ .mypy_cache/ __pycache__/ .pytest_cache/
+    items_to_delete: build/ .coverage/ coverage.xml log/ .mypy_cache/ __pycache__/ .pytest_cache/ api/pyproject.toml api/uv.lock api/.uvextras/
 
 - name: envclean
   is-local: false
   options:
-    items_to_delete: ui/node_modules .venv
+    items_to_delete: node_modules/ ui/node_modules/ .venv/
 
 - name: enable-dev
   is-local: false
@@ -27,7 +27,7 @@ scripts:
   is-local: false
   options:
     features: node,python,react
-    addons: 
+    addons: api/pyproject.toml,api/uv.lock,api/.uvextras/
 
 - name: compose-build
   desc: build api

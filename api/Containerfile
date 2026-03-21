@@ -36,7 +36,7 @@ RUN uvextras run create
 COPY --chown=app:app huntwordsapi/ /app/huntwordsapi/
 
 # run tests
-RUN uvextras run pytest && uvextras run allclean && uv sync --frozen --no-dev
+RUN uv run pytest && uvextras run allclean && uv sync --frozen --no-dev
 
 EXPOSE 3000
 

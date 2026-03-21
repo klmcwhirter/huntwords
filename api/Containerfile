@@ -1,7 +1,7 @@
 
-ARG PYTHON_BASE=3.13-alpine
+FROM alpine
 
-FROM python:$PYTHON_BASE
+RUN apk add --no-cache curl git
 
 # Add non root user
 RUN addgroup -S app && adduser app -S -G app
@@ -12,31 +12,32 @@ WORKDIR /app
 
 ENV PATH=/home/app/.local/bin:$PATH
 
-# install PDM
-RUN pip install -U pdm pip
+# set uv env vars
+ENV UV_MANAGED_PYTHON=1 \
+    UV_LINK_MODE=symlink
 
-# disable update check
-ENV PDM_CHECK_UPDATE=false
+# install UV
+RUN curl -LsSf https://astral.sh/uv/install.sh | sh
+
+# install python
+RUN uv python install 3.14
+
+# install uvextras
+RUN uv tool install https://github.com/klmcwhirter/uvextras.git
 
 # copy project files to prepare for setup
-COPY --chown=app:app pyproject.toml pdm.lock /app/
-
-# create .venv, install project dependencies, clean up
-RUN <<EOF
-pdm sync
-
-pdm cache clear
-
-pdm run python -m ensurepip --default-pip
-pip cache purge
-EOF
+COPY --chown=app:app pyproject.toml uv.lock /app/
+COPY --chown=app:app .uvextras/ /app/.uvextras/
+ 
+# create .venv, install project dependencies
+RUN uvextras run create
 
 # copy files
 COPY --chown=app:app huntwordsapi/ /app/huntwordsapi/
 
 # run tests
-RUN pdm run pytest
+RUN uvextras run pytest && uvextras run allclean && uv sync --frozen --no-dev
 
 EXPOSE 3000
 
-CMD ["pdm", "run", "start"]
+CMD ["uv", "run", "python", "-m", "huntwordsapi"]

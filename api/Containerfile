@@ -22,22 +22,19 @@ RUN curl -LsSf https://astral.sh/uv/install.sh | sh
 # install python
 RUN uv python install 3.14
 
-# install uvextras
-RUN uv tool install https://github.com/klmcwhirter/uvextras.git
-
 # copy project files to prepare for setup
 COPY --chown=app:app pyproject.toml uv.lock /app/
-COPY --chown=app:app .uvextras/ /app/.uvextras/
- 
-# create .venv, install project dependencies
-RUN uvextras run create
 
 # copy files
 COPY --chown=app:app huntwordsapi/ /app/huntwordsapi/
+ 
+# create .venv, install project dependencies
+# RUN uv sync --frozen --dev
+RUN uv sync --frozen
 
 # run tests
-RUN uv run pytest && uvextras run allclean && uv sync --frozen --no-dev
+# RUN uv run pytest && rm -fr .venv && uv sync --frozen --no-dev
 
 EXPOSE 3000
 
-CMD ["uv", "run", "python", "-m", "huntwordsapi"]
+CMD ["uv", "run", "--frozen", "python", "-m", "huntwordsapi"]

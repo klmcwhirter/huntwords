@@ -35,3 +35,9 @@ def command_puzzleboard_pop(**kwargs):
     body = f'{{ "oper": "puzzleboard-pop", "body": {{"puzzle": "{name}", "correlation-id": "{uuid4()}"}} }}'
 
     post_api_request('command_puzzleboard_pop', url, body)
+
+
+def command_puzzleboards(**kwargs):
+    url = kwargs['--url']
+    body = '{ "oper": "puzzleboards", "body": {} }'
+    post_api_request('command_puzzlesboard', url, body)

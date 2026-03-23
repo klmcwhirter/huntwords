@@ -9,11 +9,13 @@ from .puzzleboard_count import HuntwordsPuzzleBoardCountCommand
 from .puzzleboard_pop import HuntwordsPuzzleBoardPopCommand
 from .puzzleboards_clear import HuntwordsPuzzleBoardClearCommand
 from .puzzles import HuntwordsPuzzlesCommand
+from .puzzleboards import HuntwordsPuzzleBoardsCommand
 
 commands = {
     'echo': HuntwordsEchoCommand,
     'puzzle-updated': HuntwordsPuzzleUpdatedCommand,
     'puzzles': HuntwordsPuzzlesCommand,
+    'puzzleboards': HuntwordsPuzzleBoardsCommand,
     'puzzleboards-clear': HuntwordsPuzzleBoardClearCommand,
     'puzzleboard-consumed': HuntwordsPuzzleBoardConsumedCommand,
     'puzzleboard-count': HuntwordsPuzzleBoardCountCommand,

@@ -3,14 +3,14 @@ from itertools import islice
 import pytest
 
 from .puzzle import Puzzle
-from .puzzleboard import (Point, PuzzleBoard, WordSolution, is_direction,
-                          puzzleboard_urn)
+from .puzzleboard import (
+    Point,
+    PuzzleBoard,
+    WordSolution,
+    is_direction,
+)
 
 WORD = 'WORD'
-
-
-def test_puzzleboard_urn_returns_correct_key():
-    assert 'puzzleboard:mypuzzle' == puzzleboard_urn('mypuzzle')
 
 
 @pytest.fixture

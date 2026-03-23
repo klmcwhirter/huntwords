@@ -4,8 +4,6 @@ services:
       context: ./api
       dockerfile: Containerfile
     environment:
-      REDIS_HOST: redis
-      REDIS_PORT: 6379
       APP_HOST: api
       APP_PORT: 3000
       APP_ROOT: /api
@@ -22,36 +20,12 @@ services:
       dockerfile: Containerfile
     depends_on:
       - api
-      - redis
-      - redis-commander
     environment:
       EXPOSED_UI_PORT: 8090
-      EXPOSED_REDISCMD_PORT: 8099
+      # EXPOSED_REDISCMD_PORT: 8099
       TZ: PST8PDT
     ports:
       - 8090:80
-    restart: unless-stopped
-    networks:
-      - frontend
-      - backend
-
-  redis:
-    image: eqalpha/keydb:latest
-    environment:
-      TZ: PST8PDT
-    ports:
-      - 6379:6379
-    restart: unless-stopped
-    networks:
-      - backend
-
-  redis-commander:
-    image: ghcr.io/joeferner/redis-commander:latest
-    environment:
-      REDIS_HOSTS: local:redis:6379
-      TZ: PST8PDT
-    ports:
-      - 8099:8081
     restart: unless-stopped
     networks:
       - frontend

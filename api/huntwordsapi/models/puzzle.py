@@ -2,13 +2,7 @@
 import json
 from typing import Self
 
-from .redis import redis_client
-
-
-def puzzle_urn(name) -> str:
-    ''' redis universal resource name '''
-    return f'puzzle:{name}'
-
+from .repo import puzzle_repo
 
 class Puzzle:
     def __init__(self: Self, name: str, description: str, words: list[str]):
@@ -32,8 +26,8 @@ def puzzle_from_dict(d: dict) -> Puzzle:
 
 
 def get_puzzle(name: str) -> Puzzle:
-    r = redis_client()
-    jtext = r.get(puzzle_urn(name))
+    r = puzzle_repo()
+    jtext = r.puzzles.get(name, '')
 
     obj = json.loads(jtext)
     puzzle = Puzzle(obj['name'], obj['description'], obj['words'])
@@ -42,16 +36,12 @@ def get_puzzle(name: str) -> Puzzle:
 
 
 def get_puzzles() -> list[Puzzle]:
-    r = redis_client()
+    r = puzzle_repo()
 
-    keys = [k.decode('utf-8') for k in r.keys(puzzle_urn('*'))]
-
-    puzzle_names = [name[7:] for name in keys]
-
-    puzzles = [get_puzzle(name) for name in puzzle_names]
+    puzzles = [get_puzzle(name) for name in r.puzzles]
     return puzzles
 
 
 def set_puzzle(name: str, puzzle: Puzzle) -> None:
-    r = redis_client()
-    r.set(puzzle_urn(name), json.dumps(dict(puzzle)))
+    r = puzzle_repo()
+    r.puzzles[name] = json.dumps(dict(puzzle))

@@ -31,6 +31,5 @@ echo SCRIPT: $0 $*
 echo NGINX: `nginx -v`
 echo
 echo ui: http://localhost:${EXPOSED_UI_PORT}
-echo redis-commander: http://localhost:${EXPOSED_REDISCMD_PORT}
 
 echo_bar DONE

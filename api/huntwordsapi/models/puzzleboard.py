@@ -5,7 +5,7 @@ import string
 from typing import Generator, Optional, Self
 
 from .puzzle import Puzzle, puzzle_from_dict
-from .redis import redis_client
+from .repo import puzzle_repo
 
 config = {
     'retries': 2048,
@@ -143,7 +143,7 @@ class PuzzleBoard:
         if letters is None:
             # don't use * to build up all dimensions - see:
             # https://docs.python.org/3/faq/programming.html#how-do-i-create-a-multidimensional-list
-            letters = [[None] * self.width for r in range(self.height)]
+            letters = [[None] * self.width for _ in range(self.height)]
         self.letters = letters
 
         if solutions is None:
@@ -301,33 +301,35 @@ def puzzleboard_from_json(j: str) -> PuzzleBoard:
     )
 
 
-def puzzleboard_urn(name: str) -> str:
-    ''' redis universal resource name '''
-    return f'puzzleboard:{name}'
-
-
 def clear_puzzleboards() -> None:
     '''Delete all puzzleboard lists'''
-    r = redis_client()
-    keys = r.keys(puzzleboard_urn('*'))
-    r.delete(*keys)
+    r = puzzle_repo()
+    r.puzzleboards.clear()
 
 
 def count_puzzleboard(name: str) -> int:
-    '''Delete all puzzleboard lists'''
-    r = redis_client()
-    llen = r.llen(puzzleboard_urn(name))
+    '''Count puzzleboard lists'''
+    r = puzzle_repo()
+    llen = len(r.puzzleboards.get(name, []))
     return llen
+
+
+def get_puzzleboards() -> dict[str, list[str]]:
+    '''get all puzzleboard lists'''
+    r = puzzle_repo()
+    return r.puzzleboards
 
 
 def pop_puzzleboard(name: str) -> PuzzleBoard:
     '''Pop a board from the cache; signal consumption'''
-    r = redis_client()
-    jpboard = r.lpop(puzzleboard_urn(name))
+    r = puzzle_repo()
+    jpboard = r.puzzleboards.get(name, []).pop()
     return puzzleboard_from_json(jpboard)
 
 
 def push_puzzleboard(name: str, pboard: PuzzleBoard) -> None:
     '''Place the board in the cache for usage'''
-    r = redis_client()
-    r.rpush(puzzleboard_urn(name), json.dumps(dict(pboard)))
+    r = puzzle_repo()
+    pboards = r.puzzleboards.get(name, [])
+    pboards.append(json.dumps(dict(pboard)))
+    r.puzzleboards[name] = pboards

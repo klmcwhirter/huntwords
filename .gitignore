@@ -325,6 +325,3 @@ sketch
 
 # End of https://www.toptal.com/developers/gitignore/api/node,python,react
 
-api/pyproject.toml
-api/uv.lock
-api/.uvextras/

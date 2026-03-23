@@ -10,4 +10,4 @@ then
     uv sync --frozen
 fi
 
-uvextras run manage -- puzzleboards | awk -F '=' '/^text=/ { print $2 }' | jq -Cr '.body.puzzleboards | to_entries[] | " \(.key): \(.value | length)"'
+uvextras run manage -- puzzleboards | awk -F '=' '/^text=/ { print $2 }' | jq -Cr '.body.puzzleboards | to_entries[] | " \(.key): \(.value | length)"' | sort

@@ -33,8 +33,38 @@ scripts:
   options:
     features: node,python,react
 
+- name: flake8
+  desc: run flake8
+  use-python: false
+  cmd: uv run --frozen flake8 api/huntwordsapi/ manager/
+  is-local: true
+
+- name: mypy
+  desc: run mypy
+  use-python: false
+  cmd: uv run --frozen mypy api/huntwordsapi/ manager/
+  is-local: true
+
+- name: pytest
+  desc: run pytest
+  use-python: false
+  cmd: uv run --frozen pytest api/huntwordsapi/ manager/
+  is-local: true
+
+- name: ws-create
+  desc: uv ws .venv
+  use-python: false
+  cmd: uv sync --all-packages
+  is-local: true
+
+- name: ui-create
+  desc: ui pnpm install
+  use-python: false
+  cmd: /bin/bash -c "cd ui && pnpm i"
+  is-local: true
+
 - name: compose-build
-  desc: build api
+  desc: build app
   use-python: false
   cmd: docker compose build
   is-local: true
@@ -88,16 +118,4 @@ scripts:
   desc: refresh puzzleboards
   use-python: false
   cmd: ./etc/refresh_puzzleboards.sh
-  is-local: true
-
-- name: ws-create
-  desc: uv ws .venv
-  use-python: false
-  cmd: uv sync --all-packages
-  is-local: true
-
-- name: ui-create
-  desc: ui pnpm install
-  use-python: false
-  cmd: /bin/bash -c "cd ui && pnpm i"
   is-local: true

@@ -3,7 +3,7 @@ from json import dumps, loads
 
 from api.huntwordsapi.models.puzzle import Puzzle
 
-from .post_api_request import post_api_request
+from manager.post_api_request import post_api_request
 
 
 def command_puzzle_load(**kwargs):

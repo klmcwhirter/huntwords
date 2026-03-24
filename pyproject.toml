@@ -6,7 +6,6 @@ authors = [{ name = "Kevin McWhirter", email = "klmcw@yahoo.com" }]
 dependencies = [
     "fastapi>=0.135.1",
     "jmespath>=1.1.0",
-    "redis>=7.3.0",
     "requests>=2.32.5",
     "uvicorn[standard]>=0.42.0",
 ]
@@ -23,5 +22,28 @@ dev = [
     "pytest-cov>=7.0.0",
 ]
 
+[tool.autopep8]
+max-doc-length = 140
+max-line-length = 140
+
 [tool.isort]
 multi_line_output = 3
+
+[tool.pyright]
+typeCheckingMode = "standard"
+# ignore = ["*"]
+
+[tool.mypy]
+mypy_path = "api/huntwordsapi/ manager/"
+explicit_package_bases = true
+check_untyped_defs = true
+disallow_any_generics = false # until Generics union types are supported
+ignore_missing_imports = true
+no_implicit_optional = true
+show_error_codes = true
+strict_equality = true
+warn_redundant_casts = true
+warn_return_any = true
+warn_unreachable = true
+warn_unused_configs = true
+no_implicit_reexport = true

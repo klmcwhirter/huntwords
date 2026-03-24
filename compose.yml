@@ -22,7 +22,6 @@ services:
       - api
     environment:
       EXPOSED_UI_PORT: 8090
-      # EXPOSED_REDISCMD_PORT: 8099
       TZ: PST8PDT
     ports:
       - 8090:80

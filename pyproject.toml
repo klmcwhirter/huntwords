@@ -4,7 +4,6 @@ version = "1.0.0"
 description = "Huntwords - hunt for words in a grid of letters"
 authors = [{ name = "Kevin McWhirter", email = "klmcw@yahoo.com" }]
 dependencies = [
-    "docopt>=0.6.2",
     "fastapi>=0.135.1",
     "jmespath>=1.1.0",
     "redis>=7.3.0",

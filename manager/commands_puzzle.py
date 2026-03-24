@@ -7,8 +7,8 @@ from .post_api_request import post_api_request
 
 
 def command_puzzle_load(**kwargs):
-    url = kwargs['--url']
-    filename = kwargs['--file']
+    url = kwargs['url']
+    filename = kwargs['file']
 
     jpuzzle = '{}'
     with open(filename, 'r') as f:
@@ -27,6 +27,6 @@ def command_puzzle_load(**kwargs):
 
 
 def command_puzzles(**kwargs):
-    url = kwargs['--url']
+    url = kwargs['url']
     body = '{ "oper": "puzzles", "body": {} }'
     post_api_request('command_puzzles', url, body)

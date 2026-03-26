@@ -4,6 +4,7 @@ from typing import Self
 
 from .repo import puzzle_repo
 
+
 class Puzzle:
     def __init__(self: Self, name: str, description: str, words: list[str]):
         self.name = name
@@ -27,7 +28,7 @@ def puzzle_from_dict(d: dict) -> Puzzle:
 
 def get_puzzle(name: str) -> Puzzle:
     r = puzzle_repo()
-    jtext = r.puzzles.get(name, '')
+    jtext = r.puzzle_by_name(name)
 
     obj = json.loads(jtext)
     puzzle = Puzzle(obj['name'], obj['description'], obj['words'])

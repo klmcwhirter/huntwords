@@ -1,0 +1,8 @@
+{
+    "python.testing.pytestPath": "uv run --frozen pytest",
+    "python.testing.pytestArgs": [
+        "."
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true
+}

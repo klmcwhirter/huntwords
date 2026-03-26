@@ -68,24 +68,29 @@ def parse_args(args: list[str], /, version: str = '1.0.0') -> AppContext:
                                          formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
     puzzlesboards_clear_desc = 'clear all generated puzzleboards from cache'
-    puzzlesboards_clear_sub = verbs.add_parser('puzzleboards_clear', description=puzzlesboards_clear_desc, help=puzzlesboards_clear_desc,
+    puzzlesboards_clear_sub = verbs.add_parser('puzzleboards_clear',
+                                               description=puzzlesboards_clear_desc, help=puzzlesboards_clear_desc,
                                                formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
     puzzlesboard_consume_desc = 'consume a puzzleboard, generate a new one and add it to cache'
-    puzzlesboard_consume_sub = verbs.add_parser('puzzleboard_consume', description=puzzlesboard_consume_desc, help=puzzlesboard_consume_desc,
+    puzzlesboard_consume_sub = verbs.add_parser('puzzleboard_consume',
+                                                description=puzzlesboard_consume_desc, help=puzzlesboard_consume_desc,
                                                 formatter_class=argparse.ArgumentDefaultsHelpFormatter)
     puzzlesboard_consume_sub.add_argument('--async-url', default='http://localhost:8090/api/async/',
                                           help='The base url to send async request')
 
     puzzlesboard_count_desc = 'count the generated puzzleboards for NAME in the cache'
-    puzzlesboard_count_sub = verbs.add_parser('puzzleboard_count', description=puzzlesboard_count_desc, help=puzzlesboard_count_desc,
+    puzzlesboard_count_sub = verbs.add_parser('puzzleboard_count',
+                                              description=puzzlesboard_count_desc, help=puzzlesboard_count_desc,
                                               formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
     puzzlesboard_pop_desc = 'pop a puzzleboard for NAME from the cache'
     puzzlesboard_pop_sub = verbs.add_parser('puzzleboard_pop', description=puzzlesboard_pop_desc, help=puzzlesboard_pop_desc,
                                             formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
-    for p in [puzzle_load_sub, puzzles_sub, puzzlesboards_sub, puzzlesboards_clear_sub, puzzlesboard_count_sub, puzzlesboard_pop_sub]:
+    for p in [
+        puzzle_load_sub, puzzles_sub, puzzlesboards_sub, puzzlesboards_clear_sub, puzzlesboard_count_sub, puzzlesboard_pop_sub
+    ]:
         p.add_argument('--url', default='http://localhost:8090/api/', help='The base url to send request')
 
     for p in [puzzlesboard_consume_sub, puzzlesboard_count_sub, puzzlesboard_pop_sub]:

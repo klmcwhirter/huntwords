@@ -141,7 +141,8 @@ def test_is_full_false_when_no_letters_placed(test_puzzleboard: PuzzleBoard):
 
 
 def test_puzzleboard_is_iterable(test_puzzleboard: PuzzleBoard):
-    d = {'height': 10, 'width': 10, 'letters': [], 'solutions': [], 'puzzle': dict(test_puzzleboard.puzzle)}
+    pb_dict = dict(test_puzzleboard.puzzle if test_puzzleboard.puzzle else [])
+    d = {'height': 10, 'width': 10, 'letters': [], 'solutions': [], 'puzzle': pb_dict}
     test_puzzleboard.letters = []
 
     # can leverage iterabiity with dict protocol

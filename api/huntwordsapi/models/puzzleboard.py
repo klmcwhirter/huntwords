@@ -239,6 +239,9 @@ class PuzzleBoard:
 
     def words_to_place(self: Self) -> Generator[str, None, None]:
         '''Generator providing words from the puzzle'''
+        if not self.puzzle:
+            raise StopIteration
+
         words_set = set(self.puzzle.words)
         seen = set()
         while True:

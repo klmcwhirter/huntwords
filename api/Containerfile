@@ -1,7 +1,9 @@
 
 FROM alpine
 
-RUN apk add --no-cache curl git
+ARG ENABLE_TESTS
+
+RUN apk add --no-cache curl
 
 # Add non root user
 RUN addgroup -S app && adduser app -S -G app
@@ -28,12 +30,15 @@ COPY --chown=app:app pyproject.toml uv.lock /app/
 # copy files
 COPY --chown=app:app huntwordsapi/ /app/huntwordsapi/
  
-# create .venv, install project dependencies
-# RUN uv sync --frozen --dev
-RUN uv sync --frozen
+# create .venv, install project dependencies, run tests if arg set
+RUN -- if [ -n "$ENABLE_TESTS" ]; then \
+uv sync --all-groups && \
+ls -l .venv/ .venv/bin/ && \
+uv run --frozen pytest huntwordsapi/ 2>&1 | tee .pytest.log && \
+rm -fr .pytest_cache/ .venv; \
+fi && \
+uv sync --frozen --no-dev
 
-# run tests
-# RUN uv run pytest && rm -fr .venv && uv sync --frozen --no-dev
 
 EXPOSE 3000
 

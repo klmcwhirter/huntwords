@@ -1,4 +1,4 @@
-''' commands that work with redis '''
+''' commands that work with puzzles '''
 from json import dumps, loads
 
 from api.huntwordsapi.models.puzzle import Puzzle

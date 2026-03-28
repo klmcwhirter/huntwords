@@ -1,4 +1,4 @@
-''' commands for the manager cli '''
+''' commands that work with puzzleboards '''
 
 from uuid import uuid4
 

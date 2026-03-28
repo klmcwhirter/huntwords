@@ -1,10 +1,9 @@
 
-
 from unittest.mock import Mock
 
-import huntwordsapi.models.repo
-from huntwordsapi.models.puzzle import Puzzle, get_puzzle
-from huntwordsapi.models.repo import PuzzleRepo
+import api.models.repo
+from api.models.puzzle import Puzzle, get_puzzle
+from api.models.repo import PuzzleRepo
 
 
 def test_puzzle_can_contruct():
@@ -29,7 +28,7 @@ def test_get_puzzle_by_name(monkeypatch):
         mock_repo = Mock(spec=PuzzleRepo)
         mock_repo.puzzle_by_name.return_value = jsonstr
 
-        m.setattr(huntwordsapi.models.repo, '_pr_instance', mock_repo)
+        m.setattr(api.models.repo, '_pr_instance', mock_repo)
 
         rc = get_puzzle('test')
 

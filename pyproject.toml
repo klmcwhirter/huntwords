@@ -34,7 +34,7 @@ typeCheckingMode = "standard"
 # ignore = ["*"]
 
 [tool.mypy]
-mypy_path = "api/huntwordsapi/ manager/"
+mypy_path = "api/"
 explicit_package_bases = true
 check_untyped_defs = true
 disallow_any_generics = false # until Generics union types are supported

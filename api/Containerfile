@@ -12,10 +12,9 @@ USER app:app
 
 WORKDIR /app
 
-ENV PATH=/home/app/.local/bin:$PATH
-
-# set uv env vars
-ENV UV_MANAGED_PYTHON=1 \
+# set env vars
+ENV PATH=/home/app/.local/bin:$PATH \
+    UV_MANAGED_PYTHON=1 \
     UV_LINK_MODE=symlink
 
 # install UV
@@ -28,18 +27,13 @@ RUN uv python install 3.14
 COPY --chown=app:app pyproject.toml uv.lock /app/
 
 # copy files
-COPY --chown=app:app huntwordsapi/ /app/huntwordsapi/
+COPY --chown=app:app api/ /app/api/
+COPY --chown=app:app etc/puzzles-all.json /app/etc/
  
 # create .venv, install project dependencies, run tests if arg set
-RUN -- if [ -n "$ENABLE_TESTS" ]; then \
-uv sync --all-groups && \
-ls -l .venv/ .venv/bin/ && \
-uv run --frozen pytest huntwordsapi/ 2>&1 | tee .pytest.log && \
-rm -fr .pytest_cache/ .venv; \
-fi && \
-uv sync --frozen --no-dev
-
+RUN uv sync --frozen && \
+uv run --frozen pytest api/ 2>&1 | tee .pytest.log
 
 EXPOSE 3000
 
-CMD ["uv", "run", "--frozen", "python", "-m", "huntwordsapi"]
+CMD ["uv", "run", "--frozen", "python", "-m", "api"]

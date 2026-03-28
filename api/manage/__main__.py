@@ -1,8 +1,8 @@
-'''manager entrypoint'''
+'''manage entrypoint'''
 
 import sys
 
-from manager.cli import parse_args
+from api.manage.cli import parse_args
 
 if __name__ == '__main__':
     ctx = parse_args(sys.argv[1:])

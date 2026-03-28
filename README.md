@@ -18,7 +18,6 @@ ui_1               | SCRIPT: /docker-entrypoint.d/99-metrics.sh
 ui_1               | nginx version: nginx/1.29.6
 ui_1               | NGINX:
 ui_1               | ui: http://localhost:8090
-ui_1               | redis-commander: http://localhost:8099
 ```
 
 Visit the following urls as mentioned in the output above.
@@ -26,7 +25,6 @@ Visit the following urls as mentioned in the output above.
 | URL                                    | What            |
 | -------------------------------------- | --------------- |
 | [http://localhost:8090/](http://localhost:8090/) | Hunt Words UI   |
-| [http://localhost:8099/](http://localhost:8099/) | Redis Commander |
 
 Click on one of the links of defined puzzles on the left and then click on a letter in the grid to *find* one of the words from the list on the right.
 
@@ -45,7 +43,7 @@ In another shell:
 uvextras run refresh
 ```
 
-> [refresh_puzzleboards.sh](./etc/refresh_puzzleboards.sh) is designed to be able to be scheduled via cron. This may be needed in case of regular power failures. Ask me how I know ...
+> [refresh_puzzleboards.sh](./etc/refresh_puzzleboards.sh) is designed to be able to be scheduled via cron.
 
 When done using the app, simply run the following command to tear down and clean up.
 ```bash
@@ -55,9 +53,3 @@ uvextras run allclean
 
 ## Raspberry Pi
 Huntwords is deployed onto a Raspberry Pi 4B using _docker compose_.
-
-Also, in times past, `redis-commander` was not readily available as a published docker image and would need to be created from source.
-
-> The image for redis-commander on ghcr.io now supports linux/amd64, linux/arm/v7, and linux/arm64.
-
-It is no longer needed to be created from source.

@@ -1,5 +1,5 @@
 
-from .command import request_from_dict
+from api.models.command import request_from_dict
 
 
 def test_request_from_dict():

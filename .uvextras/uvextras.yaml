@@ -14,7 +14,7 @@ scripts:
 - name: envclean
   is-local: false
   options:
-    items_to_delete: node_modules/ ui/node_modules/ .venv/ api/.venv/
+    items_to_delete: node_modules/ ui/node_modules/ .venv/
 
 - name: create
   desc: runs clean and envclean; similar to distclean
@@ -36,19 +36,19 @@ scripts:
 - name: flake8
   desc: run flake8
   use-python: false
-  cmd: uv run --frozen flake8 api/huntwordsapi/ manager/
+  cmd: uv run --frozen flake8 api/
   is-local: true
 
 - name: mypy
   desc: run mypy
   use-python: false
-  cmd: uv run --frozen mypy api/huntwordsapi/ manager/
+  cmd: uv run --frozen mypy api/
   is-local: true
 
 - name: pytest
   desc: run pytest
   use-python: false
-  cmd: uv run --frozen pytest api/huntwordsapi/ manager/
+  cmd: uv run --frozen pytest api/
   is-local: true
 
 - name: ws-create
@@ -66,7 +66,7 @@ scripts:
 - name: compose-build
   desc: build app
   use-python: false
-  cmd: docker compose build
+  cmd: docker compose build --no-cache
   is-local: true
 
 - name: compose-clean
@@ -90,7 +90,7 @@ scripts:
 - name: start
   desc: start api
   use-python: false
-  cmd: /bin/bash -c "cd api && uv run python -m huntwordsapi"
+  cmd: /bin/bash -c "cd api && uv run python -m api"
   is-local: true
 
 - name: up
@@ -103,9 +103,9 @@ scripts:
   is-local: true
 
 - name: manage
-  desc: manage app resources
+  desc: manage app cache
   use-python: false
-  cmd: uv run python -m manager
+  cmd: uv run --frozen python -m api.manage
   is-local: true
 
 - name: pboards

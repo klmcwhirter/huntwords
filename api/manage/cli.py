@@ -4,8 +4,9 @@ import argparse
 from dataclasses import dataclass, field
 from typing import Any
 
-from .commands_puzzle import command_puzzle_load, command_puzzles
-from .commands_puzzleboard import (
+from api.manage.commands_puzzle import command_puzzle_load, command_puzzles
+
+from api.manage.commands_puzzleboard import (
     command_puzzleboard_consume,
     command_puzzleboard_count,
     command_puzzleboard_pop,
@@ -76,7 +77,7 @@ def parse_args(args: list[str], /, version: str = '1.0.0') -> AppContext:
     pb_consume_sub = verbs.add_parser('puzzleboard_consume',
                                       description=pb_consume_desc, help=pb_consume_desc,
                                       formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    pb_consume_sub.add_argument('--async-url', default='http://localhost:8090/api/async/',
+    pb_consume_sub.add_argument('--async-url', default='http://api:3000/api/async/',
                                 help='The base url to send async request')
 
     pb_count_desc = 'count the generated puzzleboards for NAME in the cache'
@@ -89,7 +90,7 @@ def parse_args(args: list[str], /, version: str = '1.0.0') -> AppContext:
                                   formatter_class=argparse.ArgumentDefaultsHelpFormatter)
 
     for p in [puzzle_load_sub, puzzles_sub, puzzlesboards_sub, puzzlesboards_clear_sub, pb_count_sub, pb_pop_sub]:
-        p.add_argument('--url', default='http://localhost:8090/api/', help='The base url to send request')
+        p.add_argument('--url', default='http://api:3000/api/', help='The base url to send request')
 
     for p in [pb_consume_sub, pb_count_sub, pb_pop_sub]:
         p.add_argument('--name', dest='name', required=True, help='The puzzle name on which to operate')

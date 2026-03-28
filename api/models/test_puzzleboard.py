@@ -2,8 +2,9 @@ from itertools import islice
 
 import pytest
 
-from .puzzle import Puzzle
-from .puzzleboard import (
+from api.models.puzzle import Puzzle
+
+from api.models.puzzleboard import (
     Point,
     PuzzleBoard,
     WordSolution,

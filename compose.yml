@@ -1,14 +1,11 @@
 services:
   api:
     build:
-      context: ./api
-      dockerfile: Containerfile
-      # args:
-      #   ENABLE_TESTS: yes
+      context: .
+      dockerfile: ./api/Containerfile
     environment:
       APP_HOST: api
       APP_PORT: 3000
-      APP_ROOT: /api
       TZ: PST8PDT
     ports:
       - 3000:3000

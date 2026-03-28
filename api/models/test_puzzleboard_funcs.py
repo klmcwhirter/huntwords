@@ -1,7 +1,15 @@
 import pytest
 
-from .puzzleboard import direction_hints, is_direction, Point, point_from_dict, puzzleboard_from_json
-from .puzzleboard import WordSolution, word_points, wordsolution_from_dict
+from api.models.puzzleboard import (
+    Point,
+    WordSolution,
+    direction_hints,
+    is_direction,
+    point_from_dict,
+    puzzleboard_from_json,
+    word_points,
+    wordsolution_from_dict
+)
 
 
 @pytest.mark.parametrize('direction_hint', direction_hints.keys())
@@ -66,7 +74,7 @@ def test_puzzleboard_from_json():
     assert pb is not None
     assert pb.height == 10
     assert pb.width == 10
-    assert 'word' == pb.puzzle.name
+    assert 'word' == getattr(pb.puzzle, 'name', '')
     assert 2 == len(pb.solutions)
     assert 'WORD' == pb.solutions[0].word
     assert 'WORD2' == pb.solutions[1].word

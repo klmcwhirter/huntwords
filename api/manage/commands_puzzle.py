@@ -1,9 +1,9 @@
 ''' commands that work with puzzles '''
 from json import dumps, loads
 
-from api.huntwordsapi.models.puzzle import Puzzle
+from api.models.puzzle import Puzzle
 
-from manager.post_api_request import post_api_request
+from api.manage.post_api_request import post_api_request
 
 
 def command_puzzle_load(**kwargs):

@@ -1,4 +1,5 @@
-from .puzzleboard import Point, WordSolution
+
+from api.models.puzzleboard import Point, WordSolution
 
 
 def test_wordsolution_can_construct():

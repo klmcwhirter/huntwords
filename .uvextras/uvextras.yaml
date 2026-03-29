@@ -19,7 +19,6 @@ scripts:
 - name: create
   desc: runs clean and envclean; similar to distclean
   depends-on:
-  # - ws-create
   - ui-create
   is-local: false
 
@@ -51,16 +50,40 @@ scripts:
   cmd: uv run --frozen pytest api/
   is-local: true
 
-- name: ws-create
-  desc: uv ws .venv
+- name: api-manage
+  desc: manage app cache
   use-python: false
-  cmd: uv sync --all-packages
+  cmd: API_URL=http://localhost:3000/api/ uv run --frozen python -m api.manage
+  is-local: true
+
+- name: api-pboards
+  desc: show puzzleboards
+  use-python: false
+  cmd: API_URL=http://localhost:3000/api/ ./etc/pboards.sh
+  is-local: true
+
+- name: api-refresh
+  desc: manage app cache
+  use-python: false
+  cmd: API_URL=http://localhost:3000/api/ ./etc/refresh_puzzleboards.sh
+  is-local: true
+
+- name: api-start
+  desc: start api outside container
+  use-python: false
+  cmd: APP_HOST=localhost APP_PORT=3000 uv run --frozen python -m api
   is-local: true
 
 - name: ui-create
   desc: ui pnpm install
   use-python: false
   cmd: /bin/bash -c "cd ui && pnpm i"
+  is-local: true
+
+- name: ui-up
+  desc: ui pnpm install
+  use-python: false
+  cmd: /bin/bash -c "cd ui && pnpm dev"
   is-local: true
 
 - name: compose-build
@@ -87,12 +110,6 @@ scripts:
   cmd: docker compose up
   is-local: true
 
-- name: start
-  desc: start api
-  use-python: false
-  cmd: /bin/bash -c "cd api && uv run python -m api"
-  is-local: true
-
 - name: up
   desc: runs compose-build and compose-up
   depends-on:
@@ -100,12 +117,6 @@ scripts:
   - compose-build
   - compose-up
   use-python: false
-  is-local: true
-
-- name: manage
-  desc: manage app cache
-  use-python: false
-  cmd: uv run --frozen python -m api.manage
   is-local: true
 
 - name: pboards

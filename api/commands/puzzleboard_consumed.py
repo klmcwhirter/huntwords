@@ -1,8 +1,8 @@
 from datetime import datetime
 
-from ..models.command import CommandRequest, CommandResponse
-from ..models.puzzle import get_puzzle
-from ..models.puzzleboard import generate_puzzleboard, push_puzzleboard
+from api.models.command import CommandRequest, CommandResponse
+from api.models.puzzle import get_puzzle
+from api.models.puzzleboard import generate_puzzleboard, push_puzzleboard
 
 
 class HuntwordsPuzzleBoardConsumedCommand(object):

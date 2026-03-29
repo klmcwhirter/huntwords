@@ -2,8 +2,8 @@ import logging
 import sys
 from datetime import datetime
 
-from ..models.command import CommandRequest, CommandResponse
-from ..models.puzzleboard import pop_puzzleboard
+from api.models.command import CommandRequest, CommandResponse
+from api.models.puzzleboard import pop_puzzleboard
 
 
 class HuntwordsPuzzleBoardPopCommand(object):

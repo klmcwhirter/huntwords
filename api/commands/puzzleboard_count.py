@@ -1,8 +1,8 @@
 import logging
 import sys
 
-from ..models.command import CommandRequest, CommandResponse
-from ..models.puzzleboard import count_puzzleboard
+from api.models.command import CommandRequest, CommandResponse
+from api.models.puzzleboard import count_puzzleboard
 
 
 class HuntwordsPuzzleBoardCountCommand(object):

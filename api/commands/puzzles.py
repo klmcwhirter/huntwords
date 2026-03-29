@@ -1,6 +1,6 @@
 
-from ..models.command import CommandRequest, CommandResponse
-from ..models.puzzle import get_puzzles
+from api.models.command import CommandRequest, CommandResponse
+from api.models.puzzle import get_puzzles
 
 
 class HuntwordsPuzzlesCommand(object):

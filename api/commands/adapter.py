@@ -1,15 +1,16 @@
 '''command adapter for huntwords api'''
 
 
-from ..models.command import CommandResponse, request_from_dict
-from .echo import HuntwordsEchoCommand
-from .puzzle_updated import HuntwordsPuzzleUpdatedCommand
-from .puzzleboard_consumed import HuntwordsPuzzleBoardConsumedCommand
-from .puzzleboard_count import HuntwordsPuzzleBoardCountCommand
-from .puzzleboard_pop import HuntwordsPuzzleBoardPopCommand
-from .puzzleboards_clear import HuntwordsPuzzleBoardClearCommand
-from .puzzles import HuntwordsPuzzlesCommand
-from .puzzleboards import HuntwordsPuzzleBoardsCommand
+from api.models.command import CommandResponse, request_from_dict
+
+from api.commands.echo import HuntwordsEchoCommand
+from api.commands.puzzle_updated import HuntwordsPuzzleUpdatedCommand
+from api.commands.puzzleboard_consumed import HuntwordsPuzzleBoardConsumedCommand
+from api.commands.puzzleboard_count import HuntwordsPuzzleBoardCountCommand
+from api.commands.puzzleboard_pop import HuntwordsPuzzleBoardPopCommand
+from api.commands.puzzleboards import HuntwordsPuzzleBoardsCommand
+from api.commands.puzzleboards_clear import HuntwordsPuzzleBoardClearCommand
+from api.commands.puzzles import HuntwordsPuzzlesCommand
 
 commands = {
     'echo': HuntwordsEchoCommand,

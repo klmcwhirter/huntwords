@@ -1,7 +1,7 @@
 from datetime import datetime
 
-from ..models.command import CommandRequest, CommandResponse
-from ..models.puzzleboard import get_puzzleboards
+from api.models.command import CommandRequest, CommandResponse
+from api.models.puzzleboard import get_puzzleboards
 
 
 class HuntwordsPuzzleBoardsCommand(object):

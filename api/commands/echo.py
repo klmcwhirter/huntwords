@@ -1,5 +1,5 @@
 
-from ..models.command import CommandRequest, CommandResponse
+from api.models.command import CommandRequest, CommandResponse
 
 
 class HuntwordsEchoCommand(object):

@@ -3,7 +3,12 @@
 #*--------------------------------------------------------------------------------*
 function manage
 {
-    docker compose exec -t api uv run --frozen python -m api.manage $*
+    if [ -z "${API_URL-}" ]
+    then
+        docker compose exec -t api uv run --frozen python -m api.manage $*
+    else
+        uvextras run api-manage -- $*
+    fi
 }
 #*--------------------------------------------------------------------------------*
 

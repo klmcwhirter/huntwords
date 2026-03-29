@@ -13,12 +13,14 @@ export class Point {
 export class Puzzle {
   name: string;
   description: string;
+  pb_count: number;
   words: string[];
 
   constructor(model?: Puzzle) {
     if (model) {
       this.name = model.name;
       this.description = model.description;
+      this.pb_count = model.pb_count;
       this.words = [...model.words];
     }
   }

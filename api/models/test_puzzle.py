@@ -7,14 +7,14 @@ from api.models.repo import PuzzleRepo
 
 
 def test_puzzle_can_contruct():
-    p = Puzzle('name', 'desc', ['WORDS'])
+    p = Puzzle('name', 'desc', 0, ['WORDS'])
     assert p is not None
 
 
 def test_puzzle_is_iterable():
-    p = Puzzle('name', 'desc', ['WORDS'])
+    p = Puzzle('name', 'desc', 0, ['WORDS'])
 
-    d = {'name': 'name', 'description': 'desc', 'words': ['WORDS']}
+    d = {'name': 'name', 'description': 'desc', 'pb_count': 0, 'words': ['WORDS']}
     assert d == dict(p)
 
 
@@ -23,6 +23,7 @@ def test_get_puzzle_by_name(monkeypatch):
         jsonstr: str = '''{
             "name": "test",
             "description": "test",
+            "pb_count": 0,
             "words": []
         }'''
         mock_repo = Mock(spec=PuzzleRepo)

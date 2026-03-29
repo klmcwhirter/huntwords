@@ -65,6 +65,7 @@ def test_puzzleboard_from_json():
     "puzzle": {
         "name": "word",
         "description": "word",
+        "pb_count": 0,
         "words": [
             "WORD"
         ]

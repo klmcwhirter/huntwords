@@ -12,7 +12,7 @@ const PuzzlesView = (props) => {
   createEffect(() => console.log('PuzzlesView: puzzleToEdit=', game.puzzleToEdit()));
 
   return (
-    <div class='col-start-1 mt-0 h-[94vh] w-24/100 bg-emerald-200 p-2 align-top'>
+    <div class='col-start-1 mt-0 h-[94vh] w-25/100 bg-emerald-200 p-2 align-top'>
       <h2 class='text-2xl font-semibold'>Puzzles</h2>
       <ul>
         <For each={game?.puzzles()}>

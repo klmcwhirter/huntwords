@@ -17,7 +17,7 @@ def command_puzzle_load(**kwargs):
 
     for p in obj:
         # This part of the code serves to validate the json structure from the file just read.
-        puzzle = Puzzle(p['name'], p['description'], p['words'])
+        puzzle = Puzzle(p['name'], p['description'], p['pb_count'], p['words'])
         dpuzzle = dict(puzzle)
         jpuzzle = dumps(dpuzzle)
 

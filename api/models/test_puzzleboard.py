@@ -16,7 +16,7 @@ WORD = 'WORD'
 
 @pytest.fixture
 def test_puzzle() -> Puzzle:
-    return Puzzle('test_puzzle', '', ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'])
+    return Puzzle('test_puzzle', '', 0, ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine'])
 
 
 @pytest.fixture

@@ -4,8 +4,8 @@ import random
 import string
 from typing import Generator, Optional, Self
 
-from .puzzle import Puzzle, puzzle_from_dict
-from .repo import puzzle_repo
+from api.models.puzzle import Puzzle, puzzle_from_dict
+from api.models.repo import puzzle_repo
 
 config = {
     'retries': 2048,
@@ -313,7 +313,7 @@ def clear_puzzleboards() -> None:
 def count_puzzleboard(name: str) -> int:
     '''Count puzzleboard lists'''
     r = puzzle_repo()
-    llen = len(r.puzzleboards.get(name, []))
+    llen = r.count_puzzleboard(name)
     return llen
 
 

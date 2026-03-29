@@ -2,6 +2,7 @@
   {
     "name": "Animals",
     "description": "Common animals",
+    "pb_count": 0,
     "words": [
       "albacoretuna",
       "alligator",
@@ -85,6 +86,7 @@
   {
     "name": "Flowers",
     "description": "Flowers common in the U.S.A.",
+    "pb_count": 0,
     "words": [
       "azalea",
       "babysbreath",
@@ -135,6 +137,7 @@
   {
     "name": "Fruit",
     "description": "Fruit common in the USA",
+    "pb_count": 0,
     "words": [
       "acai",
       "apple",
@@ -187,6 +190,7 @@
   {
     "name": "Bible",
     "description": "Words from the bible",
+    "pb_count": 0,
     "words": [
       "abraham",
       "adam",

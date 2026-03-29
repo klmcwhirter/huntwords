@@ -10,7 +10,7 @@ class HuntwordsPuzzleUpdatedCommand(object):
         """Command that processes puzzle-updated message"""
 
         obj = request.body
-        puzzle = Puzzle(obj["name"], obj["description"], obj["words"])
+        puzzle = Puzzle(obj["name"], obj["description"], obj["pb_count"], obj["words"])
         jpuzzle = dict(puzzle)
 
         set_puzzle(puzzle.name, puzzle)

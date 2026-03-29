@@ -7,17 +7,20 @@ export const PuzzleSelectionView = (props) => {
   const selectPuzzle = props.selectPuzzle;
 
   return (
-    <a
-      class='p-2 text-md text-blue-700
+    <>
+      <a
+        class='p-2 text-md text-blue-700
     hover:rounded-lg hover:bg-emerald-500 hover:text-lg hover:font-semibold hover:text-white hover:cursor-pointer'
-      classList={{
-        'rounded-lg bg-emerald-500 text-lg font-semibold text-white':
-          game.puzzleName() === p.name,
-      }}
-      onClick={(e) => selectPuzzle(p)}
-    >
-      {p.name} - {p.description}
-    </a>
+        classList={{
+          'rounded-lg bg-emerald-500 text-lg font-semibold text-white':
+            game.puzzleName() === p.name,
+        }}
+        onClick={(e) => selectPuzzle(p)}
+      >
+        {p.name} - {p.description}
+      </a>
+      <span class='ml-1 p-1 text-xs bg-emerald-300 text-black rounded-4xl'>{p.pb_count}</span>
+    </>
   );
 };
 
@@ -30,11 +33,11 @@ export const PuzzleSelectEditView = (props) => {
     <a
       class='p-2 text-sm text-blue-700
     hover:rounded-lg hover:bg-emerald-100 hover:text-md hover:font-semibold hover:cursor-pointer'
-    classList={{
-      'rounded-lg bg-emerald-100 font-semibold text-md':
-        game.puzzleToEdit()?.name === p.name,
-    }}
-    onClick={(e) => editPuzzle(p)}
+      classList={{
+        'rounded-lg bg-emerald-100 font-semibold text-md':
+          game.puzzleToEdit()?.name === p.name,
+      }}
+      onClick={(e) => editPuzzle(p)}
     >
       &#9881;
     </a>

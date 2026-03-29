@@ -3,7 +3,7 @@ from json import dumps, loads
 
 from api.models.puzzle import Puzzle
 
-from api.manage.post_api_request import post_api_request
+from manage.post_api_request import post_api_request
 
 
 def command_puzzle_load(**kwargs):

@@ -2,7 +2,7 @@
 
 from uuid import uuid4
 
-from api.manage.post_api_request import post_api_request
+from manage.post_api_request import post_api_request
 
 
 def command_puzzleboards_clear(**kwargs):

@@ -9,7 +9,7 @@ scripts:
 - name: clean
   is-local: false
   options:
-    items_to_delete: build/ .coverage coverage.xml log/ .mypy_cache/ __pycache__/ .pytest_cache/ api/.pytest_cache/
+    items_to_delete: build/ .coverage coverage.xml log/ .mypy_cache/ __pycache__/ .pytest_cache/
 
 - name: envclean
   is-local: false
@@ -35,25 +35,25 @@ scripts:
 - name: flake8
   desc: run flake8
   use-python: false
-  cmd: uv run --frozen flake8 api/
+  cmd: uv run --frozen flake8 api/ manage/
   is-local: true
 
 - name: mypy
   desc: run mypy
   use-python: false
-  cmd: uv run --frozen mypy api/
+  cmd: uv run --frozen mypy api/ manage/
   is-local: true
 
 - name: pytest
   desc: run pytest
   use-python: false
-  cmd: uv run --frozen pytest api/
+  cmd: uv run --frozen pytest api/ manage/
   is-local: true
 
 - name: api-manage
   desc: manage app cache
   use-python: false
-  cmd: API_URL=http://localhost:3000/api/ uv run --frozen python -m api.manage
+  cmd: API_URL=http://localhost:3000/api/ uv run --frozen --directory src python -m manage
   is-local: true
 
 - name: api-pboards
@@ -71,7 +71,7 @@ scripts:
 - name: api-start
   desc: start api outside container
   use-python: false
-  cmd: APP_HOST=localhost APP_PORT=3000 uv run --frozen python -m api
+  cmd: APP_HOST=localhost APP_PORT=3000 uv run --frozen --directory src python -m api
   is-local: true
 
 - name: ui-create
@@ -93,9 +93,17 @@ scripts:
   is-local: true
 
 - name: compose-clean
-  desc: bring app down
+  desc: clean up after compose
   use-python: false
   cmd: docker compose down --rmi local --volumes
+  is-local: true
+
+- name: compose-prune
+  desc: prune build and compose artifacts
+  depends-on:
+  - compose-clean
+  use-python: false
+  cmd: /bin/sh -c "docker buildx prune -af && docker system prune -af --volumes"
   is-local: true
 
 - name: compose-dn

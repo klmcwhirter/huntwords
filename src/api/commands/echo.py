@@ -5,7 +5,7 @@ from api.models.command import CommandRequest, CommandResponse
 class HuntwordsEchoCommand(object):
     """Command class that processes echo message"""
 
-    def run(self, request: CommandRequest):
+    def run(self, request: CommandRequest) -> CommandResponse:
         """Command that processes echo message"""
 
         resp = {'oper': request.oper, 'body': request.body}

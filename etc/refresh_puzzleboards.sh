@@ -1,11 +1,13 @@
 #!/bin/bash
 
+PUZZLES_JSON='../etc/puzzles-all.json'
+
 #*--------------------------------------------------------------------------------*
 function manage
 {
     if [ -z "${API_URL-}" ]
     then
-        docker compose exec -t api uv run --frozen python -m api.manage $*
+        docker compose exec -t api uv run --frozen --directory src python -m manage $*
     else
         uvextras run api-manage -- $*
     fi
@@ -22,8 +24,8 @@ echo count=${count}
 
 if [ ${count} -lt 4 ]
 then
-    echo manage -- puzzle_load --file ./etc/puzzles-all.json
-    manage -- puzzle_load --file ./etc/puzzles-all.json
+    echo manage -- puzzle_load --file "${PUZZLES_JSON}"
+    manage -- puzzle_load --file "${PUZZLES_JSON}"
 fi
 
 if [ "$1" = 'reload' ]

@@ -2,7 +2,7 @@
 import json
 import random
 import string
-from typing import Generator, Optional, Self
+from typing import Generator, Optional, Self, cast
 
 from api.models.puzzle import Puzzle, puzzle_from_dict
 from api.models.repo import puzzle_repo
@@ -193,7 +193,7 @@ class PuzzleBoard:
         '''Tests if a letter can be placed in the location requested'''
 
         # make sure point is in the grid
-        value = ''
+        value: str | None = ''
         if point.x >= 0 and point.x < self.width and point.y >= 0 and point.y < self.height:
             value = self.letters[point.y][point.x]
 
@@ -255,13 +255,13 @@ class PuzzleBoard:
                 break
 
 
-def generate_puzzleboard(height: int, width: int, puzzle: Puzzle) -> PuzzleBoard:
+def generate_puzzleboard(height: int, width: int, puzzle: Puzzle) -> PuzzleBoard | None:
     '''Generate a puzzleboard for the puzzle and dimensions passed'''
-    max_tries = len(direction_offsets.keys()) * width * height * config['random_factor']
+    max_tries = len(direction_offsets.keys()) * width * height * cast(int, config['random_factor'])
 
-    pboard: PuzzleBoard  # = PuzzleBoard(height, width, puzzle=puzzle)
+    pboard: PuzzleBoard | None = None
 
-    for _ in range(config['retries']):
+    for _ in range(cast(int, config['retries'])):
         # initialize an instance
         pboard = PuzzleBoard(height, width, puzzle=puzzle)
         assert not pboard.is_full()

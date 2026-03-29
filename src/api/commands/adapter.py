@@ -1,7 +1,9 @@
 '''command adapter for huntwords api'''
 
 
-from api.models.command import CommandResponse, request_from_dict
+from typing import Protocol
+
+from api.models.command import CommandRequest, CommandResponse, request_from_dict
 
 from api.commands.echo import HuntwordsEchoCommand
 from api.commands.puzzle_updated import HuntwordsPuzzleUpdatedCommand
@@ -12,7 +14,13 @@ from api.commands.puzzleboards import HuntwordsPuzzleBoardsCommand
 from api.commands.puzzleboards_clear import HuntwordsPuzzleBoardClearCommand
 from api.commands.puzzles import HuntwordsPuzzlesCommand
 
-commands = {
+
+class Command(Protocol):
+    def run(self, request: CommandRequest) -> CommandResponse:
+        ...
+
+
+commands: dict[str, type[Command]] = {
     'echo': HuntwordsEchoCommand,
     'puzzle-updated': HuntwordsPuzzleUpdatedCommand,
     'puzzles': HuntwordsPuzzlesCommand,

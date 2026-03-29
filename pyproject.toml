@@ -1,6 +1,6 @@
 [project]
 name = "huntwords"
-version = "1.0.0"
+version = "1.2.0"
 description = "Huntwords - hunt for words in a grid of letters"
 authors = [{ name = "Kevin McWhirter", email = "klmcw@yahoo.com" }]
 dependencies = [
@@ -34,7 +34,7 @@ typeCheckingMode = "standard"
 # ignore = ["*"]
 
 [tool.mypy]
-mypy_path = "api/"
+mypy_path = "src/"
 explicit_package_bases = true
 check_untyped_defs = true
 disallow_any_generics = false # until Generics union types are supported

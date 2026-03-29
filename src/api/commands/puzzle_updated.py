@@ -6,7 +6,7 @@ from api.models.puzzle import Puzzle, set_puzzle
 class HuntwordsPuzzleUpdatedCommand(object):
     """Command class that processes puzzle-updated message"""
 
-    def run(self, request: CommandRequest):
+    def run(self, request: CommandRequest) -> CommandResponse:
         """Command that processes puzzle-updated message"""
 
         obj = request.body

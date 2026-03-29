@@ -24,16 +24,20 @@ RUN curl -LsSf https://astral.sh/uv/install.sh | sh
 RUN uv python install 3.14
 
 # copy project files to prepare for setup
-COPY --chown=app:app pyproject.toml uv.lock /app/
+COPY --chown=app:app LICENSE pyproject.toml tox.ini uv.lock /app/
 
 # copy files
-COPY --chown=app:app api/ /app/api/
+COPY --chown=app:app src/ /app/src/
 COPY --chown=app:app etc/puzzles-all.json /app/etc/
  
-# create .venv, install project dependencies, run tests if arg set
+# create .venv, install project dependencies, run tests
 RUN uv sync --frozen && \
-uv run --frozen pytest api/ 2>&1 | tee .pytest.log
+uv run --frozen flake8 src/ 2>&1 | tee .flake8.log && \
+uv run --frozen pytest src/ 2>&1 | tee .pytest.log && \
+uv run --frozen mypy src/ 2>&1 | tee .mypy.log && \
+rm -fr .mypy_cache/ .pytest_cache/
+
 
 EXPOSE 3000
 
-CMD ["uv", "run", "--frozen", "python", "-m", "api"]
+CMD ["uv", "run", "--frozen", "--directory", "src", "python", "-m", "api"]

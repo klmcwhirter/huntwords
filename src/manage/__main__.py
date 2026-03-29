@@ -2,7 +2,7 @@
 
 import sys
 
-from api.manage.cli import parse_args
+from manage.cli import parse_args
 
 if __name__ == '__main__':
     ctx = parse_args(sys.argv[1:])

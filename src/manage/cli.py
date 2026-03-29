@@ -5,9 +5,9 @@ from dataclasses import dataclass, field
 import os
 from typing import Any
 
-from api.manage.commands_puzzle import command_puzzle_load, command_puzzles
+from manage.commands_puzzle import command_puzzle_load, command_puzzles
 
-from api.manage.commands_puzzleboard import (
+from manage.commands_puzzleboard import (
     command_puzzleboard_consume,
     command_puzzleboard_count,
     command_puzzleboard_pop,

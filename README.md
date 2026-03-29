@@ -48,6 +48,7 @@ uvextras run refresh
 When done using the app, simply run the following command to tear down and clean up.
 ```bash
 uvextras run allclean
+uvextras run compose-prune
 ```
 
 

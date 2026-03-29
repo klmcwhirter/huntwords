@@ -2,7 +2,7 @@ services:
   api:
     build:
       context: .
-      dockerfile: ./api/Containerfile
+      dockerfile: ./src/Containerfile
     environment:
       APP_HOST: api
       APP_PORT: 3000

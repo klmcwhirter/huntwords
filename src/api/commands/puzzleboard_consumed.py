@@ -6,22 +6,24 @@ from api.models.puzzleboard import generate_puzzleboard, push_puzzleboard
 
 
 class HuntwordsPuzzleBoardConsumedCommand(object):
-    """Command class that processes puzzleboard-consumed message"""
+    '''Command class that processes puzzleboard-consumed message'''
 
     def run(self, request: CommandRequest) -> CommandResponse:
-        """Command that processes puzzleboard-consumed message"""
+        '''Command that processes puzzleboard-consumed message'''
 
         resp = request.body
 
-        puzzle = get_puzzle(resp["puzzle"])
-        size = int(resp["size"])
+        puzzle = get_puzzle(resp['puzzle'])
+        size = int(resp['size'])
 
         pboard = generate_puzzleboard(size, size, puzzle=puzzle)
 
-        push_puzzleboard(puzzle.name, pboard)
+        if pboard:
+            push_puzzleboard(puzzle.name, pboard)
 
-        resp["processed"] = {
-            "at": f"{datetime.now().isoformat()}",
+        resp['processed'] = {
+            'at': f'{datetime.now().isoformat()}',
+            'failed': f'generate puzzleboard for {puzzle.name}'
         }
 
         return CommandResponse(200, resp, {})
